@@ -44,9 +44,9 @@ public class SeedController {
         task2.setCareCircle(circle2);
 
         Task task3 = new Task();
-        task2.setTitle("Grocery shopping");
-        task2.setDescription("Milk, eggs, cheese and bread");
-        task2.setCareCircle(circle2);
+        task3.setTitle("Grocery shopping");
+        task3.setDescription("Milk, eggs, cheese and bread");
+        task3.setCareCircle(circle2);
 
         careCircleRepository.save(circle1);
         careCircleRepository.save(circle2);
