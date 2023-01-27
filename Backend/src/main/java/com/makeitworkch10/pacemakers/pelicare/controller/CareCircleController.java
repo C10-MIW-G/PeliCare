@@ -16,7 +16,7 @@ import java.util.List;
  * <p>
  * p.c.c.moonen@gmail.com
  * <p>
- * beschrijving van het programma
+ * Endpoints for CareCircle related requests
  */
 @RestController
 @RequiredArgsConstructor

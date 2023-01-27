@@ -1,5 +1,6 @@
 package com.makeitworkch10.pacemakers.pelicare.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,17 +32,12 @@ public class CareCircle {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "careCircle")
+    @JsonManagedReference
     private List<Task> taskList;
 
-    public CareCircle(String name) {
-        this.name = name;
-        taskList = new ArrayList<>();
+    @Override
+    public String toString() {
+        return String.format("Care Circle: %s", name);
     }
-
-    public void addTask(Task task) {
-        taskList.add(task);
-    }
-
-
 }

@@ -1,0 +1,58 @@
+package com.makeitworkch10.pacemakers.pelicare.controller;
+
+import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
+import com.makeitworkch10.pacemakers.pelicare.model.Task;
+import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
+import com.makeitworkch10.pacemakers.pelicare.repository.TaskRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * @author Paul Moonen
+ * <p>
+ * p.c.c.moonen@gmail.com
+ * <p>
+ * A quick way to add data to the database
+ */
+
+@RestController
+@RequiredArgsConstructor
+public class SeedController {
+
+    private final TaskRepository taskRepository;
+    private final CareCircleRepository careCircleRepository;
+
+    @GetMapping("/seed")
+    public void seedDatabase(){
+        // first CareCircles
+        CareCircle circle1 = new CareCircle();
+        circle1.setName("Hyacinth Bouquet Society");
+
+        CareCircle circle2 = new CareCircle();
+        circle2.setName("Richard relief foundation");
+
+        // first tasks
+        Task task1 = new Task();
+        task1.setTitle("Walk the dog");
+        task1.setDescription("Wodan...");
+        task1.setCareCircle(circle1);
+
+        Task task2 = new Task();
+        task2.setTitle("Feed the cat");
+        task2.setDescription("Poekie...");
+        task2.setCareCircle(circle2);
+
+        Task task3 = new Task();
+        task2.setTitle("Grocery shopping");
+        task2.setDescription("Milk, eggs, cheese and bread");
+        task2.setCareCircle(circle2);
+
+        careCircleRepository.save(circle1);
+        careCircleRepository.save(circle2);
+        taskRepository.save(task1);
+        taskRepository.save(task2);
+        taskRepository.save(task3);
+    }
+
+}

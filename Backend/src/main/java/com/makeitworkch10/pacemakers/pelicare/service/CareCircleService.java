@@ -13,7 +13,7 @@ import java.util.List;
  * <p>
  * p.c.c.moonen@gmail.com
  * <p>
- * beschrijving van het programma
+ * Service layer for the CareCircle entity
  */
 @Service
 @RequiredArgsConstructor
@@ -23,9 +23,5 @@ public class CareCircleService {
 
     public List<CareCircle> findAllCareCircles() {
         return careCircleRepository.findAll();
-    }
-
-    public List<Task> getTasks(Long careCircleId) {
-        return careCircleRepository.findAllById(careCircleId);
     }
 }
