@@ -31,11 +31,4 @@ public class PelicareApplication {
 		return new CorsFilter(urlBasedCorsConfigurationSource);
 	}
 
-
-
-
-
-
-
-
 }
