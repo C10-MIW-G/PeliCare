@@ -1,8 +1,30 @@
-<h1 class="text-primary">Pelicare</h1>
-<ul *ngFor="let careCircle of careCircles">
-  <li>{{careCircle.name}}
-    <ul *ngFor="let task of careCircle.taskList">
-      <li>{{task.title}}: {{task.description}}</li>
-    </ul>
-  </li>
-</ul>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">  
+    <h1 class="navbar-brand">Pelicare</h1>  
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">       
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/carecircles">Care Circles</a>
+        </li>        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
+
+<footer class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">  
+    <h1 class="navbar-brand">Disclaimer</h1>  
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+             <li class="nav-item nav-link">made by PaceMakers</li>
+             <li class="nav-item nav-link">supercool dev team...</li>
+              
+      </ul>
+    </div>
+  </div>
+</footer>
+

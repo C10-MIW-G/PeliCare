@@ -40,4 +40,9 @@ public class CareCircleService {
                 ));
 
     }
+
+    public CareCircle findCareCircle( Long id ) {
+        return careCircleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Carecircle not found"));
+    }
 }
