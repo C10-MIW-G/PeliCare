@@ -1,5 +1,6 @@
 package com.makeitworkch10.pacemakers.pelicare.controller;
 
+import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleService;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,8 @@ public class CareCircleController {
     private final CareCircleService careCircleService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<CareCircle>> getAllCareCircles() {
-        List<CareCircle> responseList = careCircleService.findAllCareCircles();
+    public ResponseEntity<List<CareCircleDTO>> getAllCareCircles() {
+        List<CareCircleDTO> responseList = careCircleService.findAllCareCircles();
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 

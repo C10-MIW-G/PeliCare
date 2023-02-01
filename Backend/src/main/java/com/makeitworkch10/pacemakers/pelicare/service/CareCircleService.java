@@ -1,12 +1,14 @@
 package com.makeitworkch10.pacemakers.pelicare.service;
 
-import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
-import com.makeitworkch10.pacemakers.pelicare.model.Task;
+import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
+import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
+import com.makeitworkch10.pacemakers.pelicare.service.mappers.CareCircleDTOMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Paul Moonen
@@ -20,8 +22,22 @@ import java.util.List;
 public class CareCircleService {
 
     private final CareCircleRepository careCircleRepository;
+    private final CareCircleDTOMapper careCircleDTOMapper;
 
-    public List<CareCircle> findAllCareCircles() {
-        return careCircleRepository.findAll();
+    public List<CareCircleDTO> findAllCareCircles() {
+        return careCircleRepository.findAll()
+                .stream()
+                .map(careCircleDTOMapper)
+                .collect(Collectors.toList());
+    }
+
+
+    public CareCircleDTO getCareCircle(Long id) throws ResourceNotFoundException {
+        return careCircleRepository.findById(id)
+                .map(careCircleDTOMapper)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "CareCircle with id [%s] not found".formatted(id)
+                ));
+
     }
 }
