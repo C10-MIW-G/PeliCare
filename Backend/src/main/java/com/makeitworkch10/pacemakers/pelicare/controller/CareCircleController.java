@@ -5,9 +5,7 @@ import com.makeitworkch10.pacemakers.pelicare.service.CareCircleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +27,12 @@ public class CareCircleController {
     public ResponseEntity<List<CareCircle>> getAllCareCircles() {
         List<CareCircle> responseList = careCircleService.findAllCareCircles();
         return new ResponseEntity<>(responseList, HttpStatus.OK);
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity<CareCircle> findCareCircle(@PathVariable("id") Long id) {
+        CareCircle careCircle = careCircleService.findCareCircle(id);
+        return new ResponseEntity<>(careCircle, HttpStatus.OK);
     }
 
 }

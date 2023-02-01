@@ -1,10 +1,7 @@
 <p>Care Circles</p>
 <ul *ngFor="let careCircle of careCircles">
-    <li>{{careCircle.name}}
-      <ul *ngFor="let task of careCircle.taskList">
-        <li>
-            {{task.title}}: {{task.description}}            
-        </li>
-      </ul>
+    <li>
+      <a routerLink="/carecircle/{{careCircle.id}}">{{careCircle.name}}</a>
     </li>
-  </ul>
+</ul>
+

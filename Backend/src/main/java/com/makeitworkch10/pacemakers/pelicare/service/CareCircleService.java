@@ -24,4 +24,9 @@ public class CareCircleService {
     public List<CareCircle> findAllCareCircles() {
         return careCircleRepository.findAll();
     }
+
+    public CareCircle findCareCircle( Long id ) {
+        return careCircleRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Carecircle not found"));
+    }
 }

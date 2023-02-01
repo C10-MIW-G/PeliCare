@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
   public careCircles!: CareCircle[];
+  title: String = "pelicare";
 constructor(private careCircleService: CareCircleService){}
 
   ngOnInit(): void {
