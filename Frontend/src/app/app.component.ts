@@ -23,7 +23,7 @@ constructor(private careCircleService: CareCircleService){}
       console.log(this.careCircles);
     },
     (error: HttpErrorResponse) => {
-      alert(error.message);
+      alert("error.message");
     }
   );
   }
