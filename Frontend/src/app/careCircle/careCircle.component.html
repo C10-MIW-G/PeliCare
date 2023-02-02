@@ -1,6 +1,8 @@
-<p>tasklist works!</p>
 <div *ngIf="careCircle" class="component-body">
     <div *ngFor="let task of careCircle.taskList">
         <p>{{task.title}}</p>
+    </div>
+    <div *ngIf="careCircle.taskList.length === 0">
+        <p>The List is empty</p>
     </div>
 </div>

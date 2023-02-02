@@ -32,6 +32,9 @@ public class SeedController {
         CareCircle circle2 = new CareCircle();
         circle2.setName("Richard relief foundation");
 
+        CareCircle circle3 = new CareCircle();
+        circle3.setName("Hatseflats");
+
         // first tasks
         Task task1 = new Task();
         task1.setTitle("Walk the dog");
@@ -50,6 +53,7 @@ public class SeedController {
 
         careCircleRepository.save(circle1);
         careCircleRepository.save(circle2);
+        careCircleRepository.save(circle3);
         taskRepository.save(task1);
         taskRepository.save(task2);
         taskRepository.save(task3);
