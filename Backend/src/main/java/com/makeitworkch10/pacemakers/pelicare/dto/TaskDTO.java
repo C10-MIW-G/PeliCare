@@ -22,7 +22,7 @@ public class TaskDTO {
     }
 
 
-    public TaskDTO(String title, String description) {
+    public TaskDTO(Long id, String title, String description) {
         this.id = id;
         this.title = title;
         this.description = description;

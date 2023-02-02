@@ -1,6 +1,7 @@
 package com.makeitworkch10.pacemakers.pelicare.service;
 
 import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
+import com.makeitworkch10.pacemakers.pelicare.dto.TaskDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
@@ -42,8 +43,10 @@ public class CareCircleService {
 
     }
 
-    public CareCircle findCareCircle(Long id ) {
+    public CareCircle findCareCircle(Long id) {
         return careCircleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Carecircle not found"));
     }
+
+
 }

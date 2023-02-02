@@ -16,8 +16,9 @@ public class CareCircleDTOMapper implements Function<CareCircle, CareCircleDTO> 
     @Override
     public CareCircleDTO apply(CareCircle careCircle) {
         return new CareCircleDTO(
+                careCircle.getId(),
                 careCircle.getName(),
-                careCircle.getId()
+                careCircle.getTaskList()
         );
     }
 
