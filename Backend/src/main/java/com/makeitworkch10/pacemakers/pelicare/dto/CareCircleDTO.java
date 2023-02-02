@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author Maaike Feenstra <mk.feenstra@st.hanze.nl><
  * <p>
- * het programma doet
+ * Sends only the requested information of the CareCircle
  */
 
 @Getter
@@ -20,10 +20,6 @@ public class CareCircleDTO {
 
     private List<Task> taskList;
 
-//    public CareCircleDTO(String name, Long id) {
-//        this.name = name;
-//        this.id = id;
-//    }
 
     public CareCircleDTO(Long id, String name, List<Task> taskList) {
         this.name = name;

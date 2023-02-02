@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author Maaike Feenstra <mk.feenstra@st.hanze.nl><
  * <p>
- * het programma doet
+ * Controls taskrelated requests
  */
 
 @RestController

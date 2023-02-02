@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 /**
  * @author Maaike Feenstra <mk.feenstra@st.hanze.nl><
  * <p>
- * het programma doet
+ * servicelayer for the task entity
  */
 
 @Service
@@ -28,13 +28,11 @@ public class TaskService {
                 .collect(Collectors.toList());
     }
 
-
     public TaskDTO getTask(Long id) throws ResourceNotFoundException {
         return taskRepository.findById(id)
                 .map(taskDTOMapper)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Task with id not found"
                 ));
-
     }
 }
