@@ -1,7 +1,7 @@
 <p>Care Circles</p>
-<ul *ngFor="let careCircle of careCircles">
-    <li>
+<div *ngFor="let careCircle of careCircles">
+  
       <a routerLink="/carecircle/{{careCircle.id}}">{{careCircle.name}}</a>
-    </li>
-</ul>
+    
+  </div>
 
