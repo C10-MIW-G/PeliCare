@@ -26,6 +26,10 @@ export class AuthService {
     .pipe(tap(res => this.setSession(res)));
   }
 
+  register(email:string, password:string) {
+    return this.http.post<User>(`${this.apiBackendUrl}/account/register`, {email, password});
+  }
+
   private setSession(authResult : any) {
       const expiresAt = moment().add(authResult.expiresIn,'second');
 

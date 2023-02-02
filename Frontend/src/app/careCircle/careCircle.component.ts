@@ -16,7 +16,7 @@ export class CareCircleComponent implements OnInit {
     constructor (
       private route: ActivatedRoute,
       private careCircleService: CareCircleService,
-     
+
     ) {}
 
 	ngOnInit(): void {
@@ -24,7 +24,7 @@ export class CareCircleComponent implements OnInit {
 	}
 
 	getCareCircle(): void {
-		
+
 		const id = Number(this.route.snapshot.paramMap.get('id'));
 		this.careCircleService.getCareCircleById(id)
 		.subscribe(careCircle => this.careCircle = careCircle);

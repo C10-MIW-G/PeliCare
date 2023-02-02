@@ -1,28 +1,42 @@
+import { AuthService } from './auth.service';
 import { HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class InterceptorService {
 
-  intercept(req: HttpRequest<any>,
-    next: HttpHandler): Observable<HttpEvent<any>> {
+  omitCalls = ['auth'];
+  skipInterceptor = false;
+  constructor(private authService: AuthService) {}
 
-const idToken = localStorage.getItem("id_token");
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
 
-if (idToken) {
-  const cloned = req.clone({
-      headers: req.headers.set("Authorization",
-          "Bearer " + idToken)
-  });
+    this.omitCalls.forEach(api => {
+      if (req.url.includes(api)) {
+        this.skipInterceptor = true;
+      }
+    });
 
-  return next.handle(cloned);
-}
-else {
-  return next.handle(req);
-}
-}
+    const idToken = localStorage.getItem('id_token');
 
+    if (this.authService.isLoggedOut()) {
+      this.authService.logout();
+    }
+
+    if (idToken || !this.skipInterceptor) {
+      const cloned = req.clone({
+        headers: req.headers.set('Authorization', 'Bearer ' + idToken),
+      });
+
+      return next.handle(cloned);
+    } else {
+      return next.handle(req);
+    }
+  }
 }

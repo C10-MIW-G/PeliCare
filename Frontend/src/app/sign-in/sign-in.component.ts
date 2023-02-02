@@ -29,7 +29,7 @@ export class SignInComponent {
                 .subscribe({
                     complete: () => {
                         console.log("User is logged in");
-                        this.router.navigateByUrl('/');
+                        this.router.navigateByUrl('/carecircles');
                     },
                   error: () => {
                     alert("Username or password are incorrect.");
