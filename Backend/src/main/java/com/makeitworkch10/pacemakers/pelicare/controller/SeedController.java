@@ -27,13 +27,13 @@ public class SeedController {
     public void seedDatabase(){
         // first CareCircles
         CareCircle circle1 = new CareCircle();
-        circle1.setName("Hyacinth Bouquet Society");
+        circle1.setName("Care Circle 1");
 
         CareCircle circle2 = new CareCircle();
-        circle2.setName("Richard relief foundation");
+        circle2.setName("Care Circle 2");
 
         CareCircle circle3 = new CareCircle();
-        circle3.setName("Hatseflats");
+        circle3.setName("Care Circle 3");
 
         // first tasks
         Task task1 = new Task();
