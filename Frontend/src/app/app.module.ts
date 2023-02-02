@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { CarecirclelistComponent } from './carecirclelist/carecirclelist.component';
 import { CareCircleComponent } from './careCircle/careCircle.component';
 import { RouterModule, Routes } from '@angular/router';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { CreateAccountComponent } from './create-account/create-account.component';
 
 
 
@@ -15,7 +17,9 @@ import { RouterModule, Routes } from '@angular/router';
   declarations: [
     AppComponent,
     CarecirclelistComponent,
-    CareCircleComponent
+    CareCircleComponent,
+    SignInComponent,
+    CreateAccountComponent
   ],
   imports: [
     BrowserModule,
