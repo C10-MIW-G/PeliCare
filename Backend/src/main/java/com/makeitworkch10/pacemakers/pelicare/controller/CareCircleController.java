@@ -1,7 +1,6 @@
 package com.makeitworkch10.pacemakers.pelicare.controller;
 
 import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
-import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,8 +30,8 @@ public class CareCircleController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<CareCircle> findCareCircle(@PathVariable("id") Long id) {
-        CareCircle careCircle = careCircleService.findCareCircle(id);
+    public ResponseEntity<CareCircleDTO> findCareCircle(@PathVariable("id") Long id) {
+        CareCircleDTO careCircle = careCircleService.getCareCircle(id);
         return new ResponseEntity<>(careCircle, HttpStatus.OK);
     }
 
