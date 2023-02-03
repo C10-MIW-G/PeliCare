@@ -1,24 +1,48 @@
-<div class="component-body">
-<form [formGroup]="form">
-  <fieldset>
-      <legend>Login</legend>
-      <div class="form-field">
-          <label>Email:</label>
-          <input name="email" formControlName="email">
-          <small class="text-danger" [hidden]="form.controls['email'].valid"> Email Required</small>
-      </div>
-      <div class="form-field">
-          <label>Password:</label>
-          <input name="password" formControlName="password"
-                 type="password">
-          <small class="text-danger" [hidden]="form.controls['password'].valid"> Password Required</small>
-      </div>
-  </fieldset>
-  <div class="form-buttons">
-      <button class="button button-primary"
-              (click)="login()">Login</button>
-  </div>
-</form>
-    <a routerLink="/account/create">Create Account</a>
-</div>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="component-body">
+        <h4 class="text-primary">Sign-In</h4>
+        <form [formGroup]="form">
+          <div class="form-group">
+            <label for="inputEmail">Email:</label>
+            <input
+              type="email"
+              class="form-control"
+              id="inputEmail"
+              name="email"
+              aria-describedby="emailHelp"
+              placeholder="Enter email"
+              formControlName="email"
+            />
+            <small class="text-danger" [hidden]="form.controls['email'].valid">
+              Email Required</small
+            >
+          </div>
 
+          <div class="form-group">
+            <label for="inputPassword">Password:</label>
+            <input
+              type="password"
+              class="form-control"
+              id="inputPassword"
+              name="password"
+              placeholder="Password"
+              formControlName="password"
+            />
+            <small
+              class="text-danger"
+              [hidden]="form.controls['password'].valid"
+            >
+              Password Required</small
+            >
+          </div>
+          <button class="mt-2 btn btn-primary" (click)="login()">Login</button>
+        </form>
+        <a class="mt-2 btn btn-primary" routerLink="/account/create"
+          >Create Account</a
+        >
+      </div>
+    </div>
+  </div>
+</div>

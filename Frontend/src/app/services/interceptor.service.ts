@@ -7,29 +7,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class InterceptorService {
-
-  omitCalls = ['auth'];
-  skipInterceptor = false;
   constructor(private authService: AuthService) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-
-    this.omitCalls.forEach(api => {
-      if (req.url.includes(api)) {
-        this.skipInterceptor = true;
-      }
-    });
+    this.checkTokenExpiration();
 
     const idToken = localStorage.getItem('id_token');
 
-    if (this.authService.isLoggedOut()) {
-      this.authService.logout();
-    }
-
-    if (idToken || !this.skipInterceptor) {
+    if (idToken) {
       const cloned = req.clone({
         headers: req.headers.set('Authorization', 'Bearer ' + idToken),
       });
@@ -37,6 +25,12 @@ export class InterceptorService {
       return next.handle(cloned);
     } else {
       return next.handle(req);
+    }
+  }
+
+  checkTokenExpiration() {
+    if (this.authService.isExpired()) {
+      this.authService.logout();
     }
   }
 }
