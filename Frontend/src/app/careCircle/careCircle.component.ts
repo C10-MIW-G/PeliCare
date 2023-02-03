@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CareCircleService } from '../care-circle.service';
@@ -27,6 +28,14 @@ export class CareCircleComponent implements OnInit {
 
 		const id = Number(this.route.snapshot.paramMap.get('id'));
 		this.careCircleService.getCareCircleById(id)
-		.subscribe(careCircle => this.careCircle = careCircle);
+		.subscribe({
+			next: (response: CareCircle) => {
+			   this.careCircle = response;
+			   console.log(this.careCircle);
+			 },
+			error: (error: HttpErrorResponse) => {
+			   alert(error.message);
+			 }    
+		   });
 	}
 }
