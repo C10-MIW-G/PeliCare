@@ -17,15 +17,16 @@ constructor(private careCircleService: CareCircleService){}
   }
 
   public getCareCircles(): void {
-  this.careCircleService.getCareCircles().subscribe(
-    (response: CareCircle[]) => {
+  this.careCircleService.getCareCircles().subscribe({
+   next: (response: CareCircle[]) => {
       this.careCircles = response;
       console.log(this.careCircles);
     },
-    (error: HttpErrorResponse) => {
+   error: (error: HttpErrorResponse) => {
       alert(error.message);
-    }
-  );
+    }    
+  });
+  
   }
 
 }

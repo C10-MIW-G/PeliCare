@@ -1,7 +1,4 @@
-import { CareCircle } from './carecircle';
-import { CareCircleService } from './care-circle.service';
 import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -9,23 +6,11 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  public careCircles!: CareCircle[];
+  
   title: String = "pelicare";
-constructor(private careCircleService: CareCircleService){}
+constructor(){}
 
-  ngOnInit(): void {
-    this.getCareCircles();
+  ngOnInit(): void {  
   }
-
-  public getCareCircles(): void {
-  this.careCircleService.getCareCircles().subscribe({
-    next: (response: CareCircle[]) => {
-      this.careCircles = response;
-      console.log(this.careCircles);
-    },
-    error: (error: HttpErrorResponse) => {
-      alert(error.message);
-    }
-  });
-  }
+  
 }
