@@ -4,5 +4,5 @@
 databaseUsername=
 databasePassword=
 
-## Write username and password without " " String marks
+## Write username and password without " String " quotation marks
 ## filename application.properties is necessary and not unique in this project
