@@ -1,3 +1,4 @@
+import { CreateCarecircleComponent } from './create-carecircle/create-carecircle.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -9,9 +10,10 @@ import { SignInComponent } from './sign-in/sign-in.component';
 
 const routes: Routes = [
   { path: 'carecircles', component: CarecirclelistComponent },
-  { path: 'carecircle/:id', component: CareCircleComponent}, 
+  { path: 'carecircle/:id', component: CareCircleComponent},
   { path: 'account/create', component: CreateAccountComponent},
-  { path: 'account/signin', component: SignInComponent}
+  { path: 'account/signin', component: SignInComponent},
+  { path: 'carecircles/create', component: CreateCarecircleComponent}
 
 ];
 

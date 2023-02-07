@@ -1,6 +1,7 @@
 package com.makeitworkch10.pacemakers.pelicare.controller;
 
 import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
+import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,4 +36,9 @@ public class CareCircleController {
         return new ResponseEntity<>(careCircle, HttpStatus.OK);
     }
 
+    @PostMapping("/create")
+    public ResponseEntity<CareCircle> createCareCircle(@RequestBody CareCircle careCircle){
+        CareCircle newCareCircle = careCircleService.createCareCircle(careCircle);
+        return new ResponseEntity<>(newCareCircle, HttpStatus.CREATED);
+    }
 }
