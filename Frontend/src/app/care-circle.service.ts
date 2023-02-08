@@ -21,4 +21,7 @@ export class CareCircleService {
   public createNewCareCircle( name: string) {
     return this.http.post<CareCircle>(`${this.apiBackendUrl}/carecircle/create`, {name});
   }
+  public setTaskToComplete( completedTask: boolean) {
+
+  }
 }

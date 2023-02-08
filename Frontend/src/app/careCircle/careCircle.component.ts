@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CareCircleService } from '../care-circle.service';
 import { CareCircle } from '../carecircle';
-import { Task } from '../task';
 
 @Component({
   selector: 'app-carecircle',
@@ -35,7 +34,11 @@ export class CareCircleComponent implements OnInit {
 			 },
 			error: (error: HttpErrorResponse) => {
 			   alert(error.message);
-			 }    
+			 }
 		   });
 	}
+
+  complete(): void {
+
+  }
 }

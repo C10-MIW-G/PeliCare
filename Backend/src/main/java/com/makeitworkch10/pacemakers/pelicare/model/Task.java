@@ -28,6 +28,8 @@ public class Task {
     private String description;
     private String title;
 
+    private boolean completedTask;
+
     @ManyToOne
     @JoinColumn(name = "care_circle_id")
     @JsonBackReference
