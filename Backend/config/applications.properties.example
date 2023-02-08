@@ -3,6 +3,8 @@
 
 databaseUsername=
 databasePassword=
+JWT_KEY=
+RECAPTCHA_KEY=
 
 ## Write username and password without " String " quotation marks
 ## filename application.properties is necessary and not unique in this project
