@@ -1,10 +1,7 @@
 package com.makeitworkch10.pacemakers.pelicare.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,6 +18,7 @@ import java.util.List;
  * A group of people dedicated to caring for one Care Recipient
  */
 @Entity
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor

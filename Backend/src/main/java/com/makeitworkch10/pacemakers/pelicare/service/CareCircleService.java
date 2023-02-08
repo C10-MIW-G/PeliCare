@@ -2,6 +2,7 @@ package com.makeitworkch10.pacemakers.pelicare.service;
 
 import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;
+import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.CareCircleDTOMapper;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +38,11 @@ public class CareCircleService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "CareCircle not found"
                 ));
+    }
+    public CareCircle createCareCircle(CareCircle careCircle){
+        CareCircle newCareCircle = careCircle.builder()
+                .name(careCircle.getName())
+                .build();
+        return careCircleRepository.save(newCareCircle);
     }
 }

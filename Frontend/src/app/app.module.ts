@@ -11,6 +11,7 @@ import { CareCircleComponent } from './careCircle/careCircle.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { InterceptorService } from './services/interceptor.service';
+import { CreateCarecircleComponent } from './create-carecircle/create-carecircle.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { InterceptorService } from './services/interceptor.service';
     CarecirclelistComponent,
     CareCircleComponent,
     SignInComponent,
-    CreateAccountComponent
+    CreateAccountComponent,
+    CreateCarecircleComponent
   ],
   imports: [
     BrowserModule,

@@ -8,5 +8,9 @@ footer {
 }
 
 .component-body {
-    padding: 1rem;
+    padding: 2rem;
+}
+
+.form-control {
+  max-width: 30%;
 }

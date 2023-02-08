@@ -17,4 +17,8 @@ export class CareCircleService {
   public getCareCircleById( id: Number): Observable<CareCircle> {
     return this.http.get<CareCircle>(`${this.apiBackendUrl}/carecircle/get/${id}`);
   }
+
+  public createNewCareCircle( name: string) {
+    return this.http.post<CareCircle>(`${this.apiBackendUrl}/carecircle/create`, {name});
+  }
 }

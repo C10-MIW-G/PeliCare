@@ -1,6 +1,12 @@
-<div *ngFor="let careCircle of careCircles" class="component-body">
-
-      <a class="btn btn-primary" routerLink="/carecircle/{{careCircle.id}}">{{careCircle.name}}</a>
-
+<div class="row container-fluid component-body">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <div *ngFor="let careCircle of careCircles">
+          <a class="btn btn-dark" routerLink="/carecircle/{{careCircle.id}}">{{careCircle.name}}</a>
+      </div>
   </div>
+  <div class="col-md-3">
+      <a class="btn btn-dark" routerLink="/carecircles/create">Create</a>
+      </div>
+</div>
 
