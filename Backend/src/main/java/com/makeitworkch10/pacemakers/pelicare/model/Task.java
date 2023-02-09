@@ -2,29 +2,25 @@ package com.makeitworkch10.pacemakers.pelicare.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import lombok.*;
 
 /**
  * @author Paul Moonen
  * <p>
  * p.c.c.moonen@gmail.com
  * <p>
- * Something to be done for a Care Recipient
+ * A Task objects represents something to be done for a Care Recipient.
  */
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Task {
     @Id
     @GeneratedValue
     private Long id;
-
     private String description;
     private String title;
 

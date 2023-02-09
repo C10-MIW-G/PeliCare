@@ -1,7 +1,10 @@
 ## database credentials, excluded from version control
 ## make a file application.properties in this config folder with the next two lines:
 
-
+databaseUsername=
+databasePassword=
+jwt.private.key=
+google.recaptcha.key.secret=
 
 ## Write username and password without " String " quotation marks
 ## filename application.properties is necessary and not unique in this project

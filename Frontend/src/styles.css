@@ -41,3 +41,7 @@ footer {
     width: 100%;
   }
 }
+.errorMessage {
+  color: darkorange;
+}
+
