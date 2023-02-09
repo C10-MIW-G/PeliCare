@@ -33,12 +33,6 @@ export class TaskComponent implements OnInit{
 
     if (this.title && this.description) {      
 
-      // let newTask: NewTask = {
-      //         'title': this.title,
-      //         'description': this.description,
-      //         'careCircleId': this.careCircleId
-      // }
-
       this.taskservice.saveNewTaskData({
         title: this.title,
         description: this.description,
