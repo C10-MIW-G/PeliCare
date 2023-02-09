@@ -12,6 +12,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
 import { InterceptorService } from './services/interceptor.service';
 import { CreateCarecircleComponent } from './create-carecircle/create-carecircle.component';
+import { TaskComponent } from './task/task.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CreateCarecircleComponent } from './create-carecircle/create-carecircle
     CareCircleComponent,
     SignInComponent,
     CreateAccountComponent,
-    CreateCarecircleComponent
+    CreateCarecircleComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,

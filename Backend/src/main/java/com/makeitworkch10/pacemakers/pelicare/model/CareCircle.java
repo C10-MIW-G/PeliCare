@@ -38,4 +38,8 @@ public class CareCircle {
     public String toString() {
         return String.format("Care Circle: %s", name);
     }
+
+    public void addTask(Task task) {
+        this.taskList.add(task);
+    }
 }
