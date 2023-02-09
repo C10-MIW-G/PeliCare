@@ -10,7 +10,10 @@ import lombok.Setter;
  * <p>
  * p.c.c.moonen@gmail.com
  * <p>
- * beschrijving van het programma
+ * DTO used to hold user provided data, to make a new Task.
+ * We cannot use a normal TaskDTO for this purpose:
+ * 1)   The Task id only exists after saving in the database, and
+ * 2)   the CareCircle id that is needed to make the Task is includen.
  */
 @Getter
 @Setter

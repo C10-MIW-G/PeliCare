@@ -1,9 +1,7 @@
 package com.makeitworkch10.pacemakers.pelicare.controller;
 
-import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.NewTaskDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.TaskDTO;
-import com.makeitworkch10.pacemakers.pelicare.service.CareCircleService;
 import com.makeitworkch10.pacemakers.pelicare.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,7 +21,6 @@ import java.util.List;
 @RequestMapping("/task")
 public class TaskController {
     private final TaskService taskService;
-    private final CareCircleService careCircleService;
 
     @GetMapping("/all")
     public ResponseEntity<List<TaskDTO>> getAllTasks() {
@@ -37,14 +34,11 @@ public class TaskController {
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
 
-
     @PostMapping("/new")
     public ResponseEntity<TaskDTO> newTask(@RequestBody NewTaskDTO newTask) {
 
         TaskDTO taskDTO = taskService.saveTask(newTask);
-
-        return new ResponseEntity(taskDTO,HttpStatus.CREATED);
+        return new ResponseEntity<>(taskDTO,HttpStatus.CREATED);
     }
-
 
 }

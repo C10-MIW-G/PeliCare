@@ -1,10 +1,20 @@
-<h1>New Task</h1>
-<p>for Care Circle {{careCircleId}}</p>
-<form>
-    <input type="text" [(ngModel)]="title" placeholder="Task Title" required name="title">
-    <br>
-    <input type="text" [(ngModel)]="description" placeholder="Task description" required name="description">
-    <br>
-    <button class="btn btn-dark" (click)="saveNewTask()">Save</button>
-</form>
+<div class="row container-fluid component-body">
+    <div class="col-md-2"></div>
+    <div class="col-md-6">
+        <h4 class="text-dark">Create new Task</h4>
+        <p>for {{carecircleName}}</p>
+        <form>
+            <input type="text" [(ngModel)]="title" placeholder="Task Title" 
+            required name="title" class="form-control">
+            <br>
+            <input type="text" [(ngModel)]="description" placeholder="Task description" 
+            required name="description" class="form-control">
+            <br>
+            <p *ngIf="incompleteFields" class="errorMessage">please fill in all fields</p>
+            <button class="btn btn-dark m-2" (click)="saveNewTask()">Save</button>            
+            <a class="btn btn-dark m-2" routerLink="/carecircle/{{careCircleId}}" >Back</a>
+        </form>
+    </div>
+    <div class="col-md-2"></div>
+</div>
 

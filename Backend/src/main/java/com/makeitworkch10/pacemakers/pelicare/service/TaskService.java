@@ -2,7 +2,6 @@ package com.makeitworkch10.pacemakers.pelicare.service;
 import com.makeitworkch10.pacemakers.pelicare.dto.NewTaskDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.TaskDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;
-import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.model.Task;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
 import com.makeitworkch10.pacemakers.pelicare.repository.TaskRepository;
@@ -41,12 +40,6 @@ public class TaskService {
                 ));
     }
 
-//    public TaskDTO createTask(Task task) {
-//        Long taskId = taskRepository.save(task).getId();
-//        Task newTask = taskRepository.getReferenceById(taskId);
-//        return new TaskDTO(newTask.getId(), newTask.getTitle(), newTask.getDescription());
-//    }
-
     public TaskDTO saveTask(NewTaskDTO newTaskDTO) {
         Task task = new Task();
         task.setTitle(newTaskDTO.getTitle());
@@ -55,11 +48,9 @@ public class TaskService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         "Care Circle of this new task coul not be found")));
         Long taskId = taskRepository.save(task).getId();
-        TaskDTO savedTask = taskRepository.findById(taskId)
+        return taskRepository.findById(taskId)
                 .map(taskDTOMapper)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with id not found"));
-        return  savedTask;
+
     }
-
-
 }
