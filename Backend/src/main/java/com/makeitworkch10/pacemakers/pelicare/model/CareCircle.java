@@ -39,7 +39,4 @@ public class CareCircle {
         return String.format("Care Circle: %s", name);
     }
 
-    public void addTask(Task task) {
-        this.taskList.add(task);
-    }
 }
