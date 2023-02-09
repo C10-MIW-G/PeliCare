@@ -25,10 +25,11 @@ export class AuthService {
       .pipe(tap((res) => this.setSession(res)));
   }
 
-  register(email: string, password: string) {
+  register(email: string, password: string, captchaResponse: string | undefined) {
     return this.http.post<User>(`${this.apiBackendUrl}/account/register`, {
       email,
       password,
+      captchaResponse,
     });
   }
 

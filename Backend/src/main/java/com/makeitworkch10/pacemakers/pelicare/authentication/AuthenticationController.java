@@ -1,5 +1,6 @@
 package com.makeitworkch10.pacemakers.pelicare.authentication;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,19 +14,26 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
+    private final CaptchaService captchaService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
+            @RequestBody RegisterRequest registerRequest
     ){
-        return ResponseEntity.ok(authenticationService.register(request));
+        //Validate captcha response with the Google server
+        if(captchaService.processResponse(registerRequest.getCaptchaResponse())){
+            return ResponseEntity.ok(authenticationService.register(registerRequest));
+        }
+        else {
+            throw new RuntimeException("Invalid ReCaptcha.");
+        }
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request
+            @RequestBody AuthenticationRequest authenticationRequest
     ){
-        return ResponseEntity.ok(authenticationService.authenticate(request));
+        return ResponseEntity.ok(authenticationService.authenticate(authenticationRequest));
     }
 
 }
