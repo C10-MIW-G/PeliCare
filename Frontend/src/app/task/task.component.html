@@ -1,0 +1,10 @@
+<h1>New Task</h1>
+<p>for Care Circle {{careCircleId}}</p>
+<form>
+    <input type="text" [(ngModel)]="title" placeholder="Task Title" required name="title">
+    <br>
+    <input type="text" [(ngModel)]="description" placeholder="Task description" required name="description">
+    <br>
+    <button class="btn btn-dark" (click)="saveNewTask()">Save</button>
+</form>
+
