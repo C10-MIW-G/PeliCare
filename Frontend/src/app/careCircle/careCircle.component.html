@@ -17,7 +17,7 @@
         <td>{{task.title}}</td>
         <td>{{task.description}}</td>
         <td *ngIf="task.completedTask">Complete</td>
-        <td *ngIf="task.completedTask == false"><a (click)="complete()" >Incomplete</a></td>
+        <td *ngIf="task.completedTask == false"><a class="btn" (click)="complete(task)" >Incomplete</a></td>
       </tr>
     </tbody>
   </table>
