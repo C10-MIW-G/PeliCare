@@ -46,11 +46,20 @@ public class TaskService {
         task.setDescription(newTaskDTO.getDescription());
         task.setCareCircle(careCircleRepository.findById(newTaskDTO.getCareCircleId())
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "Care Circle of this new task coul not be found")));
+                        "Care Circle of this new task could not be found")));
         Long taskId = taskRepository.save(task).getId();
         return taskRepository.findById(taskId)
                 .map(taskDTOMapper)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with id not found"));
+    }
 
+    public TaskDTO patchTask(TaskDTO taskDTO) {
+        Task taskToUpdate = taskRepository.findById(taskDTO.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                "this Task could not be found"));
+        taskToUpdate.setTitle(taskDTO.getTitle());
+        taskToUpdate.setDescription(taskDTO.getDescription());
+        taskRepository.save(taskToUpdate);
+        return new TaskDTO(taskToUpdate.getId(), taskToUpdate.getTitle(), taskToUpdate.getDescription());
     }
 }
