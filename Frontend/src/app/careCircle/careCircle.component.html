@@ -1,10 +1,13 @@
-<div *ngIf="careCircle" class="component-body">    
-    <a routerLink="http://"></a>
-    <div *ngFor="let task of careCircle.taskList">
-        <p>{{task.title}}</p>
+<div *ngIf="careCircle" class="component-body" >    
+    <div *ngFor="let task of careCircle.taskList" class="row">
+        <p class="col-2">{{task.title}}</p>
+        <a class="btn btn-dark col-1" routerLink="/task/edit/{{task.id}}/{{careCircle.id}}">Edit</a>
     </div>
     <div *ngIf="careCircle.taskList.length === 0">
         <p>The List is empty</p>
     </div>
-    <a class="btn btn-dark" routerLink="/task/create/{{careCircle.id}}">New Task</a>
+    <div class="row">
+        <div class="col-2"> </div>
+        <a class="btn btn-dark col-1" routerLink="/task/create/{{careCircle.id}}">New Task</a>
+    </div>
 </div>
