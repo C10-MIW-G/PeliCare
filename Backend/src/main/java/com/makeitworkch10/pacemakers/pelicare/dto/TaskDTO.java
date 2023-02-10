@@ -1,6 +1,7 @@
 package com.makeitworkch10.pacemakers.pelicare.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -11,6 +12,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class TaskDTO {
     private Long id;
     private String description;
@@ -25,4 +27,6 @@ public class TaskDTO {
         this.description = description;
         this.completedTask = completedTask;
     }
+
+
 }

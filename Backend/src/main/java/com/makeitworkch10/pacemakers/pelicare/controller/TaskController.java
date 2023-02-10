@@ -1,14 +1,12 @@
 package com.makeitworkch10.pacemakers.pelicare.controller;
 
+import com.makeitworkch10.pacemakers.pelicare.dto.NewTaskDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.TaskDTO;
 import com.makeitworkch10.pacemakers.pelicare.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,4 +33,12 @@ public class TaskController {
         TaskDTO task = taskService.getTask(id);
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
+
+    @PostMapping("/new")
+    public ResponseEntity<TaskDTO> newTask(@RequestBody NewTaskDTO newTask) {
+
+        TaskDTO taskDTO = taskService.saveTask(newTask);
+        return new ResponseEntity<>(taskDTO,HttpStatus.CREATED);
+    }
+
 }
