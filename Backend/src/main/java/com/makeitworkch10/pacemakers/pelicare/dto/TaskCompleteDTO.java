@@ -5,7 +5,7 @@ import lombok.Setter;
 
 /**
  * @author Maaike de Jong
- * Passes to the front end whether a given task is completed or not
+ * Sends only the relevant data for checking whether a task is completed or not
  */
 @Getter
 @Setter

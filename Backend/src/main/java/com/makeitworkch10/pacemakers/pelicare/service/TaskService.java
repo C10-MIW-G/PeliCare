@@ -57,17 +57,15 @@ public class TaskService {
 
     }
 
-    public TaskCompleteDTO getTaskComplete(Long id) throws ResourceNotFoundException {
-        return taskRepository.findById(id)
-                .map(taskCompleteDTOMapper)
-                .orElseThrow(() -> new ResourceNotFoundException("Task with id not found"));
-    }
-    public void saveTaskComplete(Long id, TaskCompleteDTO taskCompleteDTO) {
-        TaskDTO taskdto = getTask(id);
+    public TaskCompleteDTO saveTaskComplete(TaskCompleteDTO taskCompleteDTO) {
+        TaskDTO taskdto = getTask(taskCompleteDTO.getId());
         taskdto.setCompletedTask(taskCompleteDTO.isCompletedTask());
-        Task task = taskRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Task not found"));
+        Task task = taskRepository.findById(taskCompleteDTO.getId()).orElseThrow(
+                () -> new ResourceNotFoundException("Task with id not found"));
         task.setCompletedTask(taskdto.isCompletedTask());
         taskRepository.save(task);
-
+        return taskRepository.findById(taskCompleteDTO.getId())
+                .map(taskCompleteDTOMapper)
+                .orElseThrow(() -> new ResourceNotFoundException("Task with id not found"));
     }
 }

@@ -22,7 +22,5 @@ export class CareCircleService {
   public createNewCareCircle(name: string) {
     return this.http.post(`${this.apiBackendUrl}/carecircle/create`, {name});
   }
-  public setTaskToComplete( completedTask: Task) {
-    return this.http.put<Task>(`${this.apiBackendUrl}/task/${completedTask.id}/complete`, completedTask)
-  }
+
 }

@@ -42,16 +42,9 @@ public class TaskController {
         return new ResponseEntity<>(taskDTO,HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}/complete")
-    public ResponseEntity<TaskCompleteDTO> findCompleteTask(@PathVariable("id") Long id) {
-        TaskCompleteDTO taskCompleteDTO = taskService.getTaskComplete(id);
-        return new ResponseEntity<>(taskCompleteDTO, HttpStatus.OK);
-    }
-
-    @PutMapping("/{id}/complete")
-    public ResponseEntity<TaskCompleteDTO> saveCompleteTask(
-            @PathVariable("id") Long id, @RequestBody TaskCompleteDTO taskCompleteDTO) {
-        taskService.saveTaskComplete(id, taskCompleteDTO);
+    @PatchMapping("/complete")
+    public ResponseEntity<TaskCompleteDTO> saveCompleteTask(@RequestBody TaskCompleteDTO taskCompleteDTO) {
+        taskService.saveTaskComplete(taskCompleteDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

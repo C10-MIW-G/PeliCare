@@ -8,7 +8,7 @@ import java.util.function.Function;
 
 /**
  * @author Maaike de Jong
- * Dit is wat het programma doet
+ * Maps the received TaskCompleteDTO to and from the front end
  */
 @Service
 public class TaskCompleteDTOMapper implements Function<Task, TaskCompleteDTO> {
