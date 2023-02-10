@@ -63,7 +63,10 @@ public class TaskService {
         taskToUpdate.setTitle(taskDTO.getTitle());
         taskToUpdate.setDescription(taskDTO.getDescription());
         taskRepository.save(taskToUpdate);
-        return new TaskDTO(taskToUpdate.getId(), taskToUpdate.getTitle(), taskToUpdate.getDescription());
+        return new TaskDTO(taskToUpdate.getId(),
+                                taskToUpdate.getTitle(),
+                                taskToUpdate.getDescription(),
+                                taskToUpdate.isCompletedTask());
     }
 
     public TaskCompleteDTO saveTaskComplete(TaskCompleteDTO taskCompleteDTO) {

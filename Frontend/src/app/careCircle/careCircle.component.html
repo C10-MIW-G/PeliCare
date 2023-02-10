@@ -10,16 +10,21 @@
           <th scope="col">Task name</th>
           <th scope="col">Task description</th>
           <th scope="col">Completed</th>
-          <th scope="col">Edit</th>
+          <th scope="col"></th> <!-- some layout space for the edit-button -->
         </tr>
       </thead>
       <tbody *ngFor="let task of careCircle.taskList">
       <tr>
         <td>{{task.title}}</td>
         <td>{{task.description}}</td>
+
         <td *ngIf="task.completedTask">Complete</td>
-        <td *ngIf="task.completedTask == false"><button class="btn btn-outline-dark" (click)="complete(task)" ></button></td>
-        <a class="btn btn-dark col-1" routerLink="/task/edit/{{task.id}}/{{careCircle.id}}">Edit</a>
+        <td *ngIf="task.completedTask == false">
+          <button class="btn btn-outline-dark" (click)="complete(task)" >Set to completed</button>
+        </td>
+        <td>
+          <a class="btn btn-outline-dark" routerLink="/task/edit/{{task.id}}/{{careCircle.id}}">Edit</a>
+        </td>        
       </tr>
     </tbody>
   </table>
@@ -28,8 +33,9 @@
         <p>The List is empty</p>
     </div>
     <div class="row">
-        <div class="col-2"> </div>
-        <a class="btn btn-dark col-1" routerLink="/task/create/{{careCircle.id}}">New Task</a>
+        <div class="col-3"> 
+          <a class="btn btn-outline-dark" routerLink="/task/create/{{careCircle.id}}">New Task</a>
+        </div>
     </div>
 </div>
 </div>

@@ -22,6 +22,7 @@ export class TaskComponent implements OnInit{
 	public message: String = "";		// feedback to user: what does this form do (creation or update of Task)	
 	private newTask: boolean = false; 	// making or editing requires different data and api calls
   	public careCircleId: number;
+	public completedTask: boolean;
 
   	constructor (
     	private route: ActivatedRoute,
@@ -49,6 +50,7 @@ export class TaskComponent implements OnInit{
 				next: (response: Task) => {
 					this.title = response.title;
 					this.description = response.description;
+					this.completedTask = response.completedTask;
 				},
 				error: (error: HttpErrorResponse) => { console.log(error.message); }
 			});
@@ -81,7 +83,8 @@ export class TaskComponent implements OnInit{
 		this.taskservice.updateTask({
 			title: this.title,
 			description: this.description,
-			id: this.taskId
+			id: this.taskId,
+			completedTask: false
 		}).subscribe({
 			complete: ()=> {
 				console.log(Response.toString);
