@@ -1,10 +1,12 @@
 package com.makeitworkch10.pacemakers.pelicare.service;
 
 import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
+import com.makeitworkch10.pacemakers.pelicare.dto.CreateCareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.CareCircleDTOMapper;
+import com.makeitworkch10.pacemakers.pelicare.service.mappers.CreateCareCircleDTOMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ public class CareCircleService {
 
     private final CareCircleRepository careCircleRepository;
     private final CareCircleDTOMapper careCircleDTOMapper;
+    private final CreateCareCircleDTOMapper createCareCircleDTOMapper;
 
     public List<CareCircleDTO> findAllCareCircles() {
         return careCircleRepository.findAll()
@@ -39,10 +42,8 @@ public class CareCircleService {
                         "CareCircle not found"
                 ));
     }
-    public CareCircle createCareCircle(CareCircle careCircle){
-        CareCircle newCareCircle = careCircle.builder()
-                .name(careCircle.getName())
-                .build();
+    public CareCircle createCareCircle(CreateCareCircleDTO careCircle){
+        CareCircle newCareCircle = createCareCircleDTOMapper.apply(careCircle);
         return careCircleRepository.save(newCareCircle);
     }
 }

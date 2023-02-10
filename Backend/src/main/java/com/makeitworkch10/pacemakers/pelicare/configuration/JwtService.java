@@ -6,7 +6,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,16 @@ public class JwtService {
     private final JwtSettings jwtSettings;
 
     public String extractUsername(String jwt) {
+        jwt = trimJwt(jwt);
         return extractClaim(jwt, Claims::getSubject);
+    }
+
+    private String trimJwt(String jwt){
+        if(jwt.startsWith("Bearer ")){
+            jwt = jwt.substring(7);
+            return jwt;
+        }
+        return jwt;
     }
 
     private Claims extractAllClaims(String jwt){
