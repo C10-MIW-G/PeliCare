@@ -1,8 +1,10 @@
 package com.makeitworkch10.pacemakers.pelicare.controller;
 
 import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
+import com.makeitworkch10.pacemakers.pelicare.dto.CreateCareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleService;
+import com.makeitworkch10.pacemakers.pelicare.service.CareCircleUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,7 @@ import java.util.List;
 public class CareCircleController {
 
     private final CareCircleService careCircleService;
+    private final CareCircleUserService careCircleUserService;
 
     @GetMapping("/all")
     public ResponseEntity<List<CareCircleDTO>> getAllCareCircles() {
@@ -38,8 +41,10 @@ public class CareCircleController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<CareCircle> createCareCircle(@RequestBody CareCircle careCircle){
-        CareCircle newCareCircle = careCircleService.createCareCircle(careCircle);
-        return new ResponseEntity<>(newCareCircle, HttpStatus.CREATED);
+    public ResponseEntity<String> createCareCircle(@RequestBody CreateCareCircleDTO newCareCircle,
+                                                   @RequestHeader (name="Authorization") String jwt){
+        CareCircle savedCareCircle = careCircleService.createCareCircle(newCareCircle);
+        careCircleUserService.addCircleAdminToCareCircle(jwt, savedCareCircle);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

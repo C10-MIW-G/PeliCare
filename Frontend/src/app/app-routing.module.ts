@@ -1,7 +1,6 @@
 import { CreateCarecircleComponent } from './create-carecircle/create-carecircle.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { CarecirclelistComponent } from './carecirclelist/carecirclelist.component';
 import { CareCircleComponent } from './careCircle/careCircle.component';
 import { CreateAccountComponent } from './create-account/create-account.component';
@@ -15,7 +14,8 @@ const routes: Routes = [
   { path: 'account/create', component: CreateAccountComponent },
   { path: 'account/signin', component: SignInComponent },
   { path: 'carecircles/create', component: CreateCarecircleComponent },
-  { path: 'task/create/:circleId', component: TaskComponent }
+  { path: 'task/create/:circleId', component: TaskComponent },
+  { path: 'task/edit/:taskId/:circleId', component: TaskComponent }
 ];
 
 @NgModule({

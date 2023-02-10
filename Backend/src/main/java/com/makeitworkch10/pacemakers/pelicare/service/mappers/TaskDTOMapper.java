@@ -18,8 +18,10 @@ public class TaskDTOMapper implements Function<Task, TaskDTO> {
         return new TaskDTO(
                 task.getId(),
                 task.getTitle(),
-                task.getDescription()
+                task.getDescription(),
+                task.isCompletedTask()
         );
     }
+
 
 }
