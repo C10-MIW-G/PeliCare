@@ -18,11 +18,14 @@ public class TaskDTO {
     private String description;
     private String title;
 
+    private boolean completedTask;
 
-    public TaskDTO(Long id, String title, String description) {
+
+    public TaskDTO(Long id, String title, String description, boolean completedTask) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.completedTask = completedTask;
     }
 
 

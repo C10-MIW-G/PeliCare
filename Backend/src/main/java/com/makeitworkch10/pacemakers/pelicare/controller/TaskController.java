@@ -1,6 +1,7 @@
 package com.makeitworkch10.pacemakers.pelicare.controller;
 
 import com.makeitworkch10.pacemakers.pelicare.dto.NewTaskDTO;
+import com.makeitworkch10.pacemakers.pelicare.dto.TaskCompleteDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.TaskDTO;
 import com.makeitworkch10.pacemakers.pelicare.service.TaskService;
 import lombok.RequiredArgsConstructor;
@@ -47,4 +48,9 @@ public class TaskController {
         return new ResponseEntity<>(returnTaskDTO, HttpStatus.OK);
     }
 
+    @PatchMapping("/complete")
+    public ResponseEntity<TaskCompleteDTO> saveCompleteTask(@RequestBody TaskCompleteDTO taskCompleteDTO) {
+        taskService.saveTaskComplete(taskCompleteDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

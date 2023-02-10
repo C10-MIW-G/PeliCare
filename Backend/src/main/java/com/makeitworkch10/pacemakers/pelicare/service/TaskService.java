@@ -1,10 +1,12 @@
 package com.makeitworkch10.pacemakers.pelicare.service;
 import com.makeitworkch10.pacemakers.pelicare.dto.NewTaskDTO;
+import com.makeitworkch10.pacemakers.pelicare.dto.TaskCompleteDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.TaskDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;
 import com.makeitworkch10.pacemakers.pelicare.model.Task;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
 import com.makeitworkch10.pacemakers.pelicare.repository.TaskRepository;
+import com.makeitworkch10.pacemakers.pelicare.service.mappers.TaskCompleteDTOMapper;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.TaskDTOMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final CareCircleRepository careCircleRepository;
     private final TaskDTOMapper taskDTOMapper;
+    private final TaskCompleteDTOMapper taskCompleteDTOMapper;
 
     public List<TaskDTO> findAllTasks() {
         return taskRepository.findAll()
@@ -61,5 +64,17 @@ public class TaskService {
         taskToUpdate.setDescription(taskDTO.getDescription());
         taskRepository.save(taskToUpdate);
         return new TaskDTO(taskToUpdate.getId(), taskToUpdate.getTitle(), taskToUpdate.getDescription());
+    }
+
+    public TaskCompleteDTO saveTaskComplete(TaskCompleteDTO taskCompleteDTO) {
+        TaskDTO taskdto = getTask(taskCompleteDTO.getId());
+        taskdto.setCompletedTask(taskCompleteDTO.isCompletedTask());
+        Task task = taskRepository.findById(taskCompleteDTO.getId()).orElseThrow(
+                () -> new ResourceNotFoundException("Task with id not found"));
+        task.setCompletedTask(taskdto.isCompletedTask());
+        taskRepository.save(task);
+        return taskRepository.findById(taskCompleteDTO.getId())
+                .map(taskCompleteDTOMapper)
+                .orElseThrow(() -> new ResourceNotFoundException("Task with id not found"));
     }
 }

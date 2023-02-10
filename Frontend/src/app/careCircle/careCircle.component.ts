@@ -1,9 +1,10 @@
+import { TaskService } from './../services/task.service';
+import { Task } from './../task';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CareCircleService } from '../care-circle.service';
 import { CareCircle } from '../carecircle';
-import { Task } from '../task';
 
 @Component({
   selector: 'app-carecircle',
@@ -16,7 +17,8 @@ export class CareCircleComponent implements OnInit {
 
     constructor (
       private route: ActivatedRoute,
-      private careCircleService: CareCircleService
+      private careCircleService: CareCircleService,
+      private taskservice: TaskService
     ) {}
 
 	ngOnInit(): void {
@@ -34,7 +36,12 @@ export class CareCircleComponent implements OnInit {
 			 },
 			error: (error: HttpErrorResponse) => {
 			   alert(error.message);
-			 }    
+			 }
 		   });
 	}
+
+  complete(task: Task) {
+    task.completedTask = true;
+    this.taskservice.setTaskToComplete(task).subscribe();
+  }
 }

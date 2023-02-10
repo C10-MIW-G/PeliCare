@@ -1,3 +1,4 @@
+import { Task } from './task';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
@@ -18,7 +19,8 @@ export class CareCircleService {
     return this.http.get<CareCircle>(`${this.apiBackendUrl}/carecircle/get/${id}`);
   }
 
-  public createNewCareCircle( name: string) {
-    return this.http.post<CareCircle>(`${this.apiBackendUrl}/carecircle/create`, {name});
+  public createNewCareCircle(name: string) {
+    return this.http.post(`${this.apiBackendUrl}/carecircle/create`, {name});
   }
+
 }
