@@ -40,16 +40,19 @@ public class SeedController {
         task1.setTitle("Walk the dog");
         task1.setDescription("Wodan...");
         task1.setCareCircle(circle1);
+        task1.setCompletedTask(false);
 
         Task task2 = new Task();
         task2.setTitle("Feed the cat");
         task2.setDescription("Poekie...");
         task2.setCareCircle(circle2);
+        task2.setCompletedTask(false);
 
         Task task3 = new Task();
         task3.setTitle("Grocery shopping");
         task3.setDescription("Milk, eggs, cheese and bread");
         task3.setCareCircle(circle2);
+        task3.setCompletedTask(false);
 
         careCircleRepository.save(circle1);
         careCircleRepository.save(circle2);

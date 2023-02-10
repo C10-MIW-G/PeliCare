@@ -42,6 +42,12 @@ public class TaskController {
         return new ResponseEntity<>(taskDTO,HttpStatus.CREATED);
     }
 
+    @PatchMapping("/patch")
+    public ResponseEntity<TaskDTO> patchTask(@RequestBody TaskDTO taskDTO) {
+        TaskDTO returnTaskDTO = taskService.patchTask(taskDTO);
+        return new ResponseEntity<>(returnTaskDTO, HttpStatus.OK);
+    }
+
     @PatchMapping("/complete")
     public ResponseEntity<TaskCompleteDTO> saveCompleteTask(@RequestBody TaskCompleteDTO taskCompleteDTO) {
         taskService.saveTaskComplete(taskCompleteDTO);

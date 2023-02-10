@@ -11,11 +11,6 @@ export class TaskService {
     private apiBackendUrl='http://localhost:8080';
     constructor(private http: HttpClient) { }
 
-    // public saveNewTaskObject(task: Task, careCircleId: number): Observable<Task> {
-    //     return this.http.post<Task> (`${this.apiBackendUrl}/task/new`, {task, careCircleId });
-    // }
-
-
     public saveNewTaskData( newTask: NewTask): Observable<NewTask> {
         return this.http.post<NewTask> (`${this.apiBackendUrl}/task/new`, {
             title: newTask.title,
@@ -24,13 +19,29 @@ export class TaskService {
             });
     }
 
-    public setTaskToComplete( task: Task): Observable<Task> {
-      return this.http.patch<Task>(`${this.apiBackendUrl}/task/complete`, {
-        id: task.id,
-        title: task.title,
-        description: task.description,
-        completedTask: task.completedTask
-      });
+
+    public getTaskById(id: Number): Observable<Task> {
+        return this.http.get<Task>(`${this.apiBackendUrl}/task/get/${id}`);
     }
 
+    public updateTask(task: Task): Observable<Task> {
+        return this.http.patch<Task>(`${this.apiBackendUrl}/task/patch`, {
+            title: task.title,
+            description: task.description,
+            id: task.id
+        });
+    }
+
+    public setTaskToComplete( task: Task): Observable<Task> {
+        return this.http.patch<Task>(`${this.apiBackendUrl}/task/complete`, {
+          id: task.id,
+          title: task.title,
+          description: task.description,
+          completedTask: task.completedTask
+        });
+    }
 }
+    
+
+
+

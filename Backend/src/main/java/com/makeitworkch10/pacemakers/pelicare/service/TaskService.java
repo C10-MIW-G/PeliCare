@@ -54,7 +54,19 @@ public class TaskService {
         return taskRepository.findById(taskId)
                 .map(taskDTOMapper)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with id not found"));
+    }
 
+    public TaskDTO patchTask(TaskDTO taskDTO) {
+        Task taskToUpdate = taskRepository.findById(taskDTO.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                "this Task could not be found"));
+        taskToUpdate.setTitle(taskDTO.getTitle());
+        taskToUpdate.setDescription(taskDTO.getDescription());
+        taskRepository.save(taskToUpdate);
+        return new TaskDTO(taskToUpdate.getId(),
+                                taskToUpdate.getTitle(),
+                                taskToUpdate.getDescription(),
+                                taskToUpdate.isCompletedTask());
     }
 
     public void saveTaskComplete(TaskCompleteDTO taskCompleteDTO) {
