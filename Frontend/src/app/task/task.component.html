@@ -17,7 +17,7 @@
             <p *ngIf="incompleteFields" class="errorMessage">please fill in all fields</p>
             <button class="btn btn-dark m-2" (click)="save()">Save</button>            
             <a class="btn btn-dark m-2" routerLink="/carecircle/{{careCircleId}}" >Back</a>
-            <button class="btn btn-dark m-2" (click)="delete()">Delete</button>
+            <button *ngIf="taskId" class="btn btn-dark m-2" (click)="delete()">Delete</button>
         </form>
     </div>
     <div class="col-md-2"></div>
