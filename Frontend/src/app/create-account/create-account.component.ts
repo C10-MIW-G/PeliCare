@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 export class CreateAccountComponent {
   captchaResponse: string | undefined;
   password: string;
+  confirmPassword: string;
   email: string;
 
   constructor(private authService: AuthService, private router: Router) {
@@ -19,6 +20,7 @@ export class CreateAccountComponent {
 
   onSubmitRegister() {
     console.log(`Token [${this.captchaResponse}] generated`);
+    if(this.password === this.confirmPassword){
     this.authService.register(this.email, this.password, this.captchaResponse).subscribe({
       complete: () => {
         console.log('User is registered');
@@ -28,5 +30,6 @@ export class CreateAccountComponent {
         alert(error.message);
       },
     });
-  }
+  }else{ alert('Passwords do not match');}
+}
 }
