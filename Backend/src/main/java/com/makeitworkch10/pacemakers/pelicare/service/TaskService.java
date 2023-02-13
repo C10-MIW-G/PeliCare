@@ -69,16 +69,13 @@ public class TaskService {
                                 taskToUpdate.isCompletedTask());
     }
 
-    public TaskCompleteDTO saveTaskComplete(TaskCompleteDTO taskCompleteDTO) {
+    public void saveTaskComplete(TaskCompleteDTO taskCompleteDTO) {
         TaskDTO taskdto = getTask(taskCompleteDTO.getId());
         taskdto.setCompletedTask(taskCompleteDTO.isCompletedTask());
         Task task = taskRepository.findById(taskCompleteDTO.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("Task with id not found"));
         task.setCompletedTask(taskdto.isCompletedTask());
         taskRepository.save(task);
-        return taskRepository.findById(taskCompleteDTO.getId())
-                .map(taskCompleteDTOMapper)
-                .orElseThrow(() -> new ResourceNotFoundException("Task with id not found"));
     }
 
     public void deleteTask(Long taskId) {
