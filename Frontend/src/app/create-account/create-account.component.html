@@ -3,20 +3,52 @@
     <div class="col-md-2"></div>
 
     <div class="col-md-8">
-      <h4 class="text-primary">Create new Account</h4>
-      <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()">
-        <div class="form-group">
-          <label for="inputEmail">Email:</label>
-          <input type="email" class="form-control" id="inputEmail" name="email" aria-describedby="emailHelp"
-            placeholder="Enter email" [(ngModel)]="email" required />
-        </div>
-        <div class="form-group">
-          <label for="inputPassword">Password:</label>
-          <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password"
-            [(ngModel)]="password" required />
-        </div>
-        <re-captcha id="recaptcha" name="recaptcha" #recaptcha="ngModel" [(ngModel)]="captchaResponse" required
-          [class.is-invalid]="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)"></re-captcha>
+
+        <h4 class="text-primary">Create new Account</h4>
+        <form #registerForm="ngForm" (ngSubmit)="registerForm.form.valid && onSubmitRegister()"
+        novalidate>
+          <div class="form-group">
+            <label for="inputEmail">Email:</label>
+            <input
+              type="email"
+              class="form-control"
+              id="inputEmail"
+              name="email"
+              aria-describedby="emailHelp"
+              placeholder="Enter email"
+              [(ngModel)]="email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="inputPassword">Password:</label>
+            <input
+              type="password"
+              class="form-control"
+              id="inputPassword"
+              name="password"
+              placeholder="Password"
+              [(ngModel)]="password"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="inputConfirmPassword">Confirm password:</label>
+            <input
+              type="password"
+              class="form-control"
+              id="inputConfirmPassword"
+              name="confirmPassword"
+              placeholder="Confirm password"
+              [(ngModel)]="confirmPassword"
+              required
+            />
+          </div>
+          <re-captcha id="recaptcha"
+                      name="recaptcha"
+                      #recaptcha="ngModel"
+                      [(ngModel)]="captchaResponse"
+                      required [class.is-invalid]="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)"></re-captcha>
         <div *ngIf="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)" class="invalid-feedback">
           <div *ngIf="recaptcha.errors?.['required']">This field is required.</div>
         </div>
