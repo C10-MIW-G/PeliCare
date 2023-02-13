@@ -1,43 +1,34 @@
 <div class="container-fluid component-body">
   <div class="row">
-    <div class="col">
-        <h4 class="text-primary">Create new Account</h4>
-        <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()">
-          <div class="form-group">
-            <label for="inputEmail">Email:</label>
-            <input
-              type="email"
-              class="form-control"
-              id="inputEmail"
-              name="email"
-              aria-describedby="emailHelp"
-              placeholder="Enter email"
-              [(ngModel)]="email"
-              required
-            />
-          </div>
+    <div class="col-md-2"></div>
 
-          <div class="form-group">
-            <label for="inputPassword">Password:</label>
-            <input
-              type="password"
-              class="form-control"
-              id="inputPassword"
-              name="password"
-              placeholder="Password"
-              [(ngModel)]="password"
-              required
-            />
-          </div>
-          <re-captcha id="recaptcha" name="recaptcha" #recaptcha="ngModel" [(ngModel)]="captchaResponse" required [class.is-invalid]="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)"></re-captcha>
+    <div class="col-md-8">
+      <h4 class="text-primary">Create new Account</h4>
+      <form #registerForm="ngForm" (ngSubmit)="onSubmitRegister()">
+        <div class="form-group">
+          <label for="inputEmail">Email:</label>
+          <input type="email" class="form-control" id="inputEmail" name="email" aria-describedby="emailHelp"
+            placeholder="Enter email" [(ngModel)]="email" required />
+        </div>
+        <div class="form-group">
+          <label for="inputPassword">Password:</label>
+          <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password"
+            [(ngModel)]="password" required />
+        </div>
+        <re-captcha id="recaptcha" name="recaptcha" #recaptcha="ngModel" [(ngModel)]="captchaResponse" required
+          [class.is-invalid]="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)"></re-captcha>
         <div *ngIf="recaptcha.invalid && (recaptcha.dirty || recaptcha.touched)" class="invalid-feedback">
           <div *ngIf="recaptcha.errors?.['required']">This field is required.</div>
         </div>
-          <button class="mt-2 btn btn-primary" type="submit" [disabled]="!registerForm.valid">
-            Register
-          </button>
-        </form>
-        <a class="mt-2 btn btn-primary" routerLink="/account/signin">Sign In</a>
-      </div>
+        <button class="mt-2 btn btn-primary" type="submit" [disabled]="!registerForm.valid">
+          Register
+        </button>
+      </form>
+      <br>
+      <p>Already have an account?</p>
+      <a class="mt-2 btn btn-primary" routerLink="/account/signin">Sign In</a>
+
+      <div class="col-md-2"></div>
     </div>
+  </div>
 </div>
