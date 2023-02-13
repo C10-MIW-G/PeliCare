@@ -7,19 +7,20 @@
             <div class="row">
                 <input type="text" [(ngModel)]="title" placeholder="Task Title" required name="title"
                     class="form-control col" id="title">
-                <label for="title" class="col">Title</label>
             </div>
+            <br>
             <div class="row">
                 <input type="text" [(ngModel)]="description" placeholder="Task description" required name="description"
                     class="form-control col" id="description">
-                <label for="description" class="col">Description</label>
             </div>
             <p *ngIf="incompleteFields" class="errorMessage">please fill in all fields</p>
-
-            <button class="btn btn-dark m-2" (click)="save()">Save</button>
-            <a class="btn btn-dark m-2" routerLink="/carecircle/{{careCircleId}}">Back</a>
-            <button *ngIf="taskId" class="btn btn-dark m-2" (click)="delete()">Delete</button>
         </form>
     </div>
-    <div class="col-md-2"></div>
+
+    <div class="col-md-2">
+        <div><button class="btn btn-dark m-2" (click)="save()">Save Task</button></div>
+        <div><button *ngIf="taskId" class="btn btn-dark m-2" (click)="delete()">Delete Task</button></div>
+        <div><a class="btn btn-dark m-2" routerLink="/carecircle/{{careCircleId}}">Back</a></div>
+    </div>
+
 </div>

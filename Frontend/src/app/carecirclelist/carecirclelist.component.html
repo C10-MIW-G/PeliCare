@@ -2,14 +2,17 @@
   <div class="col-md-2"></div>
 
   <div class="col-md-8">
+    <h4 class="text-dark">Your Care Circles</h4>
     <div class="list-group-item" *ngFor="let careCircle of careCircles">
       <p>
         <a routerLink="/carecircle/{{careCircle.id}}" class="list-group-item">{{careCircle.name}}</a>
       </p>
     </div>
 
-    <a class="btn btn-dark" routerLink="/carecircles/create">Create</a>
+    
   </div>
 
-  <div class="col-md-2"></div>
+  <div class="col-md-2">
+    <a class="btn btn-dark" routerLink="/carecircles/create">Create a new Care Circle</a>
+  </div>
 </div>

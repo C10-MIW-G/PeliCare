@@ -14,7 +14,7 @@ import { CareCircle } from '../carecircle';
 export class CareCircleComponent implements OnInit {
 
 	public careCircle: CareCircle;
-
+	
     constructor (
       private route: ActivatedRoute,
       private careCircleService: CareCircleService,
