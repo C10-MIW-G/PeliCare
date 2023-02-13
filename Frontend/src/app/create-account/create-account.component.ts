@@ -19,7 +19,6 @@ export class CreateAccountComponent {
   }
 
   onSubmitRegister() {
-    console.log(`Token [${this.captchaResponse}] generated`);
     if(this.password === this.confirmPassword){
     this.authService.register(this.email, this.password, this.captchaResponse).subscribe({
       complete: () => {
