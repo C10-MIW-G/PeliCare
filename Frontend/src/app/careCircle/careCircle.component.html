@@ -1,7 +1,9 @@
-<div class="row container-fluid component-body">
-  <div class="col-md-2"></div>
+<div *ngIf="careCircle" class="row container-fluid component-body">
+  <div class="col-md-2">
+    <a routerLink="/carecircle/{{careCircle.id}}/members">Members</a>
+  </div>
     <div class="col-md-6">
-<div *ngIf="careCircle" class="component-body">
+<div class="component-body">
   <h3>Task List for {{careCircle.name}}</h3>
   <p></p>
   <table class="table table-hover table-borderless">
@@ -24,7 +26,7 @@
         </td>
         <td>
           <a class="btn btn-outline-dark" routerLink="/task/edit/{{task.id}}/{{careCircle.id}}">Edit</a>
-        </td>        
+        </td>
       </tr>
     </tbody>
   </table>
@@ -33,7 +35,7 @@
         <p>The List is empty</p>
     </div>
     <div class="row">
-        <div class="col-3"> 
+        <div class="col-3">
           <a class="btn btn-outline-dark" routerLink="/task/create/{{careCircle.id}}">New Task</a>
         </div>
     </div>

@@ -3,8 +3,10 @@ package com.makeitworkch10.pacemakers.pelicare.controller;
 import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.CreateCareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
+import com.makeitworkch10.pacemakers.pelicare.model.CareCircleUser;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleService;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleUserService;
+import com.makeitworkch10.pacemakers.pelicare.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -46,5 +48,12 @@ public class CareCircleController {
         CareCircle savedCareCircle = careCircleService.createCareCircle(newCareCircle);
         careCircleUserService.addCircleAdminToCareCircle(jwt, savedCareCircle);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/adduser")
+    public ResponseEntity<String> addUserToCareCircle(@RequestBody CareCircleUser careCircleUser,
+                                                      @RequestHeader (name="Authorization") String jwt){
+        careCircleUserService.addUserToCareCircle(jwt, careCircleUser);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
