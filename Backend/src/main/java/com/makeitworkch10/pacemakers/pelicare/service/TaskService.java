@@ -80,4 +80,8 @@ public class TaskService {
                 .map(taskCompleteDTOMapper)
                 .orElseThrow(() -> new ResourceNotFoundException("Task with id not found"));
     }
+
+    public void deleteTask(Long taskId) {
+        taskRepository.deleteById(taskId);
+    }
 }

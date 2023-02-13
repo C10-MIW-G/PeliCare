@@ -10,7 +10,7 @@
           <th scope="col">Task name</th>
           <th scope="col">Task description</th>
           <th scope="col">Completed</th>
-          <th scope="col"></th> <!-- some layout space for the edit-button -->
+          <th scope="col"></th> <!-- layout space for the edit-button -->          
         </tr>
       </thead>
       <tbody *ngFor="let task of careCircle.taskList">
@@ -24,7 +24,7 @@
         </td>
         <td>
           <a class="btn btn-outline-dark" routerLink="/task/edit/{{task.id}}/{{careCircle.id}}">Edit</a>
-        </td>        
+        </td>                
       </tr>
     </tbody>
   </table>
@@ -40,3 +40,5 @@
 </div>
 </div>
 <div class="col-md-2"></div>
+
+
