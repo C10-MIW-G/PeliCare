@@ -7,13 +7,11 @@ footer {
     width: 100%;
 }
 
-.component-body {
-    padding: 2rem;
-}
 
 .form-control {
   max-width: 30%;
 }
+
 
 .errorMessage {
   color: darkorange;

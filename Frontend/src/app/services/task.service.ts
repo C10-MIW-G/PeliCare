@@ -40,6 +40,10 @@ export class TaskService {
           completedTask: task.completedTask
         });
     }
+
+    public deleteTask( taskId: number) {
+        return this.http.delete(`${this.apiBackendUrl}/task/delete/${taskId}`);
+    }
 }
     
 

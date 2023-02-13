@@ -109,4 +109,15 @@ export class TaskComponent implements OnInit{
 			error: ()=> {alert( "something went wrong"); }
 		});    		
     }  
+
+	delete() {
+		this.taskservice.deleteTask(this.taskId)
+		.subscribe({
+			complete: ()=> {
+				console.log(Response.toString);
+				this.router.navigateByUrl(`/carecircle/${this.careCircleId}`)
+			},
+			error: ()=> {alert( "something went wrong"); }
+		})
+	}
 }

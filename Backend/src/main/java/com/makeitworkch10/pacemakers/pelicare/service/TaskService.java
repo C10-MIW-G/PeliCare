@@ -77,4 +77,8 @@ public class TaskService {
         task.setCompletedTask(taskdto.isCompletedTask());
         taskRepository.save(task);
     }
+
+    public void deleteTask(Long taskId) {
+        taskRepository.deleteById(taskId);
+    }
 }
