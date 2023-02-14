@@ -2,12 +2,34 @@
   <div class="col-md-2"></div>
 
   <div class="col-md-8">
-    <h4 class="text-dark">Your Care Circles</h4>
+    <!-- <h4 class="text-dark">Your Care Circles</h4>
     <div class="list-group-item" *ngFor="let careCircle of careCircles">
       <p>
         <a routerLink="/carecircle/{{careCircle.id}}" class="list-group-item">{{careCircle.name}}</a>
       </p>
-    </div>
+    </div> -->
+
+    <div class="container">
+      <div class="row">
+          <div>
+              <div class="card">
+                  <div class="header">
+                    <h4 class="text-dark">Your Care Circles</h4>
+                  </div>
+                  <div class="body">
+                      <ul class="new_friend_list list-unstyled row">
+                          <li class="col-lg-3 col-md-6 col-12 mt-4 pt-2" *ngFor="let careCircle of careCircles">
+                              <h6>
+                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="img-fluid rounded" alt="avatar">
+                                <a routerLink="/carecircle/{{careCircle.id}}" class="list-group-item">{{careCircle.name}}</a>
+                              </h6>                            
+                          </li>                         
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 
     
   </div>
