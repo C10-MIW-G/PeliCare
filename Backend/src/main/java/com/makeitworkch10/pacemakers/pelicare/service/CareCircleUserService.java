@@ -9,6 +9,7 @@ import com.makeitworkch10.pacemakers.pelicare.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
 /**
  * @author Ruben de Vries
  * Service for adding Users to a Care Circle and managing admin rights.

@@ -1,5 +1,7 @@
 package com.makeitworkch10.pacemakers.pelicare.user;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.makeitworkch10.pacemakers.pelicare.model.CareCircleUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +31,10 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    List<CareCircleUser> careCircleUsers;
 
     @Enumerated(EnumType.STRING)
     private Role role;

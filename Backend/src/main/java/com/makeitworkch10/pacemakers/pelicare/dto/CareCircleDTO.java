@@ -20,7 +20,6 @@ public class CareCircleDTO {
 
     private List<Task> taskList;
 
-
     public CareCircleDTO(Long id, String name, List<Task> taskList) {
         this.name = name;
         this.taskList = taskList;
