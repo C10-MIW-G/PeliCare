@@ -27,6 +27,4 @@ public class TaskDTO {
         this.description = description;
         this.completedTask = completedTask;
     }
-
-
 }

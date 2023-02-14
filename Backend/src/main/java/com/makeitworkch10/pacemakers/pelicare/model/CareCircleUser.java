@@ -34,4 +34,9 @@ public class CareCircleUser {
 
     private boolean isCircleAdmin;
 
+    public CareCircleUser(User user, CareCircle careCircle, boolean isCircleAdmin) {
+        this.user = user;
+        this.careCircle = careCircle;
+        this.isCircleAdmin = isCircleAdmin;
+    }
 }
