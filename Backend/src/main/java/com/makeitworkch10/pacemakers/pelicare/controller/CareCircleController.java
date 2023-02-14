@@ -6,7 +6,6 @@ import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleService;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleUserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +33,20 @@ public class CareCircleController {
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 
+    @GetMapping("/admin")
+    public ResponseEntity<List<CareCircleDTO>> getAdminCircles(@RequestHeader (name="Authorization") String jwt) {
+        List<CareCircleDTO> responseList = careCircleService.findCirclesOfAdmin(jwt);
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<List<CareCircleDTO>> getUserCircles(@RequestHeader (name="Authorization") String jwt) {
+        List<CareCircleDTO> responseList = careCircleService.findCirclesOfUser(jwt);
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
+    }
+
     @GetMapping("/get/{id}")
-    public ResponseEntity<CareCircleDTO> findCareCircle(@PathVariable("id") Long id) {
+    public ResponseEntity<CareCircleDTO> findCareCircle(@PathVariable("id") Long id ) {
         CareCircleDTO careCircle = careCircleService.getCareCircle(id);
         return new ResponseEntity<>(careCircle, HttpStatus.OK);
     }

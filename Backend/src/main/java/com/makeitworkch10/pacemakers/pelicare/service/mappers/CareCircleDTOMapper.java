@@ -2,6 +2,7 @@ package com.makeitworkch10.pacemakers.pelicare.service.mappers;
 
 import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.function.Function;
@@ -12,7 +13,10 @@ import java.util.function.Function;
  * create mapping for the CareCircle DTO's
  */
 @Service
+@RequiredArgsConstructor
 public class CareCircleDTOMapper implements Function<CareCircle, CareCircleDTO> {
+
+
     @Override
     public CareCircleDTO apply(CareCircle careCircle) {
         return new CareCircleDTO(
@@ -21,5 +25,4 @@ public class CareCircleDTOMapper implements Function<CareCircle, CareCircleDTO> 
                 careCircle.getTaskList()
         );
     }
-
 }

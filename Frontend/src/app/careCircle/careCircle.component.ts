@@ -25,8 +25,7 @@ export class CareCircleComponent implements OnInit {
 		this.getCareCircle();
 	}
 
-	getCareCircle(): void {
-
+	getCareCircle(): void {		
 		const id = Number(this.route.snapshot.paramMap.get('id'));
 		this.careCircleService.getCareCircleById(id)
 		.subscribe({

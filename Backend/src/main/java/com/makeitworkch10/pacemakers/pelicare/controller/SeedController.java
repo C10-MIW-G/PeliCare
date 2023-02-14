@@ -1,10 +1,16 @@
 package com.makeitworkch10.pacemakers.pelicare.controller;
 
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
+import com.makeitworkch10.pacemakers.pelicare.model.CareCircleUser;
 import com.makeitworkch10.pacemakers.pelicare.model.Task;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
+import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleUserRepository;
 import com.makeitworkch10.pacemakers.pelicare.repository.TaskRepository;
+import com.makeitworkch10.pacemakers.pelicare.user.Role;
+import com.makeitworkch10.pacemakers.pelicare.user.User;
+import com.makeitworkch10.pacemakers.pelicare.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +28,9 @@ public class SeedController {
 
     private final TaskRepository taskRepository;
     private final CareCircleRepository careCircleRepository;
+    private final UserRepository userRepository;
+    private final CareCircleUserRepository careCircleUserRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/seed")
     public void seedDatabase(){
@@ -60,6 +69,25 @@ public class SeedController {
         taskRepository.save(task1);
         taskRepository.save(task2);
         taskRepository.save(task3);
+
+        // Users with different privileges
+        User circle1Admin = new User();
+        circle1Admin.setEmail("admin1");
+        circle1Admin.setPassword(passwordEncoder.encode("admin1"));
+        // Circle admin is not site admin but site user.
+        // role of Circle admin is stored in CareCircleUser objects and table
+        circle1Admin.setRole(Role.USER);
+        userRepository.save(circle1Admin);
+        CareCircleUser adminCircle1 = new CareCircleUser(circle1Admin, circle1, true);
+        careCircleUserRepository.save(adminCircle1);
+
+        User circle1User = new User();
+        circle1User.setEmail("user1");
+        circle1User.setPassword(passwordEncoder.encode("user1"));
+        circle1User.setRole(Role.USER);
+        userRepository.save(circle1User);
+        CareCircleUser userCircle1 = new CareCircleUser(circle1User, circle1, false);
+        careCircleUserRepository.save(userCircle1);
     }
 
 }
