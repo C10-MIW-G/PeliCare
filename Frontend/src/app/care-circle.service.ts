@@ -1,8 +1,8 @@
+import { Task } from './task';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { CareCircle } from './carecircle';
-import { User } from './user';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +21,6 @@ export class CareCircleService {
 
   public createNewCareCircle(name: string) {
     return this.http.post(`${this.apiBackendUrl}/carecircle/create`, {name});
-  }
-
-  public addUserToCareCircle(email: string){
-    return this.http.post(`${this.apiBackendUrl}/carecircle/adduser`, {email})
   }
 
 }

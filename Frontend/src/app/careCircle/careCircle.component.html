@@ -18,21 +18,21 @@
         <td>{{task.title}}</td>
         <td>{{task.description}}</td>
 
-            <td *ngIf="task.completedTask">Done</td>
-            <td *ngIf="task.completedTask == false">
-              <button class="btn btn-outline-dark" (click)="complete(task)">To do</button>
-            </td>
-            <td>
-              <a class="btn btn-outline-dark" routerLink="/task/edit/{{task.id}}/{{careCircle.id}}">Edit</a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <td *ngIf="task.completedTask">Complete</td>
+        <td *ngIf="task.completedTask == false">
+          <button class="btn btn-outline-dark" (click)="complete(task)" >Set to completed</button>
+        </td>
+        <td>
+          <a class="btn btn-outline-dark" routerLink="/task/edit/{{task.id}}/{{careCircle.id}}">Edit</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
       <div *ngIf="careCircle.taskList.length === 0">
         <p>The List is empty</p>
-      </div>
-      <div class="row">
+    </div>
+    <div class="row">
         <div class="col-3">
           <a class="btn btn-outline-dark" routerLink="/task/create/{{careCircle.id}}">New Task</a>
         </div>

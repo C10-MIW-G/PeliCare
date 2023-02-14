@@ -5,7 +5,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CareCircleService } from '../care-circle.service';
 import { CareCircle } from '../carecircle';
-import { User } from '../user';
 
 @Component({
   selector: 'app-carecircle',
