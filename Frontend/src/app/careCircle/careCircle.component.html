@@ -18,7 +18,6 @@
           <tr>
             <td>{{task.title}}</td>
             <td>{{task.description}}</td>
-
             <td *ngIf="task.completedTask">Done</td>
             <td *ngIf="task.completedTask == false">
               <button class="btn btn-outline-dark" (click)="complete(task)">To do</button>
@@ -33,10 +32,9 @@
       <div *ngIf="careCircle.taskList.length === 0">
         <p>The List is empty</p>
       </div>
-      
     </div>
   </div>
-  <div class="col-md-2">   
-      <a class="mt-2 btn btn-dark" routerLink="/task/create/{{careCircle.id}}">Create a new Task</a>    
+
+  <div class="col-md-2">
+    <a class="mt-2 btn btn-dark" routerLink="/task/create/{{careCircle.id}}">Create a new Task</a>
   </div>
-</div>
