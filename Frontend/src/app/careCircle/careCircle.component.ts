@@ -14,6 +14,7 @@ import { CareCircle } from '../carecircle';
 export class CareCircleComponent implements OnInit {
 
 	public careCircle: CareCircle;
+
 	public isAdmin: Boolean;
 
 	constructor(
@@ -22,6 +23,7 @@ export class CareCircleComponent implements OnInit {
 		private taskservice: TaskService,
 		private router: Router
 	) { }
+
 
 	ngOnInit(): void {
 		this.getCareCircle();	

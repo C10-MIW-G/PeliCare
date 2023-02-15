@@ -16,6 +16,7 @@ import { CreateCarecircleComponent } from './create-carecircle/create-carecircle
 import { environment } from 'src/environments/environment.development';
 import { TaskComponent } from './task/task.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +34,9 @@ import { TaskComponent } from './task/task.component';
     FormsModule,
     ReactiveFormsModule,
     RecaptchaModule,
-    RecaptchaFormsModule
+    RecaptchaFormsModule,
+    
+   
   ],
   providers: [CareCircleService, {
     provide: HTTP_INTERCEPTORS,
@@ -46,6 +49,7 @@ import { TaskComponent } from './task/task.component';
       siteKey: environment.recaptcha.siteKey,
     } as RecaptchaSettings,
 }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  
 })
 export class AppModule { }

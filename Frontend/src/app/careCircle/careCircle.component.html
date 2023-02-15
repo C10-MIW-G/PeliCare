@@ -2,23 +2,24 @@
   <div class="col-md-2"></div>
 
   <div class="col-md-8">
-    <div *ngIf="careCircle" class="component-body">
-      <h3>Task List for {{careCircle.name}}</h3>
-      
+
+    <div *ngIf="careCircle">
+      <h4 class="text-dark">Task List for {{careCircle.name}}</h4>
+      <p></p>
+
       <table class="table table-hover table-borderless">
         <thead>
           <tr>
             <th scope="col">Task name</th>
             <th scope="col">Task description</th>
             <th scope="col">Completed</th>
-            <th scope="col"></th> <!-- layout space for edit-button -->            
+            <th scope="col"></th> <!-- layout space for edit-button -->
           </tr>
         </thead>
         <tbody *ngFor="let task of careCircle.taskList">
           <tr>
             <td>{{task.title}}</td>
             <td>{{task.description}}</td>
-
             <td *ngIf="task.completedTask">Done</td>
             <td *ngIf="task.completedTask == false">
               <button class="btn btn-outline-dark" (click)="complete(task)">To do</button>
@@ -33,15 +34,10 @@
       <div *ngIf="careCircle.taskList.length === 0">
         <p>The List is empty</p>
       </div>
-      <div class="row">
-        <div class="col-3">
-          <a class="btn btn-outline-dark" routerLink="/task/create/{{careCircle.id}}">New Task</a>
-        </div>
-        <div class="col-3">
-          <button *ngIf="isAdmin" class="btn btn-outline-dark btn-warning" (click)="delete()">Delete Care Circle</button>
-        </div>
-      </div>
     </div>
   </div>
-  <div class="col-md-2"></div>
-</div>
+
+  <div class="col-md-2">
+    <a class="mt-2 btn btn-dark" routerLink="/task/create/{{careCircle.id}}">Create a new Task</a>
+    <button *ngIf="isAdmin" class="btn btn-outline-dark btn-warning" (click)="delete()">Delete Care Circle</button>
+  </div>

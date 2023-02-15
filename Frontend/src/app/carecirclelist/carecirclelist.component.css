@@ -1,0 +1,22 @@
+.card {
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    background: #fff;
+    border-radius: .1875rem;
+    margin-bottom: 30px;
+    border: 0;
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    box-shadow: none;
+}
+
+.body {
+    padding-top: 30px;
+}
+
+a {
+    text-align: center;
+}

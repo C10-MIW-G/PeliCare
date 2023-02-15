@@ -1,19 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 
 footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
 }
-
 
 .form-control {
-  max-width: 30%;
+  max-width: 40%;
 }
-
 
 .errorMessage {
   color: darkorange;
 }
 
+.component-body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.container {
+  align-content: center;
+}
