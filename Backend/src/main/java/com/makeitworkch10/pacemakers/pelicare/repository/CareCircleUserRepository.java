@@ -1,8 +1,11 @@
 package com.makeitworkch10.pacemakers.pelicare.repository;
 
+import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircleUser;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
@@ -19,4 +22,19 @@ public interface CareCircleUserRepository extends JpaRepository<CareCircleUser, 
                 nativeQuery = true
         )
         Set<Long> findCareCirclesOfUser(Long userId);
+
+        @Query(
+                value = "SELECT is_circle_admin FROM care_circle_user WHERE care_circle_id = ?1 AND user_id = ?2",
+                nativeQuery = true
+        )
+        boolean isUserAdminOfCircle(Long circleId, Long userId );
+
+        @Modifying
+        @Transactional
+        @Query(
+                value = "DELETE FROM care_circle_user WHERE care_circle_id = ?1",
+                nativeQuery = true
+        )
+        void deleteCareCircleUsersByCircleId(Long careCircleId);
+
     }

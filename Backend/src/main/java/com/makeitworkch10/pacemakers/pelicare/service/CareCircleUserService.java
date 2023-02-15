@@ -32,7 +32,16 @@ public class CareCircleUserService {
                 careCircle,
                 true
         );
-
         careCircleUserRepository.save(newCareCircleUser);
+    }
+
+    public boolean isUserAdminOfCircle(Long circleId, String jwt ) {
+        String username = jwtService.extractUsername(jwt);
+        Long userId = userRepository.findByEmail(username).orElseThrow().getId();
+        return careCircleUserRepository.isUserAdminOfCircle(circleId, userId);
+    }
+
+    public void deleteCareCircleUsers(Long circleId) {
+        careCircleUserRepository.deleteCareCircleUsersByCircleId(circleId);
     }
 }

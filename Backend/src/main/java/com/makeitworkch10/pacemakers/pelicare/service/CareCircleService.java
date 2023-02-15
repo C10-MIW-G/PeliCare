@@ -5,6 +5,7 @@ import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.CreateCareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
+import com.makeitworkch10.pacemakers.pelicare.model.Task;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleUserRepository;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.CareCircleDTOMapper;
@@ -34,8 +35,10 @@ public class CareCircleService {
     private final CreateCareCircleDTOMapper createCareCircleDTOMapper;
     private final JwtService jwtService;
     private final CareCircleUserRepository careCircleUserRepository;
+    private final CareCircleUserService careCircleUserService;
 
     private final UserRepository userRepository;
+    private final TaskService taskService;
 
     public List<CareCircleDTO> findAllCareCircles() {
         return careCircleRepository.findAll()
@@ -82,5 +85,25 @@ public class CareCircleService {
                             "CareCircle not found")));
         }
         return returnlist;
+    }
+
+    public void deleteCareCircle(Long circleId) {
+        // find the circle
+        CareCircle circleToDelete = careCircleRepository.findById(circleId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                "CareCircle not found"
+        ));
+        // find the task list of this Care Circle and delete all tasks
+        List<Task> taskList = circleToDelete.getTaskList();
+        for (Task task : taskList) {
+            taskService.deleteTask(task.getId());
+        }
+
+        // delete the appropriate entries from care_circle_user table
+        careCircleUserService.deleteCareCircleUsers(circleId);
+
+        // finally: delete the Care Circle
+        careCircleRepository.deleteById(circleId);
+
     }
 }
