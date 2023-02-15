@@ -1,0 +1,19 @@
+<form [formGroup]="form">
+  <div class="form-group">
+    <label for="inputemail">Email:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="inputEmail"
+      name="email"
+      aria-describedby="emailHelp"
+      placeholder="Enter email"
+      formControlName="email"
+    />
+  </div>
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+  <button class="mt-2 btn btn-dark" (click)="addUserToCareCircle()">
+    Add User
+  </button>
+</div>
+  </form>

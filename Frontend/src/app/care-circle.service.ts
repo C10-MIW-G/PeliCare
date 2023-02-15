@@ -27,4 +27,8 @@ export class CareCircleService {
     return this.http.post(`${this.apiBackendUrl}/carecircle/create`, {name});
   }
 
+  public addUserToCareCircle( id: Number, email: string) {
+    return this.http.post(`${this.apiBackendUrl}/carecircle/get/${id}/members/add`, {email})
+  }
+
 }

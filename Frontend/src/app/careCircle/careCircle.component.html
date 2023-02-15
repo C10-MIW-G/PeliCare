@@ -1,5 +1,7 @@
 <div class="row container-fluid component-body">
-  <div class="col-md-2"></div>
+  <div *ngIf="careCircle" class="col-md-2">
+    <a routerLink="/carecircle/{{careCircle.id}}/members">Members</a>
+  </div>
     <div class="col-md-6">
 <div *ngIf="careCircle" class="component-body">
   <h3>Task List for {{careCircle.name}}</h3>

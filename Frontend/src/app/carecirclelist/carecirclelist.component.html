@@ -3,20 +3,20 @@
 
   <div class="col-md-8">
     <h1>Admin</h1>
-    <div class="list-group-item" *ngFor="let careCircle of adminCircles">      
-      <p>
-        <a routerLink="/carecircle/{{careCircle.id}}" class="list-group-item">{{careCircle.name}}</a>
-      </p>      
-    </div>
-    <p *ngIf="adminCircles.length === 0">There are no Care Circles where you are an Admin</p>
-    <h1>User</h1>
-    <div class="list-group-item" *ngFor="let careCircle of userCircles">      
+    <div class="list-group-item" *ngFor="let careCircle of adminCircles">
       <p>
         <a routerLink="/carecircle/{{careCircle.id}}" class="list-group-item">{{careCircle.name}}</a>
       </p>
-      
     </div>
-    <p *ngIf="userCircles.length == 0">There are no Care Circles where you are not an Admin </p>
+    <p *ngIf="adminCircles.length === 0">There are no Care Circles where you are an Admin</p>
+    <h1>User</h1>
+    <div class="list-group-item" *ngFor="let careCircle of userCircles">
+      <p>
+        <a routerLink="/carecircle/{{careCircle.id}}" class="list-group-item">{{careCircle.name}}</a>
+      </p>
+
+    </div>
+    <p *ngIf="userCircles.length === 0">There are no Care Circles where you are not an Admin </p>
     <a class="btn btn-dark" routerLink="/carecircles/create">Create</a>
   </div>
 

@@ -2,9 +2,11 @@ package com.makeitworkch10.pacemakers.pelicare.controller;
 
 import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.CreateCareCircleDTO;
+import com.makeitworkch10.pacemakers.pelicare.dto.UserDTO;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleService;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleUserService;
+import com.makeitworkch10.pacemakers.pelicare.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +28,6 @@ public class CareCircleController {
 
     private final CareCircleService careCircleService;
     private final CareCircleUserService careCircleUserService;
-
-    @GetMapping("/all")
-    public ResponseEntity<List<CareCircleDTO>> getAllCareCircles() {
-        List<CareCircleDTO> responseList = careCircleService.findAllCareCircles();
-        return new ResponseEntity<>(responseList, HttpStatus.OK);
-    }
 
     @GetMapping("/admin")
     public ResponseEntity<List<CareCircleDTO>> getAdminCircles(@RequestHeader (name="Authorization") String jwt) {
@@ -57,5 +53,18 @@ public class CareCircleController {
         CareCircle savedCareCircle = careCircleService.createCareCircle(newCareCircle);
         careCircleUserService.addCircleAdminToCareCircle(jwt, savedCareCircle);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/get/{id}/members")
+    public ResponseEntity<List<UserDTO>> getUsersOfCareCircle(@PathVariable("id") Long id){
+        List<UserDTO> responseList = careCircleService.findUsersOfCareCircle(id);
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
+    }
+    @PostMapping("/get/{id}/members/add")
+    public ResponseEntity<String> addUserToCareCircle(@PathVariable("id") Long id,
+                                                      @RequestBody UserDTO user,
+                                                      @RequestHeader (name="Authorization") String jwt){
+        careCircleUserService.addUserToCareCircle(jwt, user, id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
