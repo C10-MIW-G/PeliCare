@@ -1,9 +1,7 @@
-<div class="container-fluid component-body">
-  <div class="row">
+<div class="row container-fluid component-body">  
     <div class="col-md-2"></div>
 
     <div class="col-md-8">
-
       <h4 class="text-dark">Create new Account</h4>
       <form #registerForm="ngForm" (ngSubmit)="registerForm.form.valid && onSubmitRegister()" novalidate>
         <div class="form-group">
@@ -34,6 +32,5 @@
       <p>Already have an account? <a routerLink="/account/signin"> Sign in here.</a></p>
 
       <div class="col-md-2"></div>
-    </div>
-  </div>
+    </div>  
 </div>

@@ -4,47 +4,44 @@
   <div class="col-md-8">
     <div class="container">
       <div class="row">
-        <div>
+
+        <div class="header">
+          <h4 class="text-dark">Your Care Circles</h4>
           <div class="card">
-            <div class="header">
-              <h4 class="text-dark">Your Care Circles</h4>
-            </div>
-
-            <h1>Admin</h1>
+            
             <div class="body">
+              <h5 *ngIf="adminCircles.length > 0">You are an Admin of:</h5>
               <ul class="new_friend_list list-unstyled row">
-                <li class="col-lg-3 col-md-6 col-12 mt-4 pt-2" *ngFor="let careCircle of adminCircles">
-                  <h6>
-                    <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="img-fluid rounded"
-                      alt="avatar">
-                    <a routerLink="/carecircle/{{careCircle.id}}" class="list-group-item">{{careCircle.name}}</a>
-                  </h6>
-                </li>
-              </ul>
-            </div>
-            <p *ngIf="adminCircles.length === 0">There are no Care Circles where you are an Admin</p>
-            <div class="body">
-              <ul class="new_friend_list list-unstyled row">
-                <li class="col-lg-3 col-md-6 col-12 mt-4 pt-2" *ngFor="let careCircle of userCircles">
-                  <h6>
-                    <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="img-fluid rounded"
-                      alt="avatar">
-                    <a routerLink="/carecircle/{{careCircle.id}}" class="list-group-item">{{careCircle.name}}</a>
-                  </h6>
+                <li class="col-lg-2 col-md-6 col-12 mt-4 pt-2" *ngFor="let careCircle of adminCircles">
+                  <h5>
+                    <a routerLink="/carecircle/{{careCircle.id}}" class="list-group-item">
+                      <img src="\assets\images\avatar.png" class="img-fluid rounded" alt="avatar">
+                      {{careCircle.name}}</a>
+                  </h5>
                 </li>
               </ul>
             </div>
 
+            <div class="body">
+              <h5 *ngIf="userCircles.length > 0"> You are a User of:</h5>
+              <p *ngIf="userCircles.length == 0">There are no Care Circles to display for you as a user </p>
+              <ul class="new_friend_list list-unstyled row">
+                <li class="col-lg-2 col-md-6 col-12 mt-4 pt-2" *ngFor="let careCircle of userCircles">
+                  <h5>
+                    <a routerLink="/carecircle/{{careCircle.id}}" class="list-group-item">
+                      <img src="\assets\images\avatar.png" class="img-fluid rounded" alt="avatar">
+                      {{careCircle.name}}</a>
+                  </h5>
+                </li>
+              </ul>
+            </div>
           </div>
-          <p *ngIf="userCircles.length == 0">There are no Care Circles where you are not an Admin </p>
-
         </div>
       </div>
     </div>
-
   </div>
 
-  <div class="col-md-2">
-    <a class="btn btn-dark" routerLink="/carecircles/create">Create a new Care Circle</a>
+  <div class="col-md-2">  
+      <a class="btn btn-dark" routerLink="/carecircles/create">Create a new Care Circle</a>  
   </div>
 </div>

@@ -1,5 +1,6 @@
-<div class="row">
+<div class="row container-fluid component-body">
     <div class="col-md-2"></div>
+    
     <div class="col-md-8">
         <h4 class="text-dark">{{message}}</h4>
         <p>for {{carecircleName}}</p>
@@ -10,8 +11,8 @@
             </div>
             <br>
             <div class="row">
-                <input type="text" [(ngModel)]="description" placeholder="Task description" required name="description"
-                    class="form-control col" id="description">
+                <textarea [(ngModel)]="description" placeholder="Task description" required name="description"
+                class="form-control" id="description" rows="10"></textarea>
             </div>
             <p *ngIf="incompleteFields" class="errorMessage">please fill in all fields</p>
         </form>
