@@ -9,14 +9,14 @@
         <div class="header">
           <h4 class="text-dark">Your Care Circles</h4>
           <div class="card">
-            
+
             <div class="body">
               <h5 *ngIf="adminCircles.length > 0">You are an Admin of:</h5>
               <ul class="new_friend_list list-unstyled row">
                 <li class="col-lg-2 col-md-6 col-12 mt-4 pt-2" *ngFor="let careCircle of adminCircles">
                   <h5>
                     <a routerLink="/carecircle/{{careCircle.id}}" class="list-group-item">
-                      <img src="\assets\images\avatar.png" class="img-fluid rounded" alt="avatar">
+                      <img src="\assets\images\PeliCare-zwart.png" class="img-fluid rounded circleimage" alt="avatar">
                       {{careCircle.name}}</a>
                   </h5>
                 </li>
@@ -30,7 +30,7 @@
                 <li class="col-lg-2 col-md-6 col-12 mt-4 pt-2" *ngFor="let careCircle of userCircles">
                   <h5>
                     <a routerLink="/carecircle/{{careCircle.id}}" class="list-group-item">
-                      <img src="\assets\images\avatar.png" class="img-fluid rounded" alt="avatar">
+                      <img src="\assets\images\PeliCare-zwart.png" class="img-fluid rounded circleimage" alt="avatar">
                       {{careCircle.name}}</a>
                   </h5>
                 </li>
@@ -43,7 +43,8 @@
 
   </div>
 
-  <div class="col-md-2">  
-      <a class="btn btn-dark" routerLink="/carecircles/create">Create a new Care Circle</a>  
+  <div class="col-md-2">
+    <a class="btn btn-dark" routerLink="/carecircles/create">Create a new Care Circle</a>
   </div>
 </div>
+

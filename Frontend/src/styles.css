@@ -23,3 +23,7 @@ footer {
 .container {
   align-content: center;
 }
+
+.circleimage {
+  background-color: pink;
+}
