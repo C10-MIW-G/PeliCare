@@ -1,6 +1,5 @@
 package com.makeitworkch10.pacemakers.pelicare.repository;
 
-import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircleUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

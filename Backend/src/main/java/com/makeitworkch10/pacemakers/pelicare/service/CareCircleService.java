@@ -88,22 +88,31 @@ public class CareCircleService {
     }
 
     public void deleteCareCircle(Long circleId) {
-        // find the circle
-        CareCircle circleToDelete = careCircleRepository.findById(circleId)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                "CareCircle not found"
-        ));
-        // find the task list of this Care Circle and delete all tasks
-        List<Task> taskList = circleToDelete.getTaskList();
-        for (Task task : taskList) {
-            taskService.deleteTask(task.getId());
-        }
+        // find the Care Circle
+        CareCircle circleToDelete = findCircleToDelete(circleId);
+
+        // delete all its Tasks
+        deleteTasksFromCircle(circleToDelete);
 
         // delete the appropriate entries from care_circle_user table
         careCircleUserService.deleteCareCircleUsers(circleId);
 
         // finally: delete the Care Circle
         careCircleRepository.deleteById(circleId);
+    }
 
+    private void deleteTasksFromCircle(CareCircle circleToDelete) {
+        List<Task> taskList = circleToDelete.getTaskList();
+        for (Task task : taskList) {
+            taskService.deleteTask(task.getId());
+        }
+    }
+
+    private CareCircle findCircleToDelete(Long circleId) {
+        CareCircle circleToDelete = careCircleRepository.findById(circleId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                "CareCircle not found"
+        ));
+        return circleToDelete;
     }
 }
