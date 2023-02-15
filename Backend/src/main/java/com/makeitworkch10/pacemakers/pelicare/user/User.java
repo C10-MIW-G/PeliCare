@@ -28,14 +28,16 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
+    @Column(nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     List<CareCircleUser> careCircleUsers;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 

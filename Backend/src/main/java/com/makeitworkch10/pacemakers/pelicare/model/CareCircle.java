@@ -1,12 +1,8 @@
 package com.makeitworkch10.pacemakers.pelicare.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.*;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
 import java.util.List;
 
@@ -28,6 +24,7 @@ public class CareCircle {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "careCircle")

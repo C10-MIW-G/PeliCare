@@ -1,6 +1,6 @@
 package com.makeitworkch10.pacemakers.pelicare.service;
 
-import com.makeitworkch10.pacemakers.pelicare.configuration.JwtService;
+import com.makeitworkch10.pacemakers.pelicare.authentication.JwtService;
 import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.CreateCareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;

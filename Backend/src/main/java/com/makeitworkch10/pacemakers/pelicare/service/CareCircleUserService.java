@@ -1,6 +1,6 @@
 package com.makeitworkch10.pacemakers.pelicare.service;
 
-import com.makeitworkch10.pacemakers.pelicare.configuration.JwtService;
+import com.makeitworkch10.pacemakers.pelicare.authentication.JwtService;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircleUser;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleUserRepository;

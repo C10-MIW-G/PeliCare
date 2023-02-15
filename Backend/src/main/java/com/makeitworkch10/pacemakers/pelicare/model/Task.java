@@ -21,9 +21,10 @@ public class Task {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(nullable = false)
     private String description;
+    @Column(nullable = false)
     private String title;
-
     private boolean completedTask;
 
     @ManyToOne

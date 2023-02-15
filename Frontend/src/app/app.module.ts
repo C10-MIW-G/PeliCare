@@ -25,7 +25,7 @@ import { TaskComponent } from './task/task.component';
     SignInComponent,
     CreateAccountComponent,
     CreateCarecircleComponent,
-    TaskComponent
+    TaskComponent,
   ],
   imports: [
     BrowserModule,

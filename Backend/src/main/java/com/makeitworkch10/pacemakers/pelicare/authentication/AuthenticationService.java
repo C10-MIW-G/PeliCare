@@ -1,6 +1,5 @@
 package com.makeitworkch10.pacemakers.pelicare.authentication;
 
-import com.makeitworkch10.pacemakers.pelicare.configuration.JwtService;
 import com.makeitworkch10.pacemakers.pelicare.user.Role;
 import com.makeitworkch10.pacemakers.pelicare.user.User;
 import com.makeitworkch10.pacemakers.pelicare.user.UserRepository;
@@ -45,5 +44,14 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .jwt(jwtToken)
                 .build();
+    }
+
+    public isEmailAvailableResponse isEmailAvailable(isEmailAvailableRequest request){
+        if(userRepository.findByEmail(request.getUserEmail()).isPresent()){
+            return new isEmailAvailableResponse(false);
+        }
+        else {
+            return new isEmailAvailableResponse(true);
+        }
     }
 }

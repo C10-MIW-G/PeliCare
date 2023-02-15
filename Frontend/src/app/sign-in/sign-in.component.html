@@ -1,31 +1,60 @@
 <div class="row container-fluid component-body">
   <div class="col-md-2"></div>
-
+  
   <div class="col-md-8">
-    
-      <h4 class="text-dark">Sign-In</h4>
-      <form [formGroup]="form">
-        <div class="form-group">
-          <label for="inputEmail">Email:</label>
-          <input type="email" class="form-control" id="inputEmail" name="email" aria-describedby="emailHelp"
-            placeholder="Enter email" formControlName="email" />
-          <p *ngIf="this.incompleteEmailField" class="errorMessage">Email Required</p>
-        </div>
-
-        <div class="form-group">
-          <label for="inputPassword">Password:</label>
-          <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password"
-            formControlName="password" />
-          <p *ngIf="this.incompletePasswordField" class="errorMessage">Password Required</p>
-        </div>
-        <button class="mt-2 btn btn-primary" (click)="login()">Login</button>
-      </form>
-
+    <div class="component-body">
+<h4 class="text-primary">Sign-In</h4>
+        <form [formGroup]="signInForm" (ngSubmit)="onSubmitLogin()">
+          <div class="form-group">
+            <label for="inputEmail">Email:</label>
+            <input
+              type="email"
+              class="form-control"
+              id="inputEmail"
+              name="email"
+              aria-describedby="emailHelp"
+              placeholder="Enter email"
+              formControlName="email"
+              [ngClass]="{
+                'is-invalid': (signInFormControl['email'].touched || submitted) && signInFormControl['email'].invalid
+              }"
+            />
+            <div
+              *ngIf="signInFormControl['email'].invalid"
+              class="invalid-feedback"
+            >
+              <div *ngIf="signInFormControl['email'].errors?.['required']">
+                Email is required
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword">Password:</label>
+            <input
+              type="password"
+              class="form-control"
+              id="inputPassword"
+              name="password"
+              placeholder="Password"
+              formControlName="password"
+              [ngClass]="{
+                'is-invalid': (signInFormControl['password'].touched || submitted) && signInFormControl['password'].invalid
+              }"
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="signInFormControl['password'].invalid"
+            >
+              <div *ngIf="signInFormControl['email'].errors?.['required']">
+                Password is required
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="mt-2 btn btn-primary">Login</button>
+        </form>
       <br>
-      <p>New to PeliCare? You can start here by <a routerLink="/account/create">creating your account.</a></p>
-      
-    
-
+      <p>New to PeliCare? You can start here by <a routerLink="/account/create">creating your account.</a></p> 
+    </div>
     <div class="col-md-2"></div>
   </div>
 </div>
