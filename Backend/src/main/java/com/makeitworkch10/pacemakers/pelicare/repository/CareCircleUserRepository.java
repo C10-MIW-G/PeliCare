@@ -37,13 +37,6 @@ public interface CareCircleUserRepository extends JpaRepository<CareCircleUser, 
         )
         void deleteCareCircleUsersByCircleId(Long careCircleId);
 
-
-        @Query(
-                value = "SELECT is_circle_admin FROM care_circle_user WHERE user_id = ?1 AND care_circle_id = ?2",
-                nativeQuery = true
-        )
-        boolean findIfAdmin(Long userID, Long careCircleId);
-
         @Query(
                 value = "SELECT user_id FROM care_circle_user WHERE care_circle_id = ?1",
                 nativeQuery = true

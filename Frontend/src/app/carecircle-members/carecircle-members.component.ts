@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CareCircleService } from '../care-circle.service';
 import { User } from '../user';
 
@@ -18,7 +18,8 @@ export class CarecircleMembersComponent implements OnInit{
   constructor(
     private route: ActivatedRoute,
     private fb:FormBuilder,
-    private careCircleService: CareCircleService){
+    private careCircleService: CareCircleService,
+    private router: Router){
       this.form = this.fb.group({
         email: ['',Validators.required],
       })
@@ -32,7 +33,7 @@ export class CarecircleMembersComponent implements OnInit{
       this.careCircleService.getMembersOfCareCircle(id).subscribe(        {
           next: (response: User[]) => {
                 this.users = response;
-
+                this.checkAdminStatus();
               },
              error: (error: HttpErrorResponse) => {
                 alert(error.message);
@@ -46,6 +47,7 @@ export class CarecircleMembersComponent implements OnInit{
       const val = this.form.value;
       this.careCircleService.addUserToCareCircle(id, val.email).subscribe({complete: () => {
         console.log('User is added');
+        this.router.navigateByUrl('carecircle/:id/members');
       },
       error: (error: HttpErrorResponse) => {
         alert(error.message);},
