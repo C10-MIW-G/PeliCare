@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { CareCircle } from './carecircle';
+import { User } from './user';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,10 @@ export class CareCircleService {
 
   public addUserToCareCircle( id: Number, email: string) {
     return this.http.post(`${this.apiBackendUrl}/carecircle/get/${id}/members/add`, {email})
+  }
+
+  public getMembersOfCareCircle( id: Number): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiBackendUrl}/carecircle/get/${id}/members`);
   }
 
 }

@@ -1,15 +1,19 @@
-import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CareCircleService } from '../care-circle.service';
+import { User } from '../user';
 
 @Component({
   selector: 'app-carecircle-members',
   templateUrl: './carecircle-members.component.html',
   styleUrls: ['./carecircle-members.component.css']
 })
-export class CarecircleMembersComponent {
+export class CarecircleMembersComponent implements OnInit{
   form: FormGroup;
+  users: User[] = [];
+  public isAdmin: Boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -19,10 +23,45 @@ export class CarecircleMembersComponent {
         email: ['',Validators.required],
       })
     }
+  ngOnInit(): void {
+    this.getAllMembersOfCareCircle();
+  }
+
+    getAllMembersOfCareCircle(): void{
+      const id = Number(this.route.snapshot.paramMap.get('id'));
+      this.careCircleService.getMembersOfCareCircle(id).subscribe(        {
+          next: (response: User[]) => {
+                this.users = response;
+
+              },
+             error: (error: HttpErrorResponse) => {
+                alert(error.message);
+              }
+        }
+      );
+    }
 
     addUserToCareCircle(){
       const id = Number(this.route.snapshot.paramMap.get('id'));
       const val = this.form.value;
-      this.careCircleService.addUserToCareCircle(id, val.email).subscribe();
+      this.careCircleService.addUserToCareCircle(id, val.email).subscribe({complete: () => {
+        console.log('User is added');
+      },
+      error: (error: HttpErrorResponse) => {
+        alert(error.message);},
+      });
+    }
+
+    checkAdminStatus() {
+      const id = Number(this.route.snapshot.paramMap.get('id'));
+      this.careCircleService.isAdmin(id)
+      .subscribe({
+        next: (Response: boolean) => {
+          this.isAdmin = Response.valueOf();
+        },
+        error: (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      });
     }
 }

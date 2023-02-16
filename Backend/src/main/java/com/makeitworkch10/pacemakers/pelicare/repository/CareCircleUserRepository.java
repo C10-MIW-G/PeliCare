@@ -49,4 +49,10 @@ public interface CareCircleUserRepository extends JpaRepository<CareCircleUser, 
                 nativeQuery = true
         )
         List<Long> findUsersOfCareCircle(Long careCircleId);
+
+        @Query(
+                value = "SELECT user_id FROM care_circle_user WHERE care_circle_id = ?2 AND user_id = ?1",
+                nativeQuery = true
+        )
+        Long findByUserIdAndCareCircle(Long userId, Long careCircleId);
     }

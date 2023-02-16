@@ -49,17 +49,13 @@ public class CareCircleUserService {
     }
 
     public void addUserToCareCircle(String jwt, UserDTO user, Long careCircleId) {
-        if (isUserAdmin(jwt, careCircleId)) {
+        if (isUserAdminOfCircle(careCircleId, jwt)) {
             CareCircle careCircle = careCircleRepository.findById(careCircleId).orElseThrow();
             User newUser = userRepository.findByEmail(user.getEmail()).orElseThrow();
-            CareCircleUser careCircleUser = new CareCircleUser(null, newUser, careCircle, false);
-            careCircleUserRepository.save(careCircleUser);
+            if (newUser.getId() != careCircleUserRepository.findByUserIdAndCareCircle(newUser.getId(), careCircleId)) {
+                CareCircleUser careCircleUser = new CareCircleUser(null, newUser, careCircle, false);
+                careCircleUserRepository.save(careCircleUser);
+            }
         }
-    }
-
-    private boolean isUserAdmin(String jwt, Long careCircleId){
-        String userName = jwtService.extractUsername(jwt);
-        User user = userRepository.findByEmail(userName).orElseThrow();
-        return careCircleUserRepository.findIfAdmin(user.getId(), careCircleId);
     }
 }
