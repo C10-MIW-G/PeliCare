@@ -23,7 +23,7 @@ export class TaskComponent implements OnInit{
 	private routeToThis: String = ""; 	// how we got here determines which api-route will be used next
 	public message: String = "";		// feedback to user: what does this form do (creation or update of Task)
 	private newTask: boolean = false; 	// making or editing requires different data and api calls
-  public careCircleId: number;
+	public careCircleId: number;
 	public completedTask: boolean;
 
   constructor (
@@ -35,10 +35,16 @@ export class TaskComponent implements OnInit{
     private errorHandlingService: ErrorHandlingService
   ) {}
 
-  	ngOnInit(): void {
-		this.incompleteFields = false;
-		this.careCircleId = Number(this.route.snapshot.paramMap.get('circleId'));
-		this.routeToThis = this.route.toString();
+  ngOnInit(): void {
+
+  this.taskForm = this.fb.group({
+    title: ['', Validators.required],
+    description: ['', Validators.required],
+    completedTask: [''],
+  });
+
+  this.careCircleId = Number(this.route.snapshot.paramMap.get('circleId'));
+  this.routeToThis = this.route.toString();
 
 		if(this.routeToThis.includes("create")){ this.prepareCreationOfTask(); }
 		if(this.routeToThis.includes("edit")){ this.prepareEditingOfTask(); }
@@ -110,10 +116,9 @@ export class TaskComponent implements OnInit{
 	}
 
   	saveNewTask() {
-
-		this.taskservice.saveNewTaskData({
-			title: this.title,
-			description: this.description,
+		this.taskService.saveNewTaskData({
+			title: this.taskFormControl['title'].value,
+			description: this.taskFormControl['description'].value,
 			careCircleId: this.careCircleId
 		})
 		.subscribe({
@@ -121,7 +126,9 @@ export class TaskComponent implements OnInit{
 				console.log(Response.toString);
 				this.router.navigateByUrl(`/carecircle/${this.careCircleId}`)
 			},
-			error: ()=> {alert( "something went wrong"); }
+			error: (error: HttpErrorResponse)=> {
+        this.errorHandlingService.redirectUnexpectedErrors(error);
+      }
 		});
     }
 

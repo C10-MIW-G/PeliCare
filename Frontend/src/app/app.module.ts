@@ -15,11 +15,11 @@ import { InterceptorService } from './services/interceptor.service';
 import { CreateCarecircleComponent } from './create-carecircle/create-carecircle.component';
 import { environment } from 'src/environments/environment.development';
 import { TaskComponent } from './task/task.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
 import { CarecircleMembersComponent } from './carecircle-members/carecircle-members.component';
 import { ErrorComponent } from './error/error.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -30,11 +30,11 @@ import { HomeComponent } from './home/home.component';
     CreateAccountComponent,
     CreateCarecircleComponent,
     TaskComponent,
-    ChangePasswordComponent,
     CarecircleMembersComponent,
     ErrorComponent,
     NotFoundComponent,
-    HomeComponent
+    HomeComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
