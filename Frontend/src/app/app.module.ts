@@ -19,6 +19,7 @@ import { CarecircleMembersComponent } from './carecircle-members/carecircle-memb
 import { ErrorComponent } from './error/error.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { HomeComponent } from './home/home.component';
     CarecircleMembersComponent,
     ErrorComponent,
     NotFoundComponent,
-    HomeComponent
+    HomeComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

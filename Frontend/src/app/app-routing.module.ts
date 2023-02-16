@@ -1,6 +1,7 @@
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ErrorComponent } from './error/error.component';
 import { CarecircleMembersComponent } from './carecircle-members/carecircle-members.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { CreateCarecircleComponent } from './create-carecircle/create-carecircle.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'task/edit/:taskId/:circleId', component: TaskComponent },
   { path: 'carecircle/:id/members', component: CarecircleMembersComponent},
   { path: 'error', component: ErrorComponent },
+  { path: 'account/changepassword', component: ChangePasswordComponent },
   { path: '**', component: NotFoundComponent }
 ];
 
