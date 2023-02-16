@@ -3,12 +3,15 @@ package com.makeitworkch10.pacemakers.pelicare.service;
 import com.makeitworkch10.pacemakers.pelicare.configuration.JwtService;
 import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.CreateCareCircleDTO;
+import com.makeitworkch10.pacemakers.pelicare.dto.UserDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
+import com.makeitworkch10.pacemakers.pelicare.model.Task;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleUserRepository;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.CareCircleDTOMapper;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.CreateCareCircleDTOMapper;
+import com.makeitworkch10.pacemakers.pelicare.service.mappers.UserDTOMapper;
 import com.makeitworkch10.pacemakers.pelicare.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,15 +37,10 @@ public class CareCircleService {
     private final CreateCareCircleDTOMapper createCareCircleDTOMapper;
     private final JwtService jwtService;
     private final CareCircleUserRepository careCircleUserRepository;
-
+    private final CareCircleUserService careCircleUserService;
     private final UserRepository userRepository;
-
-    public List<CareCircleDTO> findAllCareCircles() {
-        return careCircleRepository.findAll()
-                .stream()
-                .map(careCircleDTOMapper)
-                .collect(Collectors.toList());
-    }
+    private final TaskService taskService;
+    private final UserDTOMapper userDTOMapper;
 
     public CareCircleDTO getCareCircle(Long id) throws ResourceNotFoundException {
 
@@ -82,5 +80,44 @@ public class CareCircleService {
                             "CareCircle not found")));
         }
         return returnlist;
+    }
+
+    public void deleteCareCircle(Long circleId) {
+        // find the Care Circle
+        CareCircle circleToDelete = findCircleToDelete(circleId);
+
+        // delete all its Tasks
+        deleteTasksFromCircle(circleToDelete);
+
+        // delete the appropriate entries from care_circle_user table
+        careCircleUserService.deleteCareCircleUsers(circleId);
+
+        // finally: delete the Care Circle
+        careCircleRepository.deleteById(circleId);
+    }
+
+    private void deleteTasksFromCircle(CareCircle circleToDelete) {
+        List<Task> taskList = circleToDelete.getTaskList();
+        for (Task task : taskList) {
+            taskService.deleteTask(task.getId());
+        }
+    }
+
+    private CareCircle findCircleToDelete(Long circleId) {
+        CareCircle circleToDelete = careCircleRepository.findById(circleId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                "CareCircle not found"
+        ));
+        return circleToDelete;
+    }
+
+    public List<UserDTO> findUsersOfCareCircle(Long id){
+        List<Long> userIds = careCircleUserRepository.findUsersOfCareCircle(id);
+        List<UserDTO> responseList = new ArrayList<>();
+        for (Long userId : userIds) {
+            responseList.add(userRepository.findById(userId)
+                    .map(userDTOMapper).orElseThrow());
+        }
+        return responseList;
     }
 }

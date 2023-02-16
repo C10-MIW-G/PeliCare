@@ -7,40 +7,69 @@ import { CareCircleService } from '../care-circle.service';
 import { CareCircle } from '../carecircle';
 
 @Component({
-  selector: 'app-carecircle',
-  templateUrl: './careCircle.component.html',
-  styleUrls: ['./careCircle.component.css']
+	selector: 'app-carecircle',
+	templateUrl: './careCircle.component.html',
+	styleUrls: ['./careCircle.component.css']
 })
 export class CareCircleComponent implements OnInit {
 
 	public careCircle: CareCircle;
-	
-    constructor (
-      private route: ActivatedRoute,
-      private careCircleService: CareCircleService,
-      private taskservice: TaskService
-    ) {}
+
+	public isAdmin: Boolean;
+
+	constructor(
+		private route: ActivatedRoute,
+		private careCircleService: CareCircleService,
+		private taskservice: TaskService,
+		private router: Router
+	) { }
+
 
 	ngOnInit(): void {
-		this.getCareCircle();
+		this.getCareCircle();	
+
 	}
 
-	getCareCircle(): void {		
+	getCareCircle(): void {
 		const id = Number(this.route.snapshot.paramMap.get('id'));
 		this.careCircleService.getCareCircleById(id)
-		.subscribe({
-			next: (response: CareCircle) => {
-			   this.careCircle = response;
-			   console.log(this.careCircle);
-			 },
-			error: (error: HttpErrorResponse) => {
-			   alert(error.message);
-			 }
-		   });
+			.subscribe({
+				next: (response: CareCircle) => {
+					this.careCircle = response;
+					console.log(this.careCircle);	
+					this.checkAdminStatus();			
+				},
+				error: (error: HttpErrorResponse) => {
+					alert(error.message);
+				}
+			});
 	}
 
-  complete(task: Task) {
-    task.completedTask = true;
-    this.taskservice.setTaskToComplete(task).subscribe();
-  }
+	checkAdminStatus() {
+		this.careCircleService.isAdmin(this.careCircle.id)
+		.subscribe({
+			next: (Response: boolean) => {
+				this.isAdmin = Response.valueOf();
+			},
+			error: (error: HttpErrorResponse) => {
+				alert(error.message);
+			}
+		});
+	}
+
+	complete(task: Task) {
+		task.completedTask = true;
+		this.taskservice.setTaskToComplete(task).subscribe();
+	}
+
+	delete() {
+		this.careCircleService.deleteCareCircle(this.careCircle.id)
+		.subscribe({
+			complete: ()=> {
+				console.log(Response.toString);
+				this.router.navigateByUrl(`/carecircles`)
+			},
+			error: ()=> {alert( "something went wrong"); }
+		})
+	}
 }

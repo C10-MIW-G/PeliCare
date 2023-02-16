@@ -1,0 +1,29 @@
+<div class="row container-fluid component-body">
+  <div class="col-md-2"></div>
+  <div class="col-md-8">
+    <div *ngFor="let user of users">
+    <p>{{user.email}}</p>
+  </div>
+  </div>
+  <div class="col-md-2">
+    <div *ngIf="isAdmin">
+    <form [formGroup]="form">
+      <div class="form-group">
+        <label for="inputemail">Add User to Care Circle</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputEmail"
+          name="email"
+          aria-describedby="emailHelp"
+          placeholder="Enter email"
+          formControlName="email"
+        />
+      </div>
+      <button class="mt-2 btn btn-dark" (click)="addUserToCareCircle()">
+        Add User
+      </button>
+      </form>
+    </div>
+  </div>
+  </div>
