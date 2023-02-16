@@ -15,7 +15,8 @@ const routes: Routes = [
   { path: 'account/signin', component: SignInComponent },
   { path: 'carecircles/create', component: CreateCarecircleComponent },
   { path: 'task/create/:circleId', component: TaskComponent },
-  { path: 'task/edit/:taskId/:circleId', component: TaskComponent }
+  { path: 'task/edit/:taskId/:circleId', component: TaskComponent },
+  
 ];
 
 @NgModule({
