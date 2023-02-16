@@ -1,3 +1,5 @@
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
+import { HttpErrorResponse } from '@angular/common/http';
 import { CareCircleService } from './../care-circle.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -16,7 +18,8 @@ export class CreateCarecircleComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private careCircleService: CareCircleService,
-    private router: Router
+    private router: Router,
+    private errorHandlingService: ErrorHandlingService
   ) {}
 
   ngOnInit() {
@@ -40,8 +43,8 @@ export class CreateCarecircleComponent implements OnInit {
             console.log('Care Circle is created');
             this.router.navigateByUrl('/carecircles');
           },
-          error: () => {
-            alert('name is already in use');
+          error: (error: HttpErrorResponse) => {
+            this.errorHandlingService.redirectUnexpectedErrors(error);
           },
         });
     }

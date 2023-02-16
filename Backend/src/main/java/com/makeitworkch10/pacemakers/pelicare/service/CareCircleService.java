@@ -49,7 +49,7 @@ public class CareCircleService {
         return careCircleRepository.findById(id)
                 .map(careCircleDTOMapper)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "CareCircle not found"
+                        "CareCircle with id: " + id + " not found"
                 ));
     }
     public CareCircle createCareCircle(CreateCareCircleDTO careCircle){

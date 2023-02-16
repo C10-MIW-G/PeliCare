@@ -1,8 +1,9 @@
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { TaskService } from './../services/task.service';
 import { Task } from './../task';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CareCircleService } from '../care-circle.service';
 import { CareCircle } from '../carecircle';
 
@@ -14,18 +15,19 @@ import { CareCircle } from '../carecircle';
 export class CareCircleComponent implements OnInit {
 
 	public careCircle: CareCircle;
-	
+
     constructor (
       private route: ActivatedRoute,
       private careCircleService: CareCircleService,
-      private taskservice: TaskService
+      private taskservice: TaskService,
+      private errorHandlingService: ErrorHandlingService,
     ) {}
 
 	ngOnInit(): void {
 		this.getCareCircle();
 	}
 
-	getCareCircle(): void {		
+	getCareCircle(): void {
 		const id = Number(this.route.snapshot.paramMap.get('id'));
 		this.careCircleService.getCareCircleById(id)
 		.subscribe({
@@ -34,7 +36,7 @@ export class CareCircleComponent implements OnInit {
 			   console.log(this.careCircle);
 			 },
 			error: (error: HttpErrorResponse) => {
-			   alert(error.message);
+			   this.errorHandlingService.redirectUnexpectedErrors(error);
 			 }
 		   });
 	}

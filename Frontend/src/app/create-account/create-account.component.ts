@@ -1,3 +1,4 @@
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { CustomvalidationService } from './../services/custom-validation.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -18,7 +19,8 @@ export class CreateAccountComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private fb: FormBuilder,
-    private customValidator: CustomvalidationService
+    private customValidator: CustomvalidationService,
+    private errorHandlingService: ErrorHandlingService
   ) {}
 
   ngOnInit() {
@@ -57,7 +59,7 @@ export class CreateAccountComponent implements OnInit {
             this.router.navigateByUrl('/account/signin');
           },
           error: (error: HttpErrorResponse) => {
-            alert(error.message);
+            this.errorHandlingService.redirectUnexpectedErrors(error);
           },
         });
     }

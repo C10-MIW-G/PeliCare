@@ -1,0 +1,10 @@
+<div class="d-flex align-items-center justify-content-center vh-10">
+  <div class="text-center">
+      <h1 class="display-1 fw-bold">{{apiError.statusCode}}</h1>
+      <p class="fs-3"> <span class="text-danger">Oops!</span> {{apiError.statusText}}</p>
+      <p class="lead">
+          {{apiError.message}}
+        </p>
+      <a href="javascript:history.go(-2)" class="btn btn-dark">Go Back</a>
+  </div>
+</div>

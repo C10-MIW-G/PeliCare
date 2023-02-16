@@ -1,3 +1,4 @@
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CareCircleService } from '../care-circle.service';
@@ -9,13 +10,16 @@ import { CareCircle } from '../carecircle';
   styleUrls: ['./carecirclelist.component.css']
 })
 export class CarecirclelistComponent implements OnInit{
-  
+
   public adminCircles: CareCircle[]; // I am admin of these circles
   public userCircles: CareCircle[]; // I am only a user here
-constructor(private careCircleService: CareCircleService){}
+constructor(
+  private careCircleService: CareCircleService,
+  private errorHandlingService: ErrorHandlingService
+  ){}
 
   ngOnInit(): void {
-    
+
     this.getAdminCircles();
     this.getUserCircles();
   }
@@ -24,10 +28,10 @@ constructor(private careCircleService: CareCircleService){}
     this.careCircleService.getAdminCircles().subscribe({
       next: (response: CareCircle[]) => {
             this.adminCircles = response;
-          
+
           },
          error: (error: HttpErrorResponse) => {
-            alert(error.message);
+          this.errorHandlingService.redirectUnexpectedErrors(error);
           }
     });
   }
@@ -36,12 +40,12 @@ constructor(private careCircleService: CareCircleService){}
     this.careCircleService.getUserCircles().subscribe({
       next: (response: CareCircle[]) => {
             this.userCircles = response;
-          
+
           },
          error: (error: HttpErrorResponse) => {
-            alert(error.message);
+            this.errorHandlingService.redirectUnexpectedErrors(error);
           }
     });
-  } 
+  }
 
 }

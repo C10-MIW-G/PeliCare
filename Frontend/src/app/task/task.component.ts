@@ -1,3 +1,4 @@
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -30,7 +31,8 @@ export class TaskComponent implements OnInit{
     private route: ActivatedRoute,
     private taskService: TaskService,
     private router: Router,
-    private carecircleService: CareCircleService
+    private carecircleService: CareCircleService,
+    private errorHandlingService: ErrorHandlingService
   ) {}
 
   ngOnInit(): void {
@@ -64,7 +66,9 @@ export class TaskComponent implements OnInit{
 					this.taskFormControl['description'].setValue(response.description);
 					this.taskFormControl['completedTask'].setValue(response.completedTask);
 				},
-				error: (error: HttpErrorResponse) => { console.log(error.message); }
+				error: (error: HttpErrorResponse) => {
+          this.errorHandlingService.redirectUnexpectedErrors(error);
+        }
 			});
 	}
 
@@ -79,7 +83,9 @@ export class TaskComponent implements OnInit{
         	next: (response: CareCircle) => {
           		this.carecircleName = response.name;
         	},
-        	error: (error: HttpErrorResponse) => { console.log(error.message); }
+        	error: (error: HttpErrorResponse) => {
+            this.errorHandlingService.redirectUnexpectedErrors(error);
+          }
       	});
   	}
 
@@ -103,7 +109,9 @@ export class TaskComponent implements OnInit{
 				console.log(Response.toString);
 				this.router.navigateByUrl(`/carecircle/${this.careCircleId}`)
 			},
-			error: ()=> {alert( "something went wrong"); }
+			error: (error: HttpErrorResponse)=> {
+        this.errorHandlingService.redirectUnexpectedErrors(error);
+    }
 		});
 	}
 
@@ -118,7 +126,9 @@ export class TaskComponent implements OnInit{
 				console.log(Response.toString);
 				this.router.navigateByUrl(`/carecircle/${this.careCircleId}`)
 			},
-			error: ()=> {alert( "something went wrong"); }
+			error: (error: HttpErrorResponse)=> {
+        this.errorHandlingService.redirectUnexpectedErrors(error);
+      }
 		});
     }
 
@@ -129,7 +139,9 @@ export class TaskComponent implements OnInit{
 				console.log(Response.toString);
 				this.router.navigateByUrl(`/carecircle/${this.careCircleId}`)
 			},
-			error: ()=> {alert( "something went wrong"); }
+			error: (error: HttpErrorResponse)=> {
+        this.errorHandlingService.redirectUnexpectedErrors(error);
+      }
 		})
 	}
 }
