@@ -3,7 +3,7 @@ import { TaskService } from './../services/task.service';
 import { Task } from './../task';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CareCircleService } from '../care-circle.service';
 import { CareCircle } from '../carecircle';
 
@@ -20,14 +20,14 @@ export class CareCircleComponent implements OnInit {
       private route: ActivatedRoute,
       private careCircleService: CareCircleService,
       private taskservice: TaskService,
-	  private router: Router
-      private errorHandlingService: ErrorHandlingService,
+	    private router: Router,
+      private errorHandlingService: ErrorHandlingService
     ) {}
 
 	public isAdmin: Boolean;
 
 	ngOnInit(): void {
-		this.getCareCircle();	
+		this.getCareCircle();
 
 	}
 
@@ -38,7 +38,7 @@ export class CareCircleComponent implements OnInit {
 			next: (response: CareCircle) => {
 			   this.careCircle = response;
 			   console.log(this.careCircle);
-			   this.checkAdminStatus();	
+			   this.checkAdminStatus();
 			 },
 			error: (error: HttpErrorResponse) => {
 			   this.errorHandlingService.redirectUnexpectedErrors(error);
