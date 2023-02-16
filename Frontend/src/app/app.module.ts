@@ -15,6 +15,7 @@ import { InterceptorService } from './services/interceptor.service';
 import { CreateCarecircleComponent } from './create-carecircle/create-carecircle.component';
 import { environment } from 'src/environments/environment.development';
 import { TaskComponent } from './task/task.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { CarecircleMembersComponent } from './carecircle-members/carecircle-members.component';
 import { ErrorComponent } from './error/error.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -29,6 +30,7 @@ import { HomeComponent } from './home/home.component';
     CreateAccountComponent,
     CreateCarecircleComponent,
     TaskComponent,
+    ChangePasswordComponent,
     CarecircleMembersComponent,
     ErrorComponent,
     NotFoundComponent,
@@ -42,8 +44,8 @@ import { HomeComponent } from './home/home.component';
     ReactiveFormsModule,
     RecaptchaModule,
     RecaptchaFormsModule,
-    
-   
+
+
   ],
   providers: [CareCircleService, {
     provide: HTTP_INTERCEPTORS,
@@ -57,6 +59,6 @@ import { HomeComponent } from './home/home.component';
     } as RecaptchaSettings,
 }],
   bootstrap: [AppComponent],
-  
+
 })
 export class AppModule { }

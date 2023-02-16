@@ -35,22 +35,16 @@ export class TaskComponent implements OnInit{
     private errorHandlingService: ErrorHandlingService
   ) {}
 
-  ngOnInit(): void {
+  	ngOnInit(): void {
+		this.incompleteFields = false;
+		this.careCircleId = Number(this.route.snapshot.paramMap.get('circleId'));
+		this.routeToThis = this.route.toString();
 
-  this.taskForm = this.fb.group({
-    title: ['', Validators.required],
-    description: ['', Validators.required],
-    completedTask: [''],
-  });
+		if(this.routeToThis.includes("create")){ this.prepareCreationOfTask(); }
+		if(this.routeToThis.includes("edit")){ this.prepareEditingOfTask(); }
 
-  this.careCircleId = Number(this.route.snapshot.paramMap.get('circleId'));
-  this.routeToThis = this.route.toString();
-
-  if(this.routeToThis.includes("create")){ this.prepareCreationOfTask(); }
-  if(this.routeToThis.includes("edit")){ this.prepareEditingOfTask(); }
-
-    this.displayCircleName();
-  }
+    	this.displayCircleName();
+  	}
 
   get taskFormControl(){
     return this.taskForm.controls;
@@ -116,9 +110,10 @@ export class TaskComponent implements OnInit{
 	}
 
   	saveNewTask() {
-		this.taskService.saveNewTaskData({
-			title: this.taskFormControl['title'].value,
-			description: this.taskFormControl['description'].value,
+
+		this.taskservice.saveNewTaskData({
+			title: this.title,
+			description: this.description,
 			careCircleId: this.careCircleId
 		})
 		.subscribe({
@@ -126,9 +121,7 @@ export class TaskComponent implements OnInit{
 				console.log(Response.toString);
 				this.router.navigateByUrl(`/carecircle/${this.careCircleId}`)
 			},
-			error: (error: HttpErrorResponse)=> {
-        this.errorHandlingService.redirectUnexpectedErrors(error);
-      }
+			error: ()=> {alert( "something went wrong"); }
 		});
     }
 
