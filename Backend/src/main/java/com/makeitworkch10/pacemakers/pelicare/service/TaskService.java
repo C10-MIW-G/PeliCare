@@ -6,7 +6,6 @@ import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundExceptio
 import com.makeitworkch10.pacemakers.pelicare.model.Task;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
 import com.makeitworkch10.pacemakers.pelicare.repository.TaskRepository;
-import com.makeitworkch10.pacemakers.pelicare.service.mappers.TaskCompleteDTOMapper;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.TaskDTOMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,6 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final CareCircleRepository careCircleRepository;
     private final TaskDTOMapper taskDTOMapper;
-    private final TaskCompleteDTOMapper taskCompleteDTOMapper;
 
     public List<TaskDTO> findAllTasks() {
         return taskRepository.findAll()
@@ -39,7 +37,7 @@ public class TaskService {
         return taskRepository.findById(id)
                 .map(taskDTOMapper)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "Task with id not found"
+                        "Task with id " + id + " not found"
                 ));
     }
 
@@ -53,7 +51,7 @@ public class TaskService {
         Long taskId = taskRepository.save(task).getId();
         return taskRepository.findById(taskId)
                 .map(taskDTOMapper)
-                .orElseThrow(() -> new ResourceNotFoundException("Task with id not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Task with id " + taskId + " not found"));
     }
 
     public TaskDTO patchTask(TaskDTO taskDTO) {
@@ -73,7 +71,7 @@ public class TaskService {
         TaskDTO taskdto = getTask(taskCompleteDTO.getId());
         taskdto.setCompletedTask(taskCompleteDTO.isCompletedTask());
         Task task = taskRepository.findById(taskCompleteDTO.getId()).orElseThrow(
-                () -> new ResourceNotFoundException("Task with id not found"));
+                () -> new ResourceNotFoundException("Task with id " + taskCompleteDTO.getId() + " not found"));
         task.setCompletedTask(taskdto.isCompletedTask());
         taskRepository.save(task);
     }

@@ -1,22 +1,45 @@
 <div class="row container-fluid component-body">
   <div class="col-md-2"></div>
-
   <div class="col-md-8">
     <h4 class="text-dark">Create new Care Circle</h4>
-    <form [formGroup]="form">
+    <form [formGroup]="createCircleForm">
       <div class="form-group">
         <label for="inputName">Name:</label>
-        <input type="text" class="form-control" id="inputName" name="name" aria-describedby="nameHelp"
-          placeholder="Enter name" formControlName="name" />
+        <input
+          type="text"
+          class="form-control"
+          id="inputName"
+          name="name"
+          aria-describedby="nameHelp"
+          placeholder="Enter name"
+          formControlName="name"
+          [ngClass]="{
+            'is-invalid':
+              (createCircleFormControl['name'].touched || submitted) &&
+              createCircleFormControl['name'].invalid
+          }"
+        />
+        <div
+          *ngIf="createCircleFormControl['name'].invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="createCircleFormControl['name'].errors?.['required']">
+            Name is required
+          </div>
+        </div>
       </div>
-      
     </form>
   </div>
-  
-  <div class="col-md-2">    
-      <div><button class="mt-2 btn btn-dark" (click)="create()">
+  <div class="col-md-2">
+    <div>
+      <button class="mt-2 btn btn-dark" (click)="create()">
         Save new Care Circle
-      </button></div>
-      <div><button class="mt-2 btn btn-dark" routerLink="/carecircles">Back</button></div>    
+      </button>
+    </div>
+    <div>
+      <button class="mt-2 btn btn-dark" routerLink="/carecircles">
+        Back
+      </button>
+    </div>
   </div>
 </div>

@@ -1,5 +1,7 @@
 <div class="row container-fluid component-body">
-	<div class="col-md-2"></div>
+	<div *ngIf="careCircle" class="col-md-2">
+    <a class="btn btn-dark" routerLink="/carecircle/{{careCircle.id}}/members">Members</a>
+  </div>
 
 	<div class="col-md-8">
 
@@ -39,7 +41,7 @@
 	</div>
 
 	<div class="col-md-2">
-		<a class="mt-1 btn btn-dark" routerLink="/task/create/{{careCircle.id}}">Create a new Task</a>		
+		<a class="mt-1 btn btn-dark" routerLink="/task/create/{{careCircle.id}}">Create a new Task</a>
 		<button *ngIf="isAdmin" type="button" class="btn btn-warning mt-1" data-bs-toggle="modal"
 			data-bs-target="#exampleModal">
 			Delete this Care Circle
@@ -56,18 +58,18 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body row gap-2">
-					
-						<button class="btn btn-outline-dark btn-danger col" 
+
+						<button class="btn btn-outline-dark btn-danger col"
 								(click)="delete()"
 								data-bs-dismiss="modal">
 								Yes, delete Care Circle
 						</button>
-						<button type="button" 
-								class="btn btn-outline-dark btn-warning col" 
+						<button type="button"
+								class="btn btn-outline-dark btn-warning col"
 								data-bs-dismiss="modal">
 								No, go back
 						</button>
-					
+
 				</div>
 				<div class="modal-footer">
 					<p>Deleting a Care Circle can not be undone.</p>

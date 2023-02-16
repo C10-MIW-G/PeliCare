@@ -33,6 +33,13 @@ export class AuthService {
     });
   }
 
+  userEmailAvailable(userEmail: string) {
+    // avoid type "any". check the response obj and put a clear type
+       return this.http.post<any>(`${this.apiBackendUrl}/account/validate/email`, {
+         userEmail:userEmail,
+       });
+  }
+
   private setSession(authResult: any) {
     const expiresAt = moment().add(authResult.expiresIn, 'second');
 

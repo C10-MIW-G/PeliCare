@@ -1,4 +1,4 @@
-package com.makeitworkch10.pacemakers.pelicare.configuration;
+package com.makeitworkch10.pacemakers.pelicare.authentication;
 
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtSettings;
 import io.jsonwebtoken.Claims;

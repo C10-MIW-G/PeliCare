@@ -1,5 +1,6 @@
 package com.makeitworkch10.pacemakers.pelicare.configuration;
 
+import com.makeitworkch10.pacemakers.pelicare.authentication.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

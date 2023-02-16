@@ -1,8 +1,8 @@
-import { Task } from './task';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { CareCircle } from './carecircle';
+import { User } from './user';
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +28,19 @@ export class CareCircleService {
   }
 
   public isAdmin(circleId: Number): Observable<boolean> {
-    return this.http.get<boolean>(`${this.apiBackendUrl}/carecircle/isadmin/${circleId}`);    
+    return this.http.get<boolean>(`${this.apiBackendUrl}/carecircle/isadmin/${circleId}`);
   }
 
   public deleteCareCircle(circleId: Number) {
     return this.http.delete(`${this.apiBackendUrl}/carecircle/delete/${circleId}`);
+  }
+
+  public addUserToCareCircle( id: Number, email: string) {
+    return this.http.post(`${this.apiBackendUrl}/carecircle/get/${id}/members/add`, {email})
+  }
+
+  public getMembersOfCareCircle( id: Number): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiBackendUrl}/carecircle/get/${id}/members`);
   }
 
 }

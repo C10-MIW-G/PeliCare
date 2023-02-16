@@ -1,3 +1,5 @@
+import { ErrorHandlingService } from '../services/error-handling.service';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -9,43 +11,44 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./sign-in.component.css'],
 })
 export class SignInComponent implements OnInit{
-  form: FormGroup;
-  public incompleteEmailField: boolean; 
-    public incompletePasswordField: boolean;
+
+  signInForm: FormGroup;
+  submitted = false;
+  signInInvalidMessage : String;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private errorHandlingSevice : ErrorHandlingService,
     private router: Router
-  ) {
-    this.form = this.fb.group({
+  ) {}
+
+   ngOnInit(): void {
+    this.signInForm = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
-  ngOnInit(): void {
-    this.incompleteEmailField = false;
-    this.incompletePasswordField = false;    
-  }  
 
-  login() {
-    const val = this.form.value;
-    if (!val.email){
-      this.incompleteEmailField = true;
-    }
+  get signInFormControl() {
+    return this.signInForm.controls;
+  }
 
-    if (!val.password){
-      this.incompletePasswordField = true;
-    }
-
-    if (val.email && val.password) {
-      this.authService.login(val.email, val.password).subscribe({
+  onSubmitLogin() {
+    this.submitted = true;
+    if (this.signInForm.valid) {
+      this.authService.login(this.signInFormControl['email'].value, this.signInFormControl['password'].value)
+      .subscribe({
         next: () => {
-          console.log('User is logged in');
           this.router.navigateByUrl('/carecircles');
         },
-        error: () => {
-          alert('Username or password are incorrect.');
+        error: (error: HttpErrorResponse) => {
+          if(error.status === 422){
+            this.signInInvalidMessage = error.error.message;
+          }
+          else {
+            this.errorHandlingSevice.redirectUnexpectedErrors(error);
+          }
         },
       });
     }

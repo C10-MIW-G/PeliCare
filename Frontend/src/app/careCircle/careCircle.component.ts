@@ -1,3 +1,4 @@
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { TaskService } from './../services/task.service';
 import { Task } from './../task';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -15,34 +16,34 @@ export class CareCircleComponent implements OnInit {
 
 	public careCircle: CareCircle;
 
+    constructor (
+      private route: ActivatedRoute,
+      private careCircleService: CareCircleService,
+      private taskservice: TaskService,
+	    private router: Router,
+      private errorHandlingService: ErrorHandlingService
+    ) {}
+
 	public isAdmin: Boolean;
 
-	constructor(
-		private route: ActivatedRoute,
-		private careCircleService: CareCircleService,
-		private taskservice: TaskService,
-		private router: Router
-	) { }
-
-
 	ngOnInit(): void {
-		this.getCareCircle();	
+		this.getCareCircle();
 
 	}
 
 	getCareCircle(): void {
 		const id = Number(this.route.snapshot.paramMap.get('id'));
 		this.careCircleService.getCareCircleById(id)
-			.subscribe({
-				next: (response: CareCircle) => {
-					this.careCircle = response;
-					console.log(this.careCircle);	
-					this.checkAdminStatus();			
-				},
-				error: (error: HttpErrorResponse) => {
-					alert(error.message);
-				}
-			});
+		.subscribe({
+			next: (response: CareCircle) => {
+			   this.careCircle = response;
+			   console.log(this.careCircle);
+			   this.checkAdminStatus();
+			 },
+			error: (error: HttpErrorResponse) => {
+			   this.errorHandlingService.redirectUnexpectedErrors(error);
+			 }
+		   });
 	}
 
 	checkAdminStatus() {

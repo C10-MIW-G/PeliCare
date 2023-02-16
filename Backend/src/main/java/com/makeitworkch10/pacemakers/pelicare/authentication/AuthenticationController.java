@@ -15,6 +15,12 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final CaptchaService captchaService;
 
+    @PostMapping("/validate/email")
+    public ResponseEntity<isEmailAvailableResponse> isEmailAvailable(
+            @RequestBody isEmailAvailableRequest emailRequest){
+        return ResponseEntity.ok(authenticationService.isEmailAvailable(emailRequest));
+    }
+
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest registerRequest

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 
 public interface CareCircleUserRepository extends JpaRepository<CareCircleUser, Long> {
@@ -36,4 +37,15 @@ public interface CareCircleUserRepository extends JpaRepository<CareCircleUser, 
         )
         void deleteCareCircleUsersByCircleId(Long careCircleId);
 
+        @Query(
+                value = "SELECT user_id FROM care_circle_user WHERE care_circle_id = ?1",
+                nativeQuery = true
+        )
+        List<Long> findUsersOfCareCircle(Long careCircleId);
+
+        @Query(
+                value = "SELECT user_id FROM care_circle_user WHERE care_circle_id = ?2 AND user_id = ?1",
+                nativeQuery = true
+        )
+        Long findByUserIdAndCareCircle(Long userId, Long careCircleId);
     }
