@@ -1,3 +1,4 @@
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { CreateCarecircleComponent } from './create-carecircle/create-carecircle.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -16,7 +17,7 @@ const routes: Routes = [
   { path: 'carecircles/create', component: CreateCarecircleComponent },
   { path: 'task/create/:circleId', component: TaskComponent },
   { path: 'task/edit/:taskId/:circleId', component: TaskComponent },
-  
+  { path: 'account/changepassword', component: ChangePasswordComponent }
 ];
 
 @NgModule({

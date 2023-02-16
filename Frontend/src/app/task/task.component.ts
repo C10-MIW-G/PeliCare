@@ -19,9 +19,9 @@ export class TaskComponent implements OnInit{
 	public carecircleName: String;
 	public incompleteFields: boolean; 	// to display an error message if necessary
 	private routeToThis: String = ""; 	// how we got here determines which api-route will be used next
-	public message: String = "";		// feedback to user: what does this form do (creation or update of Task)	
+	public message: String = "";		// feedback to user: what does this form do (creation or update of Task)
 	private newTask: boolean = false; 	// making or editing requires different data and api calls
-  	public careCircleId: number;
+  public careCircleId: number;
 	public completedTask: boolean;
 
   	constructor (
@@ -32,14 +32,14 @@ export class TaskComponent implements OnInit{
   	) {}
 
   	ngOnInit(): void {
-		this.incompleteFields = false;	
+		this.incompleteFields = false;
 		this.careCircleId = Number(this.route.snapshot.paramMap.get('circleId'));
 		this.routeToThis = this.route.toString();
-		
-		if(this.routeToThis.includes("create")){ this.prepareCreationOfTask(); }
-		if(this.routeToThis.includes("edit")){ this.prepareEditingOfTask(); }	
 
-    	this.displayCircleName();    
+		if(this.routeToThis.includes("create")){ this.prepareCreationOfTask(); }
+		if(this.routeToThis.includes("edit")){ this.prepareEditingOfTask(); }
+
+    	this.displayCircleName();
   	}
 
 	private prepareEditingOfTask() {
@@ -60,7 +60,7 @@ export class TaskComponent implements OnInit{
 		this.newTask = true;
 		this.message = "Create new Task";
 	}
-	
+
   	private displayCircleName() {
     	this.carecircleService.getCareCircleById(this.careCircleId)
       	.subscribe({
@@ -94,21 +94,21 @@ export class TaskComponent implements OnInit{
 		});
 	}
 
-  	saveNewTask() {	      
+  	saveNewTask() {
 
 		this.taskservice.saveNewTaskData({
 			title: this.title,
 			description: this.description,
 			careCircleId: this.careCircleId
-		}) 
+		})
 		.subscribe({
 			complete: ()=> {
 				console.log(Response.toString);
 				this.router.navigateByUrl(`/carecircle/${this.careCircleId}`)
 			},
 			error: ()=> {alert( "something went wrong"); }
-		});    		
-    }  
+		});
+    }
 
 	delete() {
 		this.taskservice.deleteTask(this.taskId)

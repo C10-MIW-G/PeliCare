@@ -15,6 +15,7 @@ import { InterceptorService } from './services/interceptor.service';
 import { CreateCarecircleComponent } from './create-carecircle/create-carecircle.component';
 import { environment } from 'src/environments/environment.development';
 import { TaskComponent } from './task/task.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { TaskComponent } from './task/task.component';
     SignInComponent,
     CreateAccountComponent,
     CreateCarecircleComponent,
-    TaskComponent,    
+    TaskComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,
