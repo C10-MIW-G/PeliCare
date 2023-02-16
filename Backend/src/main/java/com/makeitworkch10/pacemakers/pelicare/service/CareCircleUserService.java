@@ -1,6 +1,7 @@
 package com.makeitworkch10.pacemakers.pelicare.service;
 
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtService;
+import com.makeitworkch10.pacemakers.pelicare.authentication.isEmailAvailableResponse;
 import com.makeitworkch10.pacemakers.pelicare.dto.UserDTO;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircleUser;
@@ -56,6 +57,7 @@ public class CareCircleUserService {
                 CareCircleUser careCircleUser = new CareCircleUser(null, newUser, careCircle, false);
                 careCircleUserRepository.save(careCircleUser);
             }
+            throw new ;
         }
     }
 }
