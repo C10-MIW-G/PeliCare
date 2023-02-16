@@ -8,9 +8,9 @@ import { CareCircleService } from '../care-circle.service';
 import { CareCircle } from '../carecircle';
 
 @Component({
-  selector: 'app-carecircle',
-  templateUrl: './careCircle.component.html',
-  styleUrls: ['./careCircle.component.css']
+	selector: 'app-carecircle',
+	templateUrl: './careCircle.component.html',
+	styleUrls: ['./careCircle.component.css']
 })
 export class CareCircleComponent implements OnInit {
 
@@ -20,11 +20,15 @@ export class CareCircleComponent implements OnInit {
       private route: ActivatedRoute,
       private careCircleService: CareCircleService,
       private taskservice: TaskService,
+	  private router: Router
       private errorHandlingService: ErrorHandlingService,
     ) {}
 
+	public isAdmin: Boolean;
+
 	ngOnInit(): void {
-		this.getCareCircle();
+		this.getCareCircle();	
+
 	}
 
 	getCareCircle(): void {
@@ -34,6 +38,7 @@ export class CareCircleComponent implements OnInit {
 			next: (response: CareCircle) => {
 			   this.careCircle = response;
 			   console.log(this.careCircle);
+			   this.checkAdminStatus();	
 			 },
 			error: (error: HttpErrorResponse) => {
 			   this.errorHandlingService.redirectUnexpectedErrors(error);
@@ -41,8 +46,31 @@ export class CareCircleComponent implements OnInit {
 		   });
 	}
 
-  complete(task: Task) {
-    task.completedTask = true;
-    this.taskservice.setTaskToComplete(task).subscribe();
-  }
+	checkAdminStatus() {
+		this.careCircleService.isAdmin(this.careCircle.id)
+		.subscribe({
+			next: (Response: boolean) => {
+				this.isAdmin = Response.valueOf();
+			},
+			error: (error: HttpErrorResponse) => {
+				alert(error.message);
+			}
+		});
+	}
+
+	complete(task: Task) {
+		task.completedTask = true;
+		this.taskservice.setTaskToComplete(task).subscribe();
+	}
+
+	delete() {
+		this.careCircleService.deleteCareCircle(this.careCircle.id)
+		.subscribe({
+			complete: ()=> {
+				console.log(Response.toString);
+				this.router.navigateByUrl(`/carecircles`)
+			},
+			error: ()=> {alert( "something went wrong"); }
+		})
+	}
 }

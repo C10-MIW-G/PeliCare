@@ -9,6 +9,7 @@ footer {
 
 .form-control {
   max-width: 40%;
+  margin: 10px;
 }
 
 .errorMessage {
@@ -22,4 +23,8 @@ footer {
 
 .container {
   align-content: center;
+}
+
+.circleimage {
+  background-color: pink;
 }

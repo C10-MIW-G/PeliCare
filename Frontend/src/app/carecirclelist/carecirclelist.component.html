@@ -2,46 +2,59 @@
   <div class="col-md-2"></div>
 
   <div class="col-md-8">
+
     <div class="container">
       <div class="row">
 
         <div class="header">
           <h4 class="text-dark">Your Care Circles</h4>
+
           <div class="card">
-            
             <div class="body">
               <h5 *ngIf="adminCircles.length > 0">You are an Admin of:</h5>
-              <ul class="new_friend_list list-unstyled row">
+              <ul class="list-unstyled row">
                 <li class="col-lg-2 col-md-6 col-12 mt-4 pt-2" *ngFor="let careCircle of adminCircles">
-                  <h5>
-                    <a routerLink="/carecircle/{{careCircle.id}}" class="list-group-item">
-                      <img src="\assets\images\avatar.png" class="img-fluid rounded" alt="avatar">
-                      {{careCircle.name}}</a>
-                  </h5>
-                </li>
+
+                  <div class="card-body">
+                    <div class="d-flex flex-column align-items-center text-center"></div>
+                    <div class="mt-3">
+                      <h5>
+                        <a routerLink="/carecircle/{{careCircle.id}}" class="list-group-item">
+                          <img src="\assets\images\PeliCare-zwart.png" class="img-fluid rounded" alt="logoPeliCare"
+                            class="rounded-circle p-1" width="110">
+                          {{careCircle.name}}</a>
+                      </h5>
+                    </div>
+                  </div>
               </ul>
             </div>
 
             <div class="body">
               <h5 *ngIf="userCircles.length > 0"> You are a User of:</h5>
               <p *ngIf="userCircles.length == 0">There are no Care Circles to display for you as a user </p>
-              <ul class="new_friend_list list-unstyled row">
+              <ul class="list-unstyled row">
                 <li class="col-lg-2 col-md-6 col-12 mt-4 pt-2" *ngFor="let careCircle of userCircles">
-                  <h5>
-                    <a routerLink="/carecircle/{{careCircle.id}}" class="list-group-item">
-                      <img src="\assets\images\avatar.png" class="img-fluid rounded" alt="avatar">
-                      {{careCircle.name}}</a>
-                  </h5>
-                </li>
+                  <div class="card-body">
+                    <div class="d-flex flex-column align-items-center text-center"></div>
+                    <div class="mt-3">
+                      <h5>
+                        <a routerLink="/carecircle/{{careCircle.id}}" class="list-group-item">
+                          <img src="\assets\images\PeliCare-zwart.png" class="img-fluid rounded" alt="logoPeliCare"
+                            class="rounded-circle p-1" width="110">
+                          {{careCircle.name}}</a>
+                      </h5>
+                    </div>
+                  </div>
               </ul>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 
-  <div class="col-md-2">  
-      <a class="btn btn-dark" routerLink="/carecircles/create">Create a new Care Circle</a>  
+  <div class="col-md-2">
+    <a class="btn btn-dark" routerLink="/carecircles/create">Create a new Care Circle</a>
   </div>
 </div>
