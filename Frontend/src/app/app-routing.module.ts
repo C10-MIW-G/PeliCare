@@ -24,7 +24,8 @@ const routes: Routes = [
   { path: 'carecircle/:id/members', component: CarecircleMembersComponent},
   { path: 'error', component: ErrorComponent },
   { path: 'account/changepassword', component: ChangePasswordComponent },
-  { path: '**', component: NotFoundComponent }
+  { path: '**', component: NotFoundComponent },
+  { path: 'account/changepassword', component: ChangePasswordComponent }
 ];
 
 @NgModule({

@@ -44,8 +44,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     ReactiveFormsModule,
     RecaptchaModule,
     RecaptchaFormsModule,
-    
-   
+
+
   ],
   providers: [CareCircleService, {
     provide: HTTP_INTERCEPTORS,
@@ -59,6 +59,6 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     } as RecaptchaSettings,
 }],
   bootstrap: [AppComponent],
-  
+
 })
 export class AppModule { }

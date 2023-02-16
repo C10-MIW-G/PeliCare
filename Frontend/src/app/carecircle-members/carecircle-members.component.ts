@@ -1,3 +1,4 @@
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -14,12 +15,12 @@ export class CarecircleMembersComponent implements OnInit{
   form: FormGroup;
   users: User[] = [];
   public isAdmin: Boolean;
+  errorHandlingService: ErrorHandlingService;
 
   constructor(
     private route: ActivatedRoute,
     private fb:FormBuilder,
-    private careCircleService: CareCircleService,
-    private router: Router){
+    private careCircleService: CareCircleService){
       this.form = this.fb.group({
         email: ['',Validators.required],
       })
@@ -47,10 +48,10 @@ export class CarecircleMembersComponent implements OnInit{
       const val = this.form.value;
       this.careCircleService.addUserToCareCircle(id, val.email).subscribe({complete: () => {
         console.log('User is added');
-        this.router.navigateByUrl('carecircle/:id/members');
+        this.reload();
       },
       error: (error: HttpErrorResponse) => {
-        alert(error.message);},
+        this.errorHandlingService.redirectUnexpectedErrors(error);},
       });
     }
 
@@ -65,5 +66,9 @@ export class CarecircleMembersComponent implements OnInit{
           alert(error.message);
         }
       });
+    }
+
+    reload(){
+      this.ngOnInit();
     }
 }

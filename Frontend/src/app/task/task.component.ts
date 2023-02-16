@@ -46,11 +46,11 @@ export class TaskComponent implements OnInit{
   this.careCircleId = Number(this.route.snapshot.paramMap.get('circleId'));
   this.routeToThis = this.route.toString();
 
-  if(this.routeToThis.includes("create")){ this.prepareCreationOfTask(); }
-  if(this.routeToThis.includes("edit")){ this.prepareEditingOfTask(); }
+		if(this.routeToThis.includes("create")){ this.prepareCreationOfTask(); }
+		if(this.routeToThis.includes("edit")){ this.prepareEditingOfTask(); }
 
-    this.displayCircleName();
-  }
+    	this.displayCircleName();
+  	}
 
   get taskFormControl(){
     return this.taskForm.controls;
