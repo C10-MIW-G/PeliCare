@@ -10,8 +10,8 @@ import { CareCircle } from '../carecircle';
 })
 export class CarecirclelistComponent implements OnInit{
   
-  public adminCircles: CareCircle[]; // I am admin of these circles
-  public userCircles: CareCircle[]; // I am only a user here
+  public adminCircles: CareCircle[] = [];   // I am admin of these circles
+  public userCircles: CareCircle[] = [];    // I am only a user here
 constructor(private careCircleService: CareCircleService){}
 
   ngOnInit(): void {

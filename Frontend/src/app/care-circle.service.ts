@@ -27,6 +27,14 @@ export class CareCircleService {
     return this.http.post(`${this.apiBackendUrl}/carecircle/create`, {name});
   }
 
+  public isAdmin(circleId: Number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiBackendUrl}/carecircle/isadmin/${circleId}`);
+  }
+
+  public deleteCareCircle(circleId: Number) {
+    return this.http.delete(`${this.apiBackendUrl}/carecircle/delete/${circleId}`);
+  }
+
   public addUserToCareCircle( id: Number, email: string) {
     return this.http.post(`${this.apiBackendUrl}/carecircle/get/${id}/members/add`, {email})
   }

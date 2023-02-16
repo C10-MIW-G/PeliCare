@@ -55,6 +55,19 @@ public class CareCircleController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @GetMapping("/isadmin/{id}")
+    public ResponseEntity<Boolean> isUserAdminOfCareCircle(@PathVariable("id") Long id,
+                                                           @RequestHeader (name="Authorization") String jwt) {
+            boolean isAdmin = careCircleUserService.isUserAdminOfCircle(id,jwt);
+            return new ResponseEntity<Boolean>(isAdmin, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteCareCircle(@PathVariable("id") Long circleId) {
+        careCircleService.deleteCareCircle(circleId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping("/get/{id}/members")
     public ResponseEntity<List<UserDTO>> getUsersOfCareCircle(@PathVariable("id") Long id){
         List<UserDTO> responseList = careCircleService.findUsersOfCareCircle(id);

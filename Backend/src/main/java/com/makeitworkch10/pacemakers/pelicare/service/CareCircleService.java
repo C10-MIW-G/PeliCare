@@ -6,6 +6,7 @@ import com.makeitworkch10.pacemakers.pelicare.dto.CreateCareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.UserDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
+import com.makeitworkch10.pacemakers.pelicare.model.Task;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleUserRepository;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.CareCircleDTOMapper;
@@ -36,7 +37,9 @@ public class CareCircleService {
     private final CreateCareCircleDTOMapper createCareCircleDTOMapper;
     private final JwtService jwtService;
     private final CareCircleUserRepository careCircleUserRepository;
+    private final CareCircleUserService careCircleUserService;
     private final UserRepository userRepository;
+    private final TaskService taskService;
     private final UserDTOMapper userDTOMapper;
 
     public CareCircleDTO getCareCircle(Long id) throws ResourceNotFoundException {
@@ -77,6 +80,35 @@ public class CareCircleService {
                             "CareCircle not found")));
         }
         return returnlist;
+    }
+
+    public void deleteCareCircle(Long circleId) {
+        // find the Care Circle
+        CareCircle circleToDelete = findCircleToDelete(circleId);
+
+        // delete all its Tasks
+        deleteTasksFromCircle(circleToDelete);
+
+        // delete the appropriate entries from care_circle_user table
+        careCircleUserService.deleteCareCircleUsers(circleId);
+
+        // finally: delete the Care Circle
+        careCircleRepository.deleteById(circleId);
+    }
+
+    private void deleteTasksFromCircle(CareCircle circleToDelete) {
+        List<Task> taskList = circleToDelete.getTaskList();
+        for (Task task : taskList) {
+            taskService.deleteTask(task.getId());
+        }
+    }
+
+    private CareCircle findCircleToDelete(Long circleId) {
+        CareCircle circleToDelete = careCircleRepository.findById(circleId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                "CareCircle not found"
+        ));
+        return circleToDelete;
     }
 
     public List<UserDTO> findUsersOfCareCircle(Long id){
