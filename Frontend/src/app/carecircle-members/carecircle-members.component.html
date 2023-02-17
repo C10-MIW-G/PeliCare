@@ -10,8 +10,12 @@
   <div class="col-md-2">
     <div *ngIf="isAdmin">
       <h6>Add User to your Circle</h6>
-      <div *ngIf="duplicateErrorMessage !== undefined" class="alert alert-warning" role="alert">
-        {{duplicateErrorMessage}}
+      <div
+        *ngIf="errorMessage !== undefined"
+        class="alert alert-warning"
+        role="alert"
+      >
+        {{ errorMessage }}
       </div>
       <form [formGroup]="form" autocomplete="off">
         <div class="form-group">
@@ -23,9 +27,23 @@
             aria-describedby="emailHelp"
             placeholder="Enter email"
             formControlName="email"
+            [ngClass]="{
+              'is-invalid':
+                (formControl['email'].touched || submitted) &&
+                formControl['email'].invalid
+            }"
           />
+          <div *ngIf="formControl['email'].invalid" class="invalid-feedback">
+            <div *ngIf="formControl['email'].errors?.['required']">
+              Email is required
+            </div>
+          </div>
         </div>
-        <button class="mt-2 btn btn-dark" type="button" (click)="addUserToCareCircle()">
+        <button
+          class="mt-2 btn btn-dark"
+          type="button"
+          (click)="addUserToCareCircle()"
+        >
           Add User
         </button>
       </form>

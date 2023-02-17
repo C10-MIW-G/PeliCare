@@ -53,6 +53,15 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                 status.toString(), LocalDateTime.now()), status);
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    protected ResponseEntity<Object> handleUserNotFoundException(
+            UserNotFoundException userNotFoundException
+    ) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        return  buildResponseEntity(new ApiError(userNotFoundException.getMessage(), status.value(),
+                status.toString(), LocalDateTime.now()), status);
+    }
+
     private ResponseEntity<Object> buildResponseEntity(ApiError apiError, HttpStatus status) {
         return new ResponseEntity<>(apiError, status);
     }
