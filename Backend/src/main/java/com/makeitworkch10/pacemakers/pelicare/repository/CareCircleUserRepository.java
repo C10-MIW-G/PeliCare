@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface CareCircleUserRepository extends JpaRepository<CareCircleUser, Long> {
@@ -27,7 +28,7 @@ public interface CareCircleUserRepository extends JpaRepository<CareCircleUser, 
                 value = "SELECT is_circle_admin FROM care_circle_user WHERE care_circle_id = ?1 AND user_id = ?2",
                 nativeQuery = true
         )
-        boolean isUserAdminOfCircle(Long circleId, Long userId );
+        Optional<Boolean> isUserAdminOfCircle(Long circleId, Long userId );
 
         @Modifying
         @Transactional

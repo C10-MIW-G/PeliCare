@@ -5,6 +5,7 @@ import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.CreateCareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.UserDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;
+import com.makeitworkch10.pacemakers.pelicare.exception.UserNotFoundException;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.model.Task;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
@@ -19,7 +20,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author Paul Moonen
@@ -59,27 +59,27 @@ public class CareCircleService {
         String username = jwtService.extractUsername(jwt);
         Long userId = userRepository.findByEmail(username).orElseThrow().getId();
         Set<Long> careCircleIds = careCircleUserRepository.findCareCirclesOfAdmin(userId);
-        List<CareCircleDTO> returnlist = new ArrayList<>();
+        List<CareCircleDTO> returnList = new ArrayList<>();
         for (Long circleId : careCircleIds) {
-            returnlist.add(careCircleRepository.findById(circleId).
+            returnList.add(careCircleRepository.findById(circleId).
                     map(careCircleDTOMapper)
                     .orElseThrow(() -> new ResourceNotFoundException(
                     "CareCircle not found")));
         }
-        return returnlist;
+        return returnList;
     }
     public List<CareCircleDTO> findCirclesOfUser(String jwt) {
         String username = jwtService.extractUsername(jwt);
         Long userId = userRepository.findByEmail(username).orElseThrow().getId();
         Set<Long> careCircleIds = careCircleUserRepository.findCareCirclesOfUser(userId);
-        List<CareCircleDTO> returnlist = new ArrayList<>();
+        List<CareCircleDTO> returnList = new ArrayList<>();
         for (Long circleId : careCircleIds) {
-            returnlist.add(careCircleRepository.findById(circleId).
+            returnList.add(careCircleRepository.findById(circleId).
                     map(careCircleDTOMapper)
                     .orElseThrow(() -> new ResourceNotFoundException(
                             "CareCircle not found")));
         }
-        return returnlist;
+        return returnList;
     }
 
     public void deleteCareCircle(Long circleId) {
@@ -104,20 +104,25 @@ public class CareCircleService {
     }
 
     private CareCircle findCircleToDelete(Long circleId) {
-        CareCircle circleToDelete = careCircleRepository.findById(circleId)
+        return careCircleRepository.findById(circleId)
                 .orElseThrow(() -> new ResourceNotFoundException(
                 "CareCircle not found"
         ));
-        return circleToDelete;
     }
 
     public List<UserDTO> findUsersOfCareCircle(Long id){
         List<Long> userIds = careCircleUserRepository.findUsersOfCareCircle(id);
-        List<UserDTO> responseList = new ArrayList<>();
-        for (Long userId : userIds) {
-            responseList.add(userRepository.findById(userId)
-                    .map(userDTOMapper).orElseThrow());
+        if (!userIds.isEmpty()) {
+            List<UserDTO> responseList = new ArrayList<>();
+            for (Long userId : userIds) {
+                responseList.add(userRepository.findById(userId)
+                        .map(userDTOMapper).orElseThrow(
+                                () -> new UserNotFoundException("Users or Care Circle not found")
+                        ));
+            }
+            return responseList;
+        } else {
+            throw new ResourceNotFoundException("Care Circle does not exist");
         }
-        return responseList;
     }
 }
