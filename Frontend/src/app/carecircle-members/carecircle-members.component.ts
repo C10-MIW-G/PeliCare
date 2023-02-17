@@ -15,13 +15,13 @@ export class CarecircleMembersComponent implements OnInit{
   form: FormGroup;
   users: User[] = [];
   public isAdmin: Boolean;
-  errorHandlingService: ErrorHandlingService;
   duplicateErrorMessage: string;
 
   constructor(
     private route: ActivatedRoute,
     private fb:FormBuilder,
-    private careCircleService: CareCircleService){
+    private careCircleService: CareCircleService,
+    private errorHandlingService: ErrorHandlingService){
       this.form = this.fb.group({
         email: ['',Validators.required],
       })
