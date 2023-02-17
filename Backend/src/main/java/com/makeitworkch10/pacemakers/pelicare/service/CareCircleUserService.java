@@ -3,6 +3,8 @@ package com.makeitworkch10.pacemakers.pelicare.service;
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtService;
 import com.makeitworkch10.pacemakers.pelicare.authentication.isEmailAvailableResponse;
 import com.makeitworkch10.pacemakers.pelicare.dto.UserDTO;
+import com.makeitworkch10.pacemakers.pelicare.exception.DuplicateUserException;
+import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircleUser;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
@@ -11,6 +13,7 @@ import com.makeitworkch10.pacemakers.pelicare.user.User;
 import com.makeitworkch10.pacemakers.pelicare.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.ResourceAccessException;
 
 
 /**
@@ -56,8 +59,9 @@ public class CareCircleUserService {
             if (newUser.getId() != careCircleUserRepository.findByUserIdAndCareCircle(newUser.getId(), careCircleId)) {
                 CareCircleUser careCircleUser = new CareCircleUser(null, newUser, careCircle, false);
                 careCircleUserRepository.save(careCircleUser);
+            } else {
+                throw new DuplicateUserException("User already in the Care Circle");
             }
-            throw new ;
         }
     }
 }
