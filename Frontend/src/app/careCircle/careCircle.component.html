@@ -12,20 +12,21 @@
 			<table class="table table-hover table-borderless">
 				<thead>
 					<tr>
+						<th scope="col"></th>
 						<th scope="col">Task name</th>
-						<th scope="col">Task description</th>
-						<th scope="col">Completed</th>
+						<th scope="col">Task description</th>						
 						<th scope="col"></th> <!-- layout space for edit-button -->
 					</tr>
 				</thead>
 				<tbody *ngFor="let task of careCircle.taskList">
 					<tr>
+						
+						<td *ngIf="task.completedTask == false">
+							<a (click)="complete(task)">☐</a>
+						</td>
+						<td *ngIf="task.completedTask">🗹</td>
 						<td>{{task.title}}</td>
 						<td>{{task.description}}</td>
-						<td *ngIf="task.completedTask">Done</td>
-						<td *ngIf="task.completedTask == false">
-							<button class="btn btn-outline-dark" (click)="complete(task)">To do</button>
-						</td>
 						<td>
 							<a class="btn btn-outline-dark"
 								routerLink="/task/edit/{{task.id}}/{{careCircle.id}}">Edit</a>
