@@ -9,6 +9,9 @@
   <div class="col-md-2">
     <div *ngIf="isAdmin">
       <h6>Add User to your Circle</h6>
+      <div *ngIf="duplicateErrorMessage !== undefined" class="alert alert-warning" role="alert">
+        {{duplicateErrorMessage}}
+      </div>
       <form [formGroup]="form">
         <div class="form-group">
           <input

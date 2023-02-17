@@ -44,6 +44,15 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                 status.toString(), LocalDateTime.now()), status);
     }
 
+    @ExceptionHandler(DuplicateUserException.class)
+    protected ResponseEntity<Object> handleDuplicateUserException(
+            DuplicateUserException duplicateUserException
+    ) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        return  buildResponseEntity(new ApiError(duplicateUserException.getMessage(), status.value(),
+                status.toString(), LocalDateTime.now()), status);
+    }
+
     private ResponseEntity<Object> buildResponseEntity(ApiError apiError, HttpStatus status) {
         return new ResponseEntity<>(apiError, status);
     }

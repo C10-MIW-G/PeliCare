@@ -16,6 +16,7 @@ export class CarecircleMembersComponent implements OnInit{
   users: User[] = [];
   public isAdmin: Boolean;
   errorHandlingService: ErrorHandlingService;
+  duplicateErrorMessage: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,7 +52,12 @@ export class CarecircleMembersComponent implements OnInit{
         this.reload();
       },
       error: (error: HttpErrorResponse) => {
-        this.errorHandlingService.redirectUnexpectedErrors(error);},
+        if(error.status === 409){
+          this.duplicateErrorMessage = error.error.message;
+        }
+      else {
+        this.errorHandlingService.redirectUnexpectedErrors(error);
+      }},
       });
     }
 
