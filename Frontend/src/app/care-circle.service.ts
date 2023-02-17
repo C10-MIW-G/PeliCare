@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { CareCircle } from './carecircle';
 import { User } from './user';
+import { ToggleUserAdmin } from './toggle-user-admin';
+import { CareCircleUserStatus } from './carecircle-user-status';
 
 @Injectable({
   providedIn: 'root'
@@ -39,8 +41,26 @@ export class CareCircleService {
     return this.http.post(`${this.apiBackendUrl}/carecircle/get/${id}/members/add`, {email})
   }
 
-  public getMembersOfCareCircle( id: Number): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiBackendUrl}/carecircle/get/${id}/members`);
+  // public getMembersOfCareCircle( id: Number): Observable<User[]> {
+  //   return this.http.get<User[]>(`${this.apiBackendUrl}/carecircle/get/${id}/members`);
+  // }
+
+  public getMembersOfCareCircle( id: Number): Observable<CareCircleUserStatus[]> {
+    return this.http.get<CareCircleUserStatus[]>(`${this.apiBackendUrl}/carecircle/get/${id}/members`);
+  }
+
+  public makeUserCircleAdmin(makeUserCircleAdmin: ToggleUserAdmin): Observable<String> {
+    return this.http.patch<String>(`${this.apiBackendUrl}/carecircle/makeadmin`,{
+      email: makeUserCircleAdmin.email,
+      circleId: makeUserCircleAdmin.circleId  
+    });
+  }
+
+  public revokeUserAdmin(revokeUserAdmin: ToggleUserAdmin): Observable<String> {
+    return this.http.patch<String>(`${this.apiBackendUrl}/carecircle/revokeadmin`,{
+      email: revokeUserAdmin.email,
+      circleId: revokeUserAdmin.circleId  
+    });
   }
 
 }

@@ -1,6 +1,8 @@
 package com.makeitworkch10.pacemakers.pelicare.service;
 
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtService;
+import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleUserDTO;
+import com.makeitworkch10.pacemakers.pelicare.dto.UserBecomesAdmin;
 import com.makeitworkch10.pacemakers.pelicare.dto.UserDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.DuplicateUserException;
 import com.makeitworkch10.pacemakers.pelicare.exception.UserNotFoundException;
@@ -13,7 +15,7 @@ import com.makeitworkch10.pacemakers.pelicare.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
+import java.util.*;
 
 
 /**
@@ -28,6 +30,7 @@ public class CareCircleUserService {
     private final UserRepository userRepository;
     private final CareCircleUserRepository careCircleUserRepository;
     private final CareCircleRepository careCircleRepository;
+    private final UserService userService;
 
     public void addCircleAdminToCareCircle(String jwt, CareCircle careCircle) {
         String userName = jwtService.extractUsername(jwt);
@@ -72,5 +75,46 @@ public class CareCircleUserService {
                 throw new DuplicateUserException("User already in the Care Circle");
             }
         }
+    }
+
+    public void promoteUserToAdmin(String jwt, UserBecomesAdmin userBecomesAdmin) {
+        // request sent by admin of this circle?
+        Long circleId = userBecomesAdmin.getCircleId();
+        String email = userBecomesAdmin.getEmail();
+
+        if(isUserAdminOfCircle(circleId, jwt)) {
+            // find the user to promote
+            Long userId = userRepository.findByEmail(email).orElseThrow().getId();
+            careCircleUserRepository.promoteUserToAdmin(userId,circleId);
+        }
+    }
+
+    public void revokeUserAdmin(String jwt, UserBecomesAdmin userBecomesAdmin) {
+        // request sent by admin of this circle?
+        Long circleId = userBecomesAdmin.getCircleId();
+        String email = userBecomesAdmin.getEmail();
+
+        if(isUserAdminOfCircle(circleId, jwt)) {
+            // find the user to promote
+            Long userId = userRepository.findByEmail(email).orElseThrow().getId();
+            careCircleUserRepository.revokeUserAdmin(userId,circleId);
+        }
+    }
+
+    public List<CareCircleUserDTO> usersOfCareCircle(Long circleId) {
+        // list to return
+        List<CareCircleUserDTO> responseList = new ArrayList<>();
+
+        List<Long> userIdList = careCircleUserRepository.findUsersOfCareCircle(circleId);
+        for (Long userId : userIdList) {
+            Boolean isAdmin = careCircleUserRepository.isUserAdminOfCircle(circleId, userId).get();
+            String email = userService.geEmailOfUser(userId);
+            CareCircleUserDTO careCircleUserDTO = new CareCircleUserDTO();
+            careCircleUserDTO.setCircleId(circleId);
+            careCircleUserDTO.setEmail(email);
+            careCircleUserDTO.setIsAdmin(isAdmin);
+            responseList.add(careCircleUserDTO);
+        }
+        return responseList;
     }
 }

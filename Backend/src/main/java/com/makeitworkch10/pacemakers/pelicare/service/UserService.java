@@ -31,4 +31,8 @@ public class UserService {
         return passwordEncoder.matches(oldPassword, user.getPassword());
     }
 
+    public String geEmailOfUser(Long userId) {
+        return userRepository.findById(userId).get().getEmail();
+    }
+
 }
