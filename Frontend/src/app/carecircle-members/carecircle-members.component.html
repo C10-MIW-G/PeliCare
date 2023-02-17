@@ -1,6 +1,6 @@
 <div class="row container-fluid component-body">
   <div class="col-md-2"></div>
-  
+
   <div class="col-md-8">
     <h4>Members</h4>
     <div *ngFor="let user of users">
@@ -13,7 +13,7 @@
       <div *ngIf="duplicateErrorMessage !== undefined" class="alert alert-warning" role="alert">
         {{duplicateErrorMessage}}
       </div>
-      <form [formGroup]="form">
+      <form [formGroup]="form" autocomplete="off">
         <div class="form-group">
           <input
             type="text"
