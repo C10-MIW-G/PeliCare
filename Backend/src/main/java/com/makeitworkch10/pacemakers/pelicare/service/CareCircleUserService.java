@@ -47,11 +47,9 @@ public class CareCircleUserService {
 
     public boolean isUserAdminOfCircle(Long circleId, String jwt ) {
         String username = jwtService.extractUsername(jwt);
-        User user = userRepository.findByEmail(username).orElseThrow(
-                () -> new UserNotFoundException("User or Care Circle does not exist")
-        );
+        User user = userRepository.findByEmail(username).orElseThrow();
         if(user != null) {
-            return careCircleUserRepository.isUserAdminOfCircle(circleId, user.getId()).isPresent();
+            return careCircleUserRepository.isUserAdminOfCircle(circleId, user.getId()).orElseThrow();
         } else {
             return false;
         }
