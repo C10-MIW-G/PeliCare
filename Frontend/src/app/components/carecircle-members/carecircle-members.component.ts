@@ -3,8 +3,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CareCircleService } from '../care-circle.service';
-import { User } from '../user';
+import { CareCircleService } from '../../services/care-circle.service';
+import { User } from '../../interfaces/user';
 
 @Component({
   selector: 'app-carecircle-members',

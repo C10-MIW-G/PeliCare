@@ -1,13 +1,13 @@
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { CareCircleService } from '../care-circle.service';
-import { CareCircle } from '../carecircle';
+import { CareCircleService } from '../../services/care-circle.service';
+import { CareCircle } from '../../interfaces/carecircle';
 
 @Component({
   selector: 'app-carecirclelist',
-  templateUrl: './carecirclelist.component.html',
-  styleUrls: ['./carecirclelist.component.css']
+  templateUrl: './carecircle-list.component.html',
+  styleUrls: ['./carecircle-list.component.css']
 })
 export class CarecirclelistComponent implements OnInit{
 

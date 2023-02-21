@@ -3,10 +3,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CareCircleService } from '../care-circle.service';
-import { CareCircle } from '../carecircle';
-import { TaskService } from '../services/task.service';
-import { Task } from '../task';
+import { CareCircleService } from '../../services/care-circle.service';
+import { CareCircle } from '../../interfaces/carecircle';
+import { TaskService } from '../../services/task.service';
+import { Task } from '../../interfaces/task';
 
 @Component({
     selector: 'app-task',

@@ -1,4 +1,4 @@
-import { ApiError } from './api-error';
+import { ApiError } from 'src/app/interfaces/api-error';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 

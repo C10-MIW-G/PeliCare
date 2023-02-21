@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
-import { CareCircle } from './carecircle';
-import { User } from './user';
+import { CareCircle } from '../interfaces/carecircle';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
