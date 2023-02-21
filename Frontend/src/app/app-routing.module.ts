@@ -1,16 +1,16 @@
-import { NotFoundComponent } from './not-found/not-found.component';
-import { ErrorComponent } from './error/error.component';
-import { CarecircleMembersComponent } from './carecircle-members/carecircle-members.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
-import { CreateCarecircleComponent } from './create-carecircle/create-carecircle.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { ErrorComponent } from './components/error/error.component';
+import { CarecircleMembersComponent } from './components/carecircle-members/carecircle-members.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { CreateCarecircleComponent } from './components/create-carecircle/create-carecircle.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CarecirclelistComponent } from './carecirclelist/carecirclelist.component';
-import { CareCircleComponent } from './careCircle/careCircle.component';
-import { CreateAccountComponent } from './create-account/create-account.component';
-import { SignInComponent } from './sign-in/sign-in.component';
-import { TaskComponent } from './task/task.component';
-import { HomeComponent } from './home/home.component';
+import { CarecirclelistComponent } from './components/carecircle-list/carecircle-list.component';
+import { CareCircleComponent } from './components/carecircle/carecircle.component';
+import { CreateAccountComponent } from './components/create-account/create-account.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { TaskComponent } from './components/task/task.component';
+import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},

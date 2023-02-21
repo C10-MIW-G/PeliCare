@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { ChangePasswords } from "../change-password";
+import { ChangePasswords } from "../interfaces/change-password";
 
 
 @Injectable({providedIn: 'root'})

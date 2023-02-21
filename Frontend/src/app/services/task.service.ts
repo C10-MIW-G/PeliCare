@@ -3,8 +3,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { NewTask } from "../newtask";
-import { Task } from "../task";
+import { NewTask } from "../interfaces/new-task";
+import { Task } from "../interfaces/task";
 
 @Injectable({providedIn: 'root'})
 export class TaskService {
@@ -45,7 +45,7 @@ export class TaskService {
         return this.http.delete(`${this.apiBackendUrl}/task/delete/${taskId}`);
     }
 }
-    
+
 
 
 

@@ -1,11 +1,11 @@
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
-import { TaskService } from './../services/task.service';
-import { Task } from './../task';
+import { TaskService } from '../../services/task.service';
+import { Task } from '../../interfaces/task';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CareCircleService } from '../care-circle.service';
-import { CareCircle } from '../carecircle';
+import { CareCircleService } from '../../services/care-circle.service';
+import { CareCircle } from '../../interfaces/carecircle';
 
 @Component({
 	selector: 'app-carecircle',

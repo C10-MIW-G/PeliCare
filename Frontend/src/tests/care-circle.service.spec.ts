@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CareCircleService } from '../app/care-circle.service';
+import { CareCircleService } from '../app/services/care-circle.service';
 
 describe('CareCircleService', () => {
   let service: CareCircleService;

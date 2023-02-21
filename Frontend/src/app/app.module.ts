@@ -1,5 +1,5 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CareCircleService } from './care-circle.service';
+import { CareCircleService } from './services/care-circle.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -7,19 +7,19 @@ import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSet
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CarecirclelistComponent } from './carecirclelist/carecirclelist.component';
-import { CareCircleComponent } from './careCircle/careCircle.component';
-import { SignInComponent } from './sign-in/sign-in.component';
-import { CreateAccountComponent } from './create-account/create-account.component';
+import { CarecirclelistComponent } from './components/carecircle-list/carecircle-list.component';
+import { CareCircleComponent } from './components/carecircle/carecircle.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { CreateAccountComponent } from './components/create-account/create-account.component';
 import { InterceptorService } from './services/interceptor.service';
-import { CreateCarecircleComponent } from './create-carecircle/create-carecircle.component';
+import { CreateCarecircleComponent } from './components/create-carecircle/create-carecircle.component';
 import { environment } from 'src/environments/environment.development';
-import { TaskComponent } from './task/task.component';
-import { CarecircleMembersComponent } from './carecircle-members/carecircle-members.component';
-import { ErrorComponent } from './error/error.component';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { HomeComponent } from './home/home.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
+import { TaskComponent } from './components/task/task.component';
+import { CarecircleMembersComponent } from './components/carecircle-members/carecircle-members.component';
+import { ErrorComponent } from './components/error/error.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { HomeComponent } from './components/home/home.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   declarations: [

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CarecirclelistComponent } from '../app/carecirclelist/carecirclelist.component';
+import { CarecirclelistComponent } from '../app/carecircle-list/carecirclelist.component';
 
 describe('CarecirclelistComponent', () => {
   let component: CarecirclelistComponent;

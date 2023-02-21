@@ -1,10 +1,10 @@
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
-import { CustomvalidationService } from './../services/custom-validation.service';
+import { CustomvalidationService } from './../../services/custom-validation.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-create-account',

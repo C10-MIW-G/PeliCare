@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, NgModule } from '@angular/core';
-import { ChangePasswordService } from '../services/change-password.service';
+import { ChangePasswordService } from '../../services/change-password.service';
 
 @Component({
   selector: 'app-change-password',

@@ -5,6 +5,8 @@ import { CareCircle } from './carecircle';
 import { User } from './user';
 import { ToggleUserAdmin } from './toggle-user-admin';
 import { CareCircleUserStatus } from './carecircle-user-status';
+import { CareCircle } from '../interfaces/carecircle';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
