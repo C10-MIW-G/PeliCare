@@ -12,7 +12,7 @@ export class ErrorComponent implements OnInit{
   apiError: ApiError;
 
   constructor(private router: Router){
-    const navigation = this.router.getCurrentNavigation();
+    const navigation = this.router.getCurrentNavigation();    
     const state = navigation?.extras.state as ApiError;
     this.apiError = state;
   }
