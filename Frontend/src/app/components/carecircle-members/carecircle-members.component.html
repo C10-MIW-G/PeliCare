@@ -13,6 +13,7 @@
 
 			</span>
 		</div>
+		<p *ngIf="lastAdminDeleteWarning" class="errorMessage">A Care Circle should have at least one Circle Admin</p>
 	</div>
 	<div class="col-md-2">
 		<div *ngIf="isAdmin">

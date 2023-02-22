@@ -18,6 +18,7 @@ export class CarecircleMembersComponent implements OnInit {
   errorMessage: string;
   submitted: boolean;
   circleId: number;
+  lastAdminDeleteWarning: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -91,6 +92,7 @@ export class CarecircleMembersComponent implements OnInit {
   }  
 
   toggleAdminStatus(email: String) {
+    this.lastAdminDeleteWarning = false; // new try after possible mistake: remove any previous error message
     this.careCircleService.toggleAdminStatus({
       email: email,
       circleId: this.circleId
@@ -101,7 +103,11 @@ export class CarecircleMembersComponent implements OnInit {
         this.reload();
       },
       error: (error: HttpErrorResponse) =>{
-        this.errorHandlingService.redirectUnexpectedErrors(error);
+        if(error.status === 500){
+         this.lastAdminDeleteWarning = true;
+        } else {
+          this.errorHandlingService.redirectUnexpectedErrors(error);
+        }        
       }
     });
   }
