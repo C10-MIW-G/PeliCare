@@ -8,11 +8,11 @@ import lombok.Setter;
  * <p>
  * p.c.c.moonen@gmail.com
  * <p>
- * receive data from front end to promote a Care Circle User to Admin of the same Care Circle
+ * receive data from front end to toggle admin status of a Care Circle member
  */
 @Getter
 @Setter
-public class UserBecomesAdmin {
+public class ToggleAdminStatusDTO {
     private String email;
     private Long circleId;
 }

@@ -59,17 +59,10 @@ public class CareCircleController {
             return new ResponseEntity<Boolean>(isAdmin, HttpStatus.OK);
     }
 
-    @PatchMapping("/makeadmin")
-    public ResponseEntity<String> makeUserAdmin(@RequestBody UserBecomesAdmin userBecomesAdmin,
-                                                @RequestHeader (name="Authorization") String jwt) {
-        careCircleUserService.promoteUserToAdmin(jwt, userBecomesAdmin);
-        return new ResponseEntity<String>( HttpStatus.OK);
-    }
-
-    @PatchMapping("/revokeadmin")
-    public ResponseEntity<String> revokeUserAdmin(@RequestBody UserBecomesAdmin userBecomesAdmin,
-                                                @RequestHeader (name="Authorization") String jwt) {
-        careCircleUserService.revokeUserAdmin(jwt, userBecomesAdmin);
+    @PatchMapping("/toggleadminstatus")
+    public ResponseEntity<String> toggleAdminStatus(@RequestBody ToggleAdminStatusDTO toggleAdminStatusDTO,
+                                                  @RequestHeader (name="Authorization") String jwt) {
+        careCircleUserService.toggleUserAdmin(jwt, toggleAdminStatusDTO);
         return new ResponseEntity<String>( HttpStatus.OK);
     }
 

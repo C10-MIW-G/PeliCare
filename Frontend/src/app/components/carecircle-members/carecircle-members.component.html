@@ -6,9 +6,9 @@
 		<div *ngFor="let user of carecirclemembers">
 			<span class="row">
 				<p class="col-3">{{ user.email }}</p>
-				<button *ngIf="isAdmin && !user.isAdmin" (click)="makeAdmin(user.email)"
+				<button *ngIf="isAdmin && !user.isAdmin" (click)="toggleAdminStatus(user.email)"
 					class="mt-2 btn btn-warning mt-1 col-3">Grant Circle Admin privileges</button>
-				<button *ngIf="isAdmin && user.isAdmin" (click)="revokeAdmin(user.email)"
+				<button *ngIf="isAdmin && user.isAdmin" (click)="toggleAdminStatus(user.email)"
 					class="mt-2 btn btn-success mt-1 col-3">Revoke Circle Admin privileges</button>
 
 			</span>

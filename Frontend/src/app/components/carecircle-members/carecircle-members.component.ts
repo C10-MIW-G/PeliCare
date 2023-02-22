@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CareCircleService } from '../../services/care-circle.service';
-import { User } from '../../interfaces/user';
+import { CareCircleUserStatus } from 'src/app/services/carecircle-user-status';
 
 @Component({
   selector: 'app-carecircle-members',
@@ -13,10 +13,11 @@ import { User } from '../../interfaces/user';
 })
 export class CarecircleMembersComponent implements OnInit {
   form: FormGroup;
-  users: User[] = [];
+  carecirclemembers: CareCircleUserStatus[] = [];
   public isAdmin: Boolean;
   errorMessage: string;
   submitted: boolean;
+  circleId: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,10 +38,10 @@ export class CarecircleMembersComponent implements OnInit {
   }
 
   getAllMembersOfCareCircle(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.careCircleService.getMembersOfCareCircle(id).subscribe({
-      next: (response: User[]) => {
-        this.users = response;
+    this.circleId = Number(this.route.snapshot.paramMap.get('id'));
+    this.careCircleService.getMembersOfCareCircle(this.circleId).subscribe({
+      next: (response: CareCircleUserStatus[]) => {
+        this.carecirclemembers = response;
         this.checkAdminStatus();
       },
       error: (error: HttpErrorResponse) => {
@@ -87,5 +88,21 @@ export class CarecircleMembersComponent implements OnInit {
 
   reload() {
     this.ngOnInit();
+  }  
+
+  toggleAdminStatus(email: String) {
+    this.careCircleService.toggleAdminStatus({
+      email: email,
+      circleId: this.circleId
+    })
+    .subscribe({
+      complete: () => {
+        console.log("admin status of user is turned around");
+        this.reload();
+      },
+      error: (error: HttpErrorResponse) =>{
+        this.errorHandlingService.redirectUnexpectedErrors(error);
+      }
+    });
   }
 }

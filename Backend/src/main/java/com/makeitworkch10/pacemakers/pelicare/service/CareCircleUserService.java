@@ -2,8 +2,9 @@ package com.makeitworkch10.pacemakers.pelicare.service;
 
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtService;
 import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleUserDTO;
-import com.makeitworkch10.pacemakers.pelicare.dto.UserBecomesAdmin;
+import com.makeitworkch10.pacemakers.pelicare.dto.ToggleAdminStatusDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.UserDTO;
+import com.makeitworkch10.pacemakers.pelicare.exception.CareCircleMustHaveAdminException;
 import com.makeitworkch10.pacemakers.pelicare.exception.DuplicateUserException;
 import com.makeitworkch10.pacemakers.pelicare.exception.UserNotFoundException;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
@@ -75,27 +76,22 @@ public class CareCircleUserService {
         }
     }
 
-    public void promoteUserToAdmin(String jwt, UserBecomesAdmin userBecomesAdmin) {
-        // request sent by admin of this circle?
-        Long circleId = userBecomesAdmin.getCircleId();
-        String email = userBecomesAdmin.getEmail();
+    public void toggleUserAdmin(String jwt, ToggleAdminStatusDTO toggleAdminStatusDTO) {
 
+        Long circleId = toggleAdminStatusDTO.getCircleId();
         if(isUserAdminOfCircle(circleId, jwt)) {
-            // find the user to promote
-            Long userId = userRepository.findByEmail(email).orElseThrow().getId();
-            careCircleUserRepository.promoteUserToAdmin(userId,circleId);
-        }
-    }
-
-    public void revokeUserAdmin(String jwt, UserBecomesAdmin userBecomesAdmin) {
-        // request sent by admin of this circle?
-        Long circleId = userBecomesAdmin.getCircleId();
-        String email = userBecomesAdmin.getEmail();
-
-        if(isUserAdminOfCircle(circleId, jwt)) {
-            // find the user to promote
-            Long userId = userRepository.findByEmail(email).orElseThrow().getId();
-            careCircleUserRepository.revokeUserAdmin(userId,circleId);
+            Long userId = userService.findUserByEmail(toggleAdminStatusDTO.getEmail()).getId();
+            Boolean isAdmin = careCircleUserRepository.isUserAdminOfCircle(circleId, userId).get();
+            if(!isAdmin){
+                careCircleUserRepository.promoteUserToAdmin(userId,circleId);
+            }
+            else {
+                if (careCircleUserRepository.countAdmins(circleId) >= 2) {
+                    careCircleUserRepository.revokeUserAdmin(userId,circleId);
+                } else {
+                    throw new CareCircleMustHaveAdminException("A Care Circle should have at least one Admin.");
+                }
+            }
         }
     }
 

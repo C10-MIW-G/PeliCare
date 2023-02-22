@@ -62,4 +62,10 @@ public interface CareCircleUserRepository extends JpaRepository<CareCircleUser, 
                 nativeQuery = true)
         void revokeUserAdmin(Long userId, Long circleId);
 
+        @Query(
+                value = "SELECT COUNT(*) FROM care_circle_user WHERE care_circle_id = ?1 AND is_circle_admin = true",
+                nativeQuery = true
+        )
+        int countAdmins(Long careCircleId);
+
     }
