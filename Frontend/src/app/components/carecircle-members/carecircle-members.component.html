@@ -3,17 +3,17 @@
 
 	<div class="col-md-8">
 		<h4>Members</h4>
-		<div *ngFor="let user of carecirclemembers">
+		<div *ngFor="let userstatus of carecirclemembers">
 			<span class="row">
-				<p class="col-3">{{ user.email }}</p>
-				<button *ngIf="isAdmin && !user.isAdmin" (click)="toggleAdminStatus(user.email)"
-					class="mt-2 btn btn-warning mt-1 col-3">Grant Circle Admin privileges</button>
-				<button *ngIf="isAdmin && user.isAdmin" (click)="toggleAdminStatus(user.email)"
-					class="mt-2 btn btn-success mt-1 col-3">Revoke Circle Admin privileges</button>
-
+				<p class="col-3">{{ userstatus.email }}</p>
+				<button *ngIf="isAdmin && !userstatus.isAdmin" class="mt-2 btn btn-warning mt-1 col-3"
+					data-bs-toggle="modal" data-bs-target="#adminstatusmodal" (click)="showModal(userstatus)">Grant
+					Circle Admin privileges</button>
+				<button *ngIf="isAdmin && userstatus.isAdmin" class="mt-2 btn btn-success mt-1 col-3"
+					data-bs-toggle="modal" data-bs-target="#adminstatusmodal" (click)="showModal(userstatus)">Revoke
+					Circle Admin privileges</button>
 			</span>
 		</div>
-		<p *ngIf="lastAdminDeleteWarning" class="errorMessage">A Care Circle should have at least one Circle Admin</p>
 	</div>
 	<div class="col-md-2">
 		<div *ngIf="isAdmin">
@@ -39,6 +39,32 @@
 					Add User
 				</button>
 			</form>
+		</div>
+	</div>
+</div>
+
+<!-- modal -->
+<div class="modal fade" id="adminstatusmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel">Change of Care Circle Admin status</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p *ngIf="selectedUserStatus.isAdmin && numberOfAdmins > 1">Are you sure you want to <b>revoke the admin
+					rights</b><br>of Care Circle member {{selectedUserStatus.email}}?</p>
+				<p *ngIf="selectedUserStatus.isAdmin && numberOfAdmins == 1" class="errorMessage">You are the last
+					remaining Admin of this Care Circle.<br>The Care Circle should have at least one Admin.</p>
+				<p *ngIf="!selectedUserStatus.isAdmin">Are you sure you want to <b>grant Admin rights</b><br>to Care Circle Member
+					{{selectedUserStatus.email}}?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning" data-bs-dismiss="modal"
+					(click)="toggleAdminStatus(selectedUserStatus.email)"
+					*ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)">Yes</button>
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Go Back</button>
+			</div>
 		</div>
 	</div>
 </div>
