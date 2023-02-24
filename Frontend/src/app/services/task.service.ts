@@ -19,6 +19,9 @@ export class TaskService {
             });
     }
 
+    public getTasksByCareCircle(careCircleId: Number): Observable<Task[]> {
+      return this.http.get<Task[]>(`${this.apiBackendUrl}/task/all/${careCircleId}`);
+    }
 
     public getTaskById(id: Number): Observable<Task> {
         return this.http.get<Task>(`${this.apiBackendUrl}/task/get/${id}`);
@@ -26,6 +29,7 @@ export class TaskService {
 
     public updateTask(task: Task): Observable<Task> {
         return this.http.patch<Task>(`${this.apiBackendUrl}/task/patch`, {
+            completedTask: task.completedTask,
             title: task.title,
             description: task.description,
             id: task.id

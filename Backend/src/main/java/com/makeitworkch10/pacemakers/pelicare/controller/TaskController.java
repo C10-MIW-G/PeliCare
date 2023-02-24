@@ -29,6 +29,12 @@ public class TaskController {
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 
+    @GetMapping("/all/{careCircleId}")
+    public ResponseEntity<List<TaskDTO>> getAllTasksByCareCircle(@PathVariable("careCircleId") Long careCircleId) {
+        List<TaskDTO> responseList = taskService.findAllTasksByCareCircle(careCircleId);
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
+    }
+
     @GetMapping("/get/{id}")
     public ResponseEntity<TaskDTO> findTask(@PathVariable("id") Long id) {
         TaskDTO task = taskService.getTask(id);

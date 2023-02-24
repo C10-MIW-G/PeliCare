@@ -4,6 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings } from 'ng-recaptcha';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +21,10 @@ import { ErrorComponent } from './components/error/error.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { TaskListComponent } from './components/task-list/task-list.component';
+import { AddTaskComponent } from './components/add-task/add-task.component';
+import { EditTaskComponent } from './components/edit-task/edit-task.component';
+import { DeleteTaskComponent } from './components/delete-task/delete-task.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +39,11 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     ErrorComponent,
     NotFoundComponent,
     HomeComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    TaskListComponent,
+    AddTaskComponent,
+    EditTaskComponent,
+    DeleteTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -44,8 +53,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     ReactiveFormsModule,
     RecaptchaModule,
     RecaptchaFormsModule,
-
-
+    FontAwesomeModule,
   ],
   providers: [CareCircleService, {
     provide: HTTP_INTERCEPTORS,

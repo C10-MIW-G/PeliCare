@@ -1,80 +1,83 @@
 <div class="row container-fluid component-body">
-	<div *ngIf="careCircle" class="col-md-2">
-    <a class="btn btn-dark" routerLink="/carecircle/{{careCircle.id}}/members">Members</a>
+  <div *ngIf="careCircle" class="col-md-2 text-center">
+    <a class="btn btn-dark" routerLink="/carecircle/{{ careCircle.id }}/members"
+      >Members</a
+    >
   </div>
 
-	<div class="col-md-8">
+  <div class="col-md-8">
+    <div *ngIf="careCircle">
+      <h4 class="text-dark text-center">Task List for {{ careCircle.name }}</h4>
+      <div class="row d-flex justify-content-center">
+        <div class="col-6">
+          <app-task-list [careCircleId]="careCircle.id"></app-task-list>
+        </div>
+      </div>
+    </div>
+  </div>
 
-		<div *ngIf="careCircle">
-			<h4 class="text-dark">Task List for {{careCircle.name}}</h4>
-			<p></p>
+  <div class="col-md-2 text-center">
+    <button
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#addTask"
+    >
+      <fa-icon [icon]="faPlusCircle"></fa-icon> Add new Task
+    </button>
 
-			<table class="table table-hover table-borderless">
-				<thead>
-					<tr>
-						<th scope="col">Done</th>
-						<th scope="col">Task name</th>
-						<th scope="col">Task description</th>						
-						<th scope="col"></th> <!-- layout space for edit-button -->
-					</tr>
-				</thead>
-				<tbody *ngFor="let task of careCircle.taskList">
-					<tr>
-						
-						<td *ngIf="task.completedTask == false">
-							<a (click)="complete(task)">☐</a>
-						</td>
-						<td *ngIf="task.completedTask">🗹</td>
-						<td>{{task.title}}</td>
-						<td>{{task.description}}</td>
-						<td>
-							<a class="btn btn-outline-dark"
-								routerLink="/task/edit/{{task.id}}/{{careCircle.id}}">Edit</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+    <button
+      *ngIf="isAdmin"
+      type="button"
+      class="btn btn-warning mt-1"
+      data-bs-toggle="modal"
+      data-bs-target="#deleteCircle"
+    >
+      Delete this Circle
+    </button>
+  </div>
 
-			<div *ngIf="careCircle.taskList.length === 0">
-				<p>The List is empty</p>
-			</div>
-		</div>
-	</div>
-
-	<div class="col-md-2">
-		<a class="mt-1 btn btn-dark" routerLink="/task/create/{{careCircle.id}}">Create a new Task</a>
-		<button *ngIf="isAdmin" type="button" class="btn btn-warning mt-1" data-bs-toggle="modal"
-			data-bs-target="#exampleModal">
-			Delete this Care Circle
-		</button>
-	</div>
-
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure you want to delete this care
-						circle?</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body row gap-2">
-
-						<button class="btn btn-outline-dark btn-danger col"
-								(click)="delete()"
-								data-bs-dismiss="modal">
-								Yes, delete Care Circle
-						</button>
-						<button type="button"
-								class="btn btn-outline-dark btn-warning col"
-								data-bs-dismiss="modal">
-								No, go back
-						</button>
-
-				</div>
-				<div class="modal-footer">
-					<p>Deleting a Care Circle can not be undone.</p>
-				</div>
-			</div>
-		</div>
-	</div>
+  <!-- delete care circle modal-->
+  <div
+    class="modal fade"
+    id="deleteCircle"
+    tabindex="-1"
+    aria-labelledby="deleteCircleLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteCircleLabel">
+            Are you sure you want to delete this care circle?
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body row gap-2">
+          <button
+            class="btn btn-outline-dark btn-danger col"
+            (click)="deleteCareCircle()"
+            data-bs-dismiss="modal"
+          >
+            Yes, delete Care Circle
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-dark btn-warning col"
+            data-bs-dismiss="modal"
+          >
+            No, go back
+          </button>
+        </div>
+        <div class="modal-footer">
+          <p>Deleting a Care Circle can not be undone.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -33,6 +33,13 @@ public class TaskService {
                 .collect(Collectors.toList());
     }
 
+    public List<TaskDTO> findAllTasksByCareCircle(Long careCircleId){
+        return taskRepository.findAllByCareCircleIdOrderByCompletedTaskAscIdDesc(careCircleId)
+                .stream()
+                .map(taskDTOMapper)
+                .collect(Collectors.toList());
+    }
+
     public TaskDTO getTask(Long id) throws ResourceNotFoundException {
         return taskRepository.findById(id)
                 .map(taskDTOMapper)

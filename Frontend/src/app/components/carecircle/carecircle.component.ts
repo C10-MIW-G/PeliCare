@@ -1,11 +1,10 @@
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
-import { TaskService } from '../../services/task.service';
-import { Task } from '../../interfaces/task';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CareCircleService } from '../../services/care-circle.service';
 import { CareCircle } from '../../interfaces/carecircle';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
 	selector: 'app-carecircle',
@@ -14,21 +13,21 @@ import { CareCircle } from '../../interfaces/carecircle';
 })
 export class CareCircleComponent implements OnInit {
 
+  faPlusCircle = faPlusCircle;
+
+  public showEditButton: Boolean;
+  public isAdmin: Boolean;
 	public careCircle: CareCircle;
 
     constructor (
       private route: ActivatedRoute,
       private careCircleService: CareCircleService,
-      private taskservice: TaskService,
-	  private router: Router,
+	    private router: Router,
       private errorHandlingService: ErrorHandlingService
     ) {}
 
-	public isAdmin: Boolean;
-
 	ngOnInit(): void {
 		this.getCareCircle();
-
 	}
 
 	getCareCircle(): void {
@@ -52,24 +51,20 @@ export class CareCircleComponent implements OnInit {
 				this.isAdmin = Response.valueOf();
 			},
 			error: (error: HttpErrorResponse) => {
-				alert(error.message);
+				this.errorHandlingService.redirectUnexpectedErrors(error);
 			}
 		});
 	}
 
-	complete(task: Task) {
-		task.completedTask = true;
-		this.taskservice.setTaskToComplete(task).subscribe();
-	}
-
-	delete() {
+	deleteCareCircle() {
 		this.careCircleService.deleteCareCircle(this.careCircle.id)
 		.subscribe({
 			complete: ()=> {
-				console.log(Response.toString);
 				this.router.navigateByUrl(`/carecircles`)
 			},
-			error: ()=> {alert( "something went wrong"); }
+			error: (error: HttpErrorResponse)=> {
+        this.errorHandlingService.redirectUnexpectedErrors(error);
+       }
 		})
 	}
 }
