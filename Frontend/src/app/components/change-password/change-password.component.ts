@@ -30,7 +30,7 @@ export class ChangePasswordComponent implements OnInit {
       {
         oldPassword: ['', [Validators.required]],
         newPassword: ['', [Validators.required, Validators.minLength(6)]],
-        newPasswordConfirm: ['', [Validators.required]]
+        newPasswordConfirm: ['', [Validators.required, Validators.minLength(6)]]
       },
       {
         validator: this.customValidator.matchNewPassword(
