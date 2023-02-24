@@ -62,6 +62,15 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                 status.toString(), LocalDateTime.now()), status);
     }
 
+    @ExceptionHandler(WrongPasswordException.class)
+    protected ResponseEntity<Object> handleWrongPasswordException(
+            WrongPasswordException wrongPasswordException
+    ) {
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+        return  buildResponseEntity(new ApiError(wrongPasswordException.getMessage(), status.value(),
+                status.toString(), LocalDateTime.now()), status);
+    }
+
     private ResponseEntity<Object> buildResponseEntity(ApiError apiError, HttpStatus status) {
         return new ResponseEntity<>(apiError, status);
     }

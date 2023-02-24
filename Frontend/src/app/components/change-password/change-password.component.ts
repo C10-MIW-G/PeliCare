@@ -1,5 +1,9 @@
+import { ErrorHandlingService } from '../../services/error-handling.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { CustomvalidationService } from '../../services/custom-validation.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { ChangePasswordService } from '../../services/change-password.service';
 
 @Component({
@@ -7,34 +11,60 @@ import { ChangePasswordService } from '../../services/change-password.service';
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.css']
 })
-export class ChangePasswordComponent {
-  oldPassword: string;
-  newPassword: string;
-  newPasswordConfirm: string;
-  public showErrorMessage: boolean = false;
+export class ChangePasswordComponent implements OnInit {
+  changePasswordForm: FormGroup;
+  submitted: boolean;
+  showErrorMessage: string;
 
   constructor(
+    private errorHandlingService: ErrorHandlingService,
     private route: ActivatedRoute,
     private changepasswordservice: ChangePasswordService,
     private router: Router,
+    private fb: FormBuilder,
+    private customValidator: CustomvalidationService
   ){}
 
+  ngOnInit() {
+    this.changePasswordForm = this.fb.group({
+      oldPassword: ['', [Validators.required]],
+      newPassword: ['', [Validators.required, Validators.minLength(6)]],
+      newPasswordConfirm: ['', [Validators.required]]},
+      {
+        Validators: this.customValidator.MatchPassword(
+          'newPassword',
+          'newPasswordConfirm'
+        )
+      }
+    );
+  }
+
+  get changePasswordFormControl(){
+    return this.changePasswordForm.controls
+  }
+
   savePass(){
-    if (this.newPassword === this.newPasswordConfirm){
+    this.submitted = true;
+
+    if (this.changePasswordForm.valid){
       this.changepasswordservice.updatePassword({
-        oldPassword: this.oldPassword,
-        newPassword: this.newPassword,
+        oldPassword: this.changePasswordFormControl['oldPassword'].value,
+        newPassword: this.changePasswordFormControl['newPassword'].value,
       })
       .subscribe({
         complete: ()=> {
           console.log(Response.toString);
           this.router.navigateByUrl("/carecircles")
         },
-        error: ()=> {alert( "something went wrong"); }
+        error: (error: HttpErrorResponse)=> {
+          if(error.status === 422){
+          this.showErrorMessage = error.error.message
+        } else {
+          this.errorHandlingService.redirectUnexpectedErrors (error)
+        }
+         }
       });
-    } else {
-      this.showErrorMessage = true
-    }
+
   }
 
-}
+}}

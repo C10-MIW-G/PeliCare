@@ -16,6 +16,9 @@
             <a class="nav-link active" routerLink="/account/signin">Sign In</a>
           </li>
           <li *ngIf="isLoggedIn()" class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/account/changepassword">Change Password</a>
+          </li>
+          <li *ngIf="isLoggedIn()" class="nav-item">
             <a class="nav-link btn" (click)="logout()">Sign Out</a>
           </li>
         </ul>

@@ -1,6 +1,7 @@
 package com.makeitworkch10.pacemakers.pelicare.controller;
 
 import com.makeitworkch10.pacemakers.pelicare.dto.ChangePasswordDTO;
+import com.makeitworkch10.pacemakers.pelicare.exception.WrongPasswordException;
 import com.makeitworkch10.pacemakers.pelicare.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,6 @@ public class UserController {
             if (oldPasswordOK){
                 userService.updatePassword(jwt, changePasswordDTO.getNewPassword());
                 return new ResponseEntity<ChangePasswordDTO>(responseDTO, HttpStatus.OK);
-            }
-            return new ResponseEntity<ChangePasswordDTO>(responseDTO, HttpStatus.FORBIDDEN);
+            } throw new WrongPasswordException("Old password is incorrect");
     }
 }
