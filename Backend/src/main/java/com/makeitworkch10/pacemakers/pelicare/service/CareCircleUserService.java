@@ -14,7 +14,9 @@ import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleUserRepositor
 import com.makeitworkch10.pacemakers.pelicare.user.User;
 import com.makeitworkch10.pacemakers.pelicare.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.ErrorResponseException;
 
 import java.util.*;
 
@@ -73,6 +75,20 @@ public class CareCircleUserService {
             } else {
                 throw new DuplicateUserException("User already in the Care Circle");
             }
+        }
+    }
+    public void removeUserFromCareCircle(String jwt, String email, Long careCircleId) {
+        if (isUserAdminOfCircle(careCircleId, jwt)) {
+            CareCircle careCircle = careCircleRepository.findById(careCircleId).orElseThrow(
+                    () -> new UserNotFoundException("CareCircle does not exist")
+            );
+            User removeUser = userRepository.findByEmail(email).orElseThrow(
+                    () -> new UserNotFoundException("User does not exist")
+            );
+                careCircleUserRepository.deleteCareCircleUserByCircleIdAndUserId
+                        (removeUser.getId(), careCircle.getId());
+            } else {
+                throw new ErrorResponseException(HttpStatus.FORBIDDEN);
         }
     }
 

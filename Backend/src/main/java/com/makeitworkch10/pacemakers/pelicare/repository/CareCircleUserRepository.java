@@ -68,4 +68,11 @@ public interface CareCircleUserRepository extends JpaRepository<CareCircleUser, 
         )
         int countAdmins(Long careCircleId);
 
+        @Modifying
+        @Transactional
+        @Query(
+                value = "DELETE FROM care_circle_user WHERE user_id = ?1 AND care_circle_id = ?2",
+                nativeQuery = true
+        )
+        void deleteCareCircleUserByCircleIdAndUserId(Long userId, Long careCircleId);
     }

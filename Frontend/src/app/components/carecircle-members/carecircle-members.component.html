@@ -12,6 +12,7 @@
 				<button *ngIf="isAdmin && userstatus.isAdmin" class="mt-2 btn btn-success mt-1 col-3"
 					data-bs-toggle="modal" data-bs-target="#adminstatusmodal" (click)="showModal(userstatus)">Revoke
 					Circle Admin privileges</button>
+          <button class="mt-2 btn btn-danger mt-1 col-3" data-bs-toggle="modal" data-bs-target="#removeusermodal" (click)="showModal(userstatus)">Remove User</button>
 			</span>
 		</div>
 	</div>
@@ -63,7 +64,30 @@
 				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Go Back</button>
 				<button type="button" class="btn btn-warning" data-bs-dismiss="modal"
 					(click)="toggleAdminStatus(selectedUserStatus.email)"
-					*ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)">Yes</button>				
+					*ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)">Yes</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- modal -->
+<div class="modal fade" id="removeusermodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel">Remove User from Care Circle</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p *ngIf="selectedUserStatus.isAdmin && numberOfAdmins == 1" class="errorMessage">You are the last
+					remaining Admin of this Care Circle.<br>The Care Circle should have at least one Admin.</p>
+				<p *ngIf="!selectedUserStatus.isAdmin || numberOfAdmins > 1">Are you sure you want to remove {{selectedUserStatus.email}} from this Care Circle?</p>
+			</div>
+			<div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Go Back</button>
+				<button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+					(click)="removeUserFromCareCircle(selectedUserStatus)"
+					*ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)">Yes</button>
 			</div>
 		</div>
 	</div>

@@ -1,5 +1,5 @@
 export interface CareCircleUserStatus {
-    email: String,
+    email: string,
     isAdmin: Boolean,
     circleId: Number
 }

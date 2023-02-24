@@ -33,7 +33,7 @@ export class CarecircleMembersComponent implements OnInit {
 	}
 	ngOnInit(): void {
 		this.getAllMembersOfCareCircle();
-		// the template modal data need to have some initialisation 
+		// the template modal data need to have some initialisation
 		this.selectedUserStatus = { email: "test mail", isAdmin: false, circleId: -1 };
 	}
 
@@ -78,6 +78,20 @@ export class CarecircleMembersComponent implements OnInit {
 		}
 	}
 
+  removeUserFromCareCircle(user: CareCircleUserStatus) {
+    const id = Number(this.route.snapshot.paramMap.get('id'))
+    var userEmail = user.email
+    this.careCircleService.removeUserFromCareCircle(id, userEmail).subscribe({
+      complete: () => {
+        console.log('User is removed');
+        this.reload();
+      },
+      error: (error: HttpErrorResponse) => {
+        this.errorHandlingService.redirectUnexpectedErrors(error);
+      }
+    })
+  }
+
 	showModal(userstatus: CareCircleUserStatus) {
 		this.selectedUserStatus = userstatus;
 		this.countNumberOfAdminsInCircle();
@@ -117,8 +131,8 @@ export class CarecircleMembersComponent implements OnInit {
 				console.log("admin status of user is turned around");
 				this.reload();
 			},
-			error: (error: HttpErrorResponse) => {				
-				this.errorHandlingService.redirectUnexpectedErrors(error);				
+			error: (error: HttpErrorResponse) => {
+				this.errorHandlingService.redirectUnexpectedErrors(error);
 			}
 		});
 	}
