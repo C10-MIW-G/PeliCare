@@ -60,10 +60,10 @@
 					{{selectedUserStatus.email}}?</p>
 			</div>
 			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Go Back</button>
 				<button type="button" class="btn btn-warning" data-bs-dismiss="modal"
 					(click)="toggleAdminStatus(selectedUserStatus.email)"
-					*ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)">Yes</button>
-				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Go Back</button>
+					*ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)">Yes</button>				
 			</div>
 		</div>
 	</div>
