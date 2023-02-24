@@ -28,7 +28,34 @@ export class CustomvalidationService {
       } else {
         confirmPasswordControl.setErrors(null);
       }
+    }
+  }
 
+  matchNewPassword(oldPassword: string, password: string, confirmPassword: string) {
+    return (formGroup: FormGroup) => {
+      const oldPasswordControl = formGroup.controls[oldPassword];
+      const passwordControl = formGroup.controls[password];
+      const confirmPasswordControl = formGroup.controls[confirmPassword];
+
+      if (!passwordControl || !confirmPasswordControl) {
+        return null;
+      }
+
+      if (confirmPasswordControl.errors && !confirmPasswordControl.errors['passwordMismatch']) {
+        return null;
+      }
+
+      if (oldPasswordControl.value === passwordControl.value){
+        passwordControl.setErrors({ passwordMismatch: true});
+      } else {
+        passwordControl.setErrors(null);
+      }
+
+      if (passwordControl.value !== confirmPasswordControl.value) {
+        confirmPasswordControl.setErrors({ passwordMismatch: true });
+      } else {
+        confirmPasswordControl.setErrors(null);
+      }
     }
   }
 
