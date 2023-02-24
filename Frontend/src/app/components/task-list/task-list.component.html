@@ -1,0 +1,93 @@
+<div *ngFor="let task of taskList" class="accordion" id="accordionTaskList">
+  <div class="accordion-item mt-2">
+    <h2 class="accordion-header" [attr.id]="'heading-' + task.id">
+      <button
+        [ngClass]="
+          taskList[0] === task
+            ? 'accordion-button'
+            : 'accordion-button collapsed'
+        "
+        type="button"
+        data-bs-toggle="collapse"
+        [attr.data-bs-target]="'#collapse-' + task.id"
+        [attr.aria-expanded]="taskList[0] === task ? 'false' : 'true'"
+        [attr.aria-controls]="'collapse-' + task.id"
+      >
+        <fa-icon
+          size="lg"
+          [ngClass]="
+            task.completedTask === true
+              ? 'task-completed'
+              : 'task-not-completed'
+          "
+          [icon]="task.completedTask === true ? faCheckSquare : faSquare"
+        ></fa-icon>
+        &nbsp; &nbsp;
+        <span
+          [ngClass]="
+            task.completedTask === true
+              ? 'task-completed'
+              : 'task-not-completed'
+          "
+          >{{ task.title }}</span
+        >
+      </button>
+    </h2>
+    <div
+      [attr.id]="'collapse-' + task.id"
+      [ngClass]="
+        taskList[0] === task
+          ? 'accordion-collapse collapse show'
+          : 'accordion-collapse collapse'
+      "
+      [attr.aria-labelledby]="'heading-' + task.id"
+      [attr.data-bs-parent]="'#accordionTask-' + task.id"
+    >
+      <div class="accordion-body">
+        {{ task.description }}
+      </div>
+      <div class="accordion-footer d-flex justify-content-between">
+        <div
+          *ngIf="task.completedTask === false"
+          class="btn bg-transparent text-primary"
+          (click)="fillEditTaskForm(task)"
+          data-bs-toggle="modal"
+          data-bs-target="#editTask"
+        >
+          <fa-icon [icon]="faPencil"></fa-icon> edit
+        </div>
+        <button
+          *ngIf="task.completedTask === true"
+          type="button"
+          class="btn btn-secondary"
+          (click)="undoTask(task)"
+        >
+          undo
+        </button>
+        <button
+          *ngIf="task.completedTask === false"
+          type="button"
+          class="btn btn-success"
+          (click)="completeTask(task)"
+        >
+          <fa-icon [icon]="faCheckCircle"></fa-icon> done
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="taskList.length === 0">
+  <p>The List is empty</p>
+</div>
+
+<app-edit-task
+  [editTaskForm]="editTaskForm"
+  (onUpdateTask)="updateTask($event)"
+  (onDeleteTask)="deleteTask($event)"
+></app-edit-task>
+<app-add-task
+  [careCircleId]="careCircleId"
+  (onAddTask)="addTask($event)"
+></app-add-task>
+
