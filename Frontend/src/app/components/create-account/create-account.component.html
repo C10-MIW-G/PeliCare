@@ -58,18 +58,15 @@
             name="confirmPassword"
             placeholder="Confirm Password"
             formControlName="confirmPassword"
-            [ngClass]="{'is-invalid': (registerFormControl['confirmPassword'].touched || submitted) && registerFormControl['confirmPassword'].invalid}"
-          />
-          <div
-            *ngIf="registerFormControl['confirmPassword'].invalid"
-            class="invalid-feedback"
-          >
-            <div *ngIf="registerFormControl['confirmPassword'].errors?.['required']">
-              Confirm Password is required
-            </div>
-            <div *ngIf="registerFormControl['confirmPassword'].errors?.['passwordMismatch']">
-              Confirm Password does not match
-            </div>
+            [ngClass]="{
+              'is-invalid':
+              (registerFormControl['confirmPassword'].touched || submitted) &&
+              registerFormControl['confirmPassword'].invalid
+            }"/>
+          <div *ngIf="registerFormControl['confirmPassword'].invalid"
+            class="invalid-feedback">
+            <div *ngIf="registerFormControl['confirmPassword'].errors?.['required']">Confirm Password is required</div>
+            <div *ngIf="registerFormControl['confirmPassword'].errors?.['passwordMismatch']">Confirm Password does not match</div>
           </div>
         </div>
         <div class="form-group mt-2">
