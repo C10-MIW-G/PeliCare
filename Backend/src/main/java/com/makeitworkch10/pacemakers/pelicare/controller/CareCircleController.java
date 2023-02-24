@@ -1,12 +1,9 @@
 package com.makeitworkch10.pacemakers.pelicare.controller;
 
-import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
-import com.makeitworkch10.pacemakers.pelicare.dto.CreateCareCircleDTO;
-import com.makeitworkch10.pacemakers.pelicare.dto.UserDTO;
+import com.makeitworkch10.pacemakers.pelicare.dto.*;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleService;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleUserService;
-import com.makeitworkch10.pacemakers.pelicare.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,6 +59,13 @@ public class CareCircleController {
             return new ResponseEntity<Boolean>(isAdmin, HttpStatus.OK);
     }
 
+    @PatchMapping("/toggleadminstatus")
+    public ResponseEntity<String> toggleAdminStatus(@RequestBody ToggleAdminStatusDTO toggleAdminStatusDTO,
+                                                  @RequestHeader (name="Authorization") String jwt) {
+        careCircleUserService.toggleUserAdmin(jwt, toggleAdminStatusDTO);
+        return new ResponseEntity<String>( HttpStatus.OK);
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteCareCircle(@PathVariable("id") Long circleId) {
         careCircleService.deleteCareCircle(circleId);
@@ -69,10 +73,12 @@ public class CareCircleController {
     }
 
     @GetMapping("/get/{id}/members")
-    public ResponseEntity<List<UserDTO>> getUsersOfCareCircle(@PathVariable("id") Long id){
-        List<UserDTO> responseList = careCircleService.findUsersOfCareCircle(id);
-        return new ResponseEntity<>(responseList, HttpStatus.OK);
+    public ResponseEntity<List<CareCircleUserDTO>> getUsersWithStatusOfCareCircle(@PathVariable("id") Long circleId){
+
+        List<CareCircleUserDTO> responseList = careCircleUserService.usersOfCareCircle(circleId);
+        return new ResponseEntity<List<CareCircleUserDTO>>(responseList, HttpStatus.OK);
     }
+
     @PostMapping("/get/{id}/members/add")
     public ResponseEntity<String> addUserToCareCircle(@PathVariable("id") Long id,
                                                       @RequestBody UserDTO user,

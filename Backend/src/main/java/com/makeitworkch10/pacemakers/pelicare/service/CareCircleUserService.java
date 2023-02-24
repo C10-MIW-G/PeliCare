@@ -1,7 +1,10 @@
 package com.makeitworkch10.pacemakers.pelicare.service;
 
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtService;
+import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleUserDTO;
+import com.makeitworkch10.pacemakers.pelicare.dto.ToggleAdminStatusDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.UserDTO;
+import com.makeitworkch10.pacemakers.pelicare.exception.CareCircleMustHaveAdminException;
 import com.makeitworkch10.pacemakers.pelicare.exception.DuplicateUserException;
 import com.makeitworkch10.pacemakers.pelicare.exception.UserNotFoundException;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
@@ -13,7 +16,7 @@ import com.makeitworkch10.pacemakers.pelicare.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
+import java.util.*;
 
 
 /**
@@ -28,6 +31,7 @@ public class CareCircleUserService {
     private final UserRepository userRepository;
     private final CareCircleUserRepository careCircleUserRepository;
     private final CareCircleRepository careCircleRepository;
+    private final UserService userService;
 
     public void addCircleAdminToCareCircle(String jwt, CareCircle careCircle) {
         String userName = jwtService.extractUsername(jwt);
@@ -70,5 +74,41 @@ public class CareCircleUserService {
                 throw new DuplicateUserException("User already in the Care Circle");
             }
         }
+    }
+
+    public void toggleUserAdmin(String jwt, ToggleAdminStatusDTO toggleAdminStatusDTO) {
+
+        Long circleId = toggleAdminStatusDTO.getCircleId();
+        if(isUserAdminOfCircle(circleId, jwt)) {
+            Long userId = userService.findUserByEmail(toggleAdminStatusDTO.getEmail()).getId();
+            Boolean isAdmin = careCircleUserRepository.isUserAdminOfCircle(circleId, userId).get();
+            if(!isAdmin){
+                careCircleUserRepository.promoteUserToAdmin(userId,circleId);
+            }
+            else {
+                if (careCircleUserRepository.countAdmins(circleId) >= 2) {
+                    careCircleUserRepository.revokeUserAdmin(userId,circleId);
+                } else {
+                    throw new CareCircleMustHaveAdminException("A Care Circle should have at least one Admin.");
+                }
+            }
+        }
+    }
+
+    public List<CareCircleUserDTO> usersOfCareCircle(Long circleId) {
+        // list to return
+        List<CareCircleUserDTO> responseList = new ArrayList<>();
+
+        List<Long> userIdList = careCircleUserRepository.findUsersOfCareCircle(circleId);
+        for (Long userId : userIdList) {
+            Boolean isAdmin = careCircleUserRepository.isUserAdminOfCircle(circleId, userId).get();
+            String email = userService.geEmailOfUser(userId);
+            CareCircleUserDTO careCircleUserDTO = new CareCircleUserDTO();
+            careCircleUserDTO.setCircleId(circleId);
+            careCircleUserDTO.setEmail(email);
+            careCircleUserDTO.setIsAdmin(isAdmin);
+            responseList.add(careCircleUserDTO);
+        }
+        return responseList;
     }
 }

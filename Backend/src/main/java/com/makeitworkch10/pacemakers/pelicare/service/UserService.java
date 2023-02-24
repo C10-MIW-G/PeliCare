@@ -1,6 +1,8 @@
 package com.makeitworkch10.pacemakers.pelicare.service;
 
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtService;
+import com.makeitworkch10.pacemakers.pelicare.dto.UserDTO;
+import com.makeitworkch10.pacemakers.pelicare.service.mappers.UserDTOMapper;
 import com.makeitworkch10.pacemakers.pelicare.user.User;
 import com.makeitworkch10.pacemakers.pelicare.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    private  final UserDTOMapper userDTOMapper;
+
     public void updatePassword(String jwt, String newPassword){
         String username = jwtService.extractUsername(jwt);
         userRepository.updateUserPassword(passwordEncoder.encode(newPassword), username);
@@ -29,6 +33,14 @@ public class UserService {
         String username = jwtService.extractUsername(jwt);
         User user = userRepository.findByEmail(username).orElseThrow();
         return passwordEncoder.matches(oldPassword, user.getPassword());
+    }
+
+    public String geEmailOfUser(Long userId) {
+        return userRepository.findById(userId).get().getEmail();
+    }
+
+    public UserDTO findUserByEmail(String email) {
+        return userRepository.findByEmail(email).map(userDTOMapper).orElseThrow();
     }
 
 }

@@ -6,9 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public interface CareCircleUserRepository extends JpaRepository<CareCircleUser, Long> {
 
@@ -49,4 +47,25 @@ public interface CareCircleUserRepository extends JpaRepository<CareCircleUser, 
                 nativeQuery = true
         )
         Long findByUserIdAndCareCircle(Long userId, Long careCircleId);
+
+        @Modifying
+        @Transactional
+        @Query(
+                value = "UPDATE care_circle_user ccu SET ccu.is_circle_admin = true WHERE ccu.user_id = ?1 AND ccu.care_circle_id = ?2",
+                nativeQuery = true)
+        void promoteUserToAdmin(Long userId, Long circleId);
+
+        @Modifying
+        @Transactional
+        @Query(
+                value = "UPDATE care_circle_user ccu SET ccu.is_circle_admin = false WHERE ccu.user_id = ?1 AND ccu.care_circle_id = ?2",
+                nativeQuery = true)
+        void revokeUserAdmin(Long userId, Long circleId);
+
+        @Query(
+                value = "SELECT COUNT(*) FROM care_circle_user WHERE care_circle_id = ?1 AND is_circle_admin = true",
+                nativeQuery = true
+        )
+        int countAdmins(Long careCircleId);
+
     }

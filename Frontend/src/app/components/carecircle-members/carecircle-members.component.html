@@ -1,52 +1,70 @@
 <div class="row container-fluid component-body">
-  <div class="col-md-2"></div>
+	<div class="col-md-2"></div>
 
-  <div class="col-md-8">
-    <h4>Members</h4>
-    <div *ngFor="let user of users">
-      <p>{{ user.email }}</p>
-    </div>
-  </div>
-  <div class="col-md-2">
-    <div *ngIf="isAdmin">
-      <h6>Add User to your Circle</h6>
-      <div
-        *ngIf="errorMessage !== undefined"
-        class="alert alert-warning"
-        role="alert"
-      >
-        {{ errorMessage }}
-      </div>
-      <form [formGroup]="form" autocomplete="off">
-        <div class="form-group">
-          <input
-            type="text"
-            class="form-control"
-            id="inputEmail"
-            name="email"
-            aria-describedby="emailHelp"
-            placeholder="Enter email"
-            formControlName="email"
-            [ngClass]="{
+	<div class="col-md-8">
+		<h4>Members</h4>
+		<div *ngFor="let userstatus of carecirclemembers">
+			<span class="row">
+				<p class="col-3">{{ userstatus.email }}</p>
+				<button *ngIf="isAdmin && !userstatus.isAdmin" class="mt-2 btn btn-warning mt-1 col-3"
+					data-bs-toggle="modal" data-bs-target="#adminstatusmodal" (click)="showModal(userstatus)">Grant
+					Circle Admin privileges</button>
+				<button *ngIf="isAdmin && userstatus.isAdmin" class="mt-2 btn btn-success mt-1 col-3"
+					data-bs-toggle="modal" data-bs-target="#adminstatusmodal" (click)="showModal(userstatus)">Revoke
+					Circle Admin privileges</button>
+			</span>
+		</div>
+	</div>
+	<div class="col-md-2">
+		<div *ngIf="isAdmin">
+			<h6>Add User to your Circle</h6>
+			<div *ngIf="errorMessage !== undefined" class="alert alert-warning" role="alert">
+				{{ errorMessage }}
+			</div>
+			<form [formGroup]="form" autocomplete="off">
+				<div class="form-group">
+					<input type="text" class="form-control" id="inputEmail" name="email" aria-describedby="emailHelp"
+						placeholder="Enter email" formControlName="email" [ngClass]="{
               'is-invalid':
                 (formControl['email'].touched || submitted) &&
                 formControl['email'].invalid
-            }"
-          />
-          <div *ngIf="formControl['email'].invalid" class="invalid-feedback">
-            <div *ngIf="formControl['email'].errors?.['required']">
-              Email is required
-            </div>
-          </div>
-        </div>
-        <button
-          class="mt-2 btn btn-dark"
-          type="button"
-          (click)="addUserToCareCircle()"
-        >
-          Add User
-        </button>
-      </form>
-    </div>
-  </div>
+            }" />
+					<div *ngIf="formControl['email'].invalid" class="invalid-feedback">
+						<div *ngIf="formControl['email'].errors?.['required']">
+							Email is required
+						</div>
+					</div>
+				</div>
+				<button class="mt-2 btn btn-dark" type="button" (click)="addUserToCareCircle()">
+					Add User
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- modal -->
+<div class="modal fade" id="adminstatusmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel">Change of Care Circle Admin status</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p *ngIf="selectedUserStatus.isAdmin && numberOfAdmins > 1">Are you sure you want to <b>revoke the admin
+					rights</b><br>of Care Circle member {{selectedUserStatus.email}}?</p>
+				<p *ngIf="selectedUserStatus.isAdmin && numberOfAdmins == 1" class="errorMessage">You are the last
+					remaining Admin of this Care Circle.<br>The Care Circle should have at least one Admin.</p>
+				<p *ngIf="!selectedUserStatus.isAdmin">Are you sure you want to <b>grant Admin rights</b><br>to Care Circle Member
+					{{selectedUserStatus.email}}?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning" data-bs-dismiss="modal"
+					(click)="toggleAdminStatus(selectedUserStatus.email)"
+					*ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)">Yes</button>
+				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Go Back</button>
+			</div>
+		</div>
+	</div>
 </div>

@@ -20,7 +20,7 @@ export class CareCircleComponent implements OnInit {
       private route: ActivatedRoute,
       private careCircleService: CareCircleService,
       private taskservice: TaskService,
-	    private router: Router,
+	  private router: Router,
       private errorHandlingService: ErrorHandlingService
     ) {}
 
@@ -37,7 +37,6 @@ export class CareCircleComponent implements OnInit {
 		.subscribe({
 			next: (response: CareCircle) => {
 			   this.careCircle = response;
-			   console.log(this.careCircle);
 			   this.checkAdminStatus();
 			 },
 			error: (error: HttpErrorResponse) => {

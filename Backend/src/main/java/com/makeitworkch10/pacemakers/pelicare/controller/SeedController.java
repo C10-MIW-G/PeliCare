@@ -71,11 +71,12 @@ public class SeedController {
         taskRepository.save(task3);
 
         // Users with different privileges
+        // Circle admin is not site admin but site user.
+        // role of Circle admin is stored in CareCircleUser objects and table
         User circle1Admin = new User();
         circle1Admin.setEmail("admin1");
         circle1Admin.setPassword(passwordEncoder.encode("admin1"));
-        // Circle admin is not site admin but site user.
-        // role of Circle admin is stored in CareCircleUser objects and table
+
         circle1Admin.setRole(Role.USER);
         userRepository.save(circle1Admin);
         CareCircleUser adminCircle1 = new CareCircleUser(circle1Admin, circle1, true);
@@ -88,6 +89,37 @@ public class SeedController {
         userRepository.save(circle1User);
         CareCircleUser userCircle1 = new CareCircleUser(circle1User, circle1, false);
         careCircleUserRepository.save(userCircle1);
+
+        // people in Circle 2
+
+        User circle2Admin = new User();
+        circle2Admin.setEmail("admin2");
+        circle2Admin.setPassword(passwordEncoder.encode("admin2"));
+
+        circle2Admin.setRole(Role.USER);
+        userRepository.save(circle2Admin);
+        CareCircleUser adminCircle2 = new CareCircleUser(circle2Admin, circle2, true);
+        careCircleUserRepository.save(adminCircle2);
+
+        User circle2User = new User();
+        circle2User.setEmail("user2");
+        circle2User.setPassword(passwordEncoder.encode("user2"));
+        circle2User.setRole(Role.USER);
+        userRepository.save(circle2User);
+        CareCircleUser userCircle2 = new CareCircleUser(circle2User, circle2, false);
+        careCircleUserRepository.save(userCircle2);
+
+        // Admin for Care Circle 3
+        User circle3Admin = new User();
+        circle3Admin.setEmail("admin3");
+        circle3Admin.setPassword(passwordEncoder.encode("admin3"));
+
+        circle3Admin.setRole(Role.USER);
+        userRepository.save(circle3Admin);
+        CareCircleUser adminCircle3 = new CareCircleUser(circle3Admin, circle3, true);
+        careCircleUserRepository.save(adminCircle3);
+
     }
 
 }
+
