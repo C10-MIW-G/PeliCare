@@ -76,7 +76,7 @@ public class CareCircleController {
     public ResponseEntity<List<CareCircleUserDTO>> getUsersWithStatusOfCareCircle(@PathVariable("id") Long circleId){
 
         List<CareCircleUserDTO> responseList = careCircleUserService.usersOfCareCircle(circleId);
-        return new ResponseEntity<List<CareCircleUserDTO>>(responseList, HttpStatus.OK);
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 
     @PostMapping("/get/{id}/members/add")

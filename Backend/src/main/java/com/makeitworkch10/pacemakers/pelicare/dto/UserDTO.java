@@ -1,6 +1,7 @@
 package com.makeitworkch10.pacemakers.pelicare.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@NoArgsConstructor
 public class UserDTO {
     private Long id;
     private String email;

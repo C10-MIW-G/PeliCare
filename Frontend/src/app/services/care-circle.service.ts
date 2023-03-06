@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { CareCircle } from '../interfaces/carecircle';
 import { CareCircleUserStatus } from '../interfaces/carecircle-user-status';
-import { ToggleUserAdmin } from './toggle-user-admin';
+import { ToggleUserAdmin } from '../interfaces/toggle-user-admin';
 import { User } from '../interfaces/user';
 
 @Injectable({

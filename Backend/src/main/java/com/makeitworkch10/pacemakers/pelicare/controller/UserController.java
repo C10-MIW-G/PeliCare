@@ -1,6 +1,7 @@
 package com.makeitworkch10.pacemakers.pelicare.controller;
 
 import com.makeitworkch10.pacemakers.pelicare.dto.ChangePasswordDTO;
+import com.makeitworkch10.pacemakers.pelicare.dto.UserDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.WrongPasswordException;
 import com.makeitworkch10.pacemakers.pelicare.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -34,5 +35,11 @@ public class UserController {
                 userService.updatePassword(jwt, changePasswordDTO.getNewPassword());
                 return new ResponseEntity<ChangePasswordDTO>(responseDTO, HttpStatus.OK);
             } throw new WrongPasswordException("Old password is incorrect");
+    }
+
+    @GetMapping("/currentuser")
+    public ResponseEntity<UserDTO> getCurrentUser(@RequestHeader (name="Authorization") String jwt){
+        UserDTO currentUser = userService.findCurrentUser(jwt);
+        return new ResponseEntity<>(currentUser, HttpStatus.OK);
     }
 }

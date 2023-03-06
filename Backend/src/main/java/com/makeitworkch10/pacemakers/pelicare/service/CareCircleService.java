@@ -109,20 +109,4 @@ public class CareCircleService {
                 "CareCircle not found"
         ));
     }
-
-    public List<UserDTO> findUsersOfCareCircle(Long id){
-        List<Long> userIds = careCircleUserRepository.findUsersOfCareCircle(id);
-        if (!userIds.isEmpty()) {
-            List<UserDTO> responseList = new ArrayList<>();
-            for (Long userId : userIds) {
-                responseList.add(userRepository.findById(userId)
-                        .map(userDTOMapper).orElseThrow(
-                                () -> new UserNotFoundException("Users or Care Circle not found")
-                        ));
-            }
-            return responseList;
-        } else {
-            throw new ResourceNotFoundException("Care Circle does not exist");
-        }
-    }
 }

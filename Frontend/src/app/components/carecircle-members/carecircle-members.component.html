@@ -12,7 +12,7 @@
 				<button *ngIf="isAdmin && userstatus.isAdmin" class="mt-2 btn btn-success mt-1 col-3"
 					data-bs-toggle="modal" data-bs-target="#adminstatusmodal" (click)="showModal(userstatus)">Revoke
 					Circle Admin privileges</button>
-          <button *ngIf="isAdmin" class="mt-2 btn btn-danger mt-1 col-3" data-bs-toggle="modal"
+          <button *ngIf="isAdmin && userstatus.email!=currentUser" class="mt-2 btn btn-danger mt-1 col-2" data-bs-toggle="modal"
           data-bs-target="#removeusermodal" (click)="showModal(userstatus)">Remove User</button>
 			</span>
 		</div>

@@ -43,4 +43,9 @@ public class UserService {
         return userRepository.findByEmail(email).map(userDTOMapper).orElseThrow();
     }
 
+    public UserDTO findCurrentUser(String jwt){
+        String username = jwtService.extractUsername(jwt);
+        return findUserByEmail(username);
+    }
+
 }

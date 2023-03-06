@@ -1,10 +1,12 @@
+import { UserService } from './../../services/user.service';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { CareCircleService } from '../../services/care-circle.service';
 import { CareCircleUserStatus } from 'src/app/interfaces/carecircle-user-status';
+import { User } from 'src/app/interfaces/user';
 
 @Component({
 	selector: 'app-carecircle-members',
@@ -20,12 +22,14 @@ export class CarecircleMembersComponent implements OnInit {
 	errorMessage: string;
 	submitted: boolean;
 	circleId: number;
+  currentUser: string;
 
 	constructor(
 		private route: ActivatedRoute,
 		private fb: FormBuilder,
 		private careCircleService: CareCircleService,
-		private errorHandlingService: ErrorHandlingService
+		private errorHandlingService: ErrorHandlingService,
+    private userService: UserService
 	) {
 		this.form = this.fb.group({
 			email: ['', Validators.required],
@@ -47,6 +51,7 @@ export class CarecircleMembersComponent implements OnInit {
 			next: (response: CareCircleUserStatus[]) => {
 				this.carecirclemembers = response;
 				this.checkAdminStatus();
+        this.getCurrentUser();
 			},
 			error: (error: HttpErrorResponse) => {
 				this.errorHandlingService.redirectUnexpectedErrors(error);
@@ -116,6 +121,19 @@ export class CarecircleMembersComponent implements OnInit {
 			},
 		});
 	}
+
+  getCurrentUser(){
+    this.userService.getCurrentUser().subscribe({
+      next: (Response: User) => {
+        this.currentUser = Response.email;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.errorHandlingService.redirectUnexpectedErrors(error);
+      }
+    });
+
+    return this.currentUser;
+  }
 
 	reload() {
 		this.ngOnInit();
