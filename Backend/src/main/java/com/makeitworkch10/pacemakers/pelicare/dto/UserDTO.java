@@ -2,12 +2,11 @@ package com.makeitworkch10.pacemakers.pelicare.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 /**
  * @author Maaike de Jong
- * Dit is wat het programma doet
+ * DTO to pass useremail and ID along
  */
 @Getter
 @Setter
