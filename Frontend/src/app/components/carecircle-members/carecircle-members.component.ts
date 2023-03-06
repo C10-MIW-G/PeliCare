@@ -131,7 +131,6 @@ export class CarecircleMembersComponent implements OnInit {
         this.errorHandlingService.redirectUnexpectedErrors(error);
       }
     });
-
     return this.currentUser;
   }
 

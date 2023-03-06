@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { CareCircle } from '../interfaces/carecircle';
 import { CareCircleUserStatus } from '../interfaces/carecircle-user-status';
 import { ToggleUserAdmin } from '../interfaces/toggle-user-admin';
-import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
