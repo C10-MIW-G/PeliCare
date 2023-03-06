@@ -1,4 +1,4 @@
-import { AuthService } from './auth.service';
+import { TokenStorageService } from './token-storage.service';
 import { HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -7,30 +7,22 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class InterceptorService {
-  constructor(private authService: AuthService) {}
+  constructor(private tokenStorageService: TokenStorageService) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    this.checkTokenExpiration();
+    const jwtToken = this.tokenStorageService.getToken();
 
-    const idToken = localStorage.getItem('id_token');
-
-    if (idToken) {
+    if (jwtToken) {
       const cloned = req.clone({
-        headers: req.headers.set('Authorization', 'Bearer ' + idToken),
+        headers: req.headers.set('Authorization', 'Bearer ' + jwtToken),
       });
 
       return next.handle(cloned);
     } else {
       return next.handle(req);
-    }
-  }
-
-  checkTokenExpiration() {
-    if (this.authService.isExpired()) {
-      this.authService.logout();
     }
   }
 }

@@ -1,8 +1,8 @@
+import { TokenStorageService } from './token-storage.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as moment from 'moment';
-import { tap } from 'rxjs';
 import { User } from '../interfaces/user';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,17 +12,17 @@ import { User } from '../interfaces/user';
 export class AuthService {
   private apiBackendUrl = 'http://localhost:8080';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private tokenStorageService: TokenStorageService) {}
 
   login(email: string, password: string) {
-    this.removePreviousToken();
+    this.tokenStorageService.removeToken();
 
     return this.http
       .post<User>(`${this.apiBackendUrl}/account/authenticate`, {
         email,
         password,
       })
-      .pipe(tap((res) => this.setSession(res)));
+      .pipe(tap((res) => this.tokenStorageService.setSession(res)));
   }
 
   register(email: string, password: string, captchaResponse: string | undefined) {
@@ -34,44 +34,13 @@ export class AuthService {
   }
 
   userEmailAvailable(userEmail: string) {
-    // avoid type "any". check the response obj and put a clear type
        return this.http.post<any>(`${this.apiBackendUrl}/account/validate/email`, {
          userEmail:userEmail,
        });
   }
 
-  private setSession(authResult: any) {
-    const expiresAt = moment().add(authResult.expiresIn, 'second');
-
-    localStorage.setItem('id_token', authResult.jwt);
-    localStorage.setItem(
-      'expires_at',
-      JSON.stringify(expiresAt.valueOf() + 1000 * 60 * 24)
-    );
-  }
-
   logout() {
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
+    this.tokenStorageService.removeToken();
   }
 
-  public isNotExpired() {
-    return moment().isBefore(this.getExpiration());
-  }
-
-  isExpired() {
-    return !this.isNotExpired();
-  }
-
-  getExpiration() {
-    const expiration = localStorage.getItem('expires_at');
-    const expiresAt = JSON.parse(expiration!);
-    return moment(expiresAt);
-  }
-
-  removePreviousToken() {
-    if (localStorage.getItem('id_token')) {
-      this.logout();
-    }
-  }
 }

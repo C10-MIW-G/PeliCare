@@ -1,6 +1,6 @@
+import { TokenStorageService } from './services/token-storage.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +11,16 @@ export class AppComponent {
 
 title: String = "pelicare";
 constructor(
-  private authService: AuthService,
+  private tokenStorageService: TokenStorageService,
   private router: Router
 ){}
 
 isLoggedIn(): boolean {
-  return this.authService.isNotExpired();
+  return this.tokenStorageService.isNotExpired();
 }
 
 logout() {
-    this.authService.logout();
+    this.tokenStorageService.removeToken();
         this.router.navigateByUrl('/account/signin');
   }
 }
