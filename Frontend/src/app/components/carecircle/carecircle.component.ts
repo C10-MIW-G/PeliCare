@@ -27,11 +27,10 @@ export class CareCircleComponent implements OnInit {
     ) {}
 
 	ngOnInit(): void {
-		this.getCareCircle();
+    this.route.params.subscribe(routeParams => {this.getCareCircle(routeParams['id'])})
 	}
 
-	getCareCircle(): void {
-		const id = Number(this.route.snapshot.paramMap.get('id'));
+	getCareCircle(id: Number): void {
 		this.careCircleService.getCareCircleById(id)
 		.subscribe({
 			next: (response: CareCircle) => {

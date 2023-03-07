@@ -20,7 +20,6 @@ constructor(
   ){}
 
   ngOnInit(): void {
-
     this.getAdminCircles();
     this.getUserCircles();
   }
@@ -29,7 +28,6 @@ constructor(
     this.careCircleService.getAdminCircles().subscribe({
       next: (response: CareCircle[]) => {
             this.adminCircles = response;
-
           },
          error: (error: HttpErrorResponse) => {
           this.errorHandlingService.redirectUnexpectedErrors(error);
@@ -41,7 +39,6 @@ constructor(
     this.careCircleService.getUserCircles().subscribe({
       next: (response: CareCircle[]) => {
             this.userCircles = response;
-
           },
          error: (error: HttpErrorResponse) => {
             this.errorHandlingService.redirectUnexpectedErrors(error);

@@ -20,6 +20,10 @@ export class CareCircleService {
     return this.http.get<CareCircle[]>(`${this.apiBackendUrl}/carecircle/user`);
   }
 
+  public getAllCircles(): Observable<CareCircle[]> {
+    return this.http.get<CareCircle[]>(`${this.apiBackendUrl}/carecircle/all`);
+  }
+
   public getCareCircleById( id: Number): Observable<CareCircle> {
     return this.http.get<CareCircle>(`${this.apiBackendUrl}/carecircle/get/${id}`);
   }

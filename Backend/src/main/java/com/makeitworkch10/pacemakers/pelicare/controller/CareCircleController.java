@@ -38,6 +38,12 @@ public class CareCircleController {
         return new ResponseEntity<>(responseList, HttpStatus.OK);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<CareCircleDTO>> getAllCircles(@RequestHeader (name="Authorization") String jwt){
+        List<CareCircleDTO> responseList = careCircleService.findAllCareCirclesOfUser(jwt);
+        return new ResponseEntity<>(responseList, HttpStatus.OK);
+    }
+
     @GetMapping("/get/{id}")
     public ResponseEntity<CareCircleDTO> findCareCircle(@PathVariable("id") Long id ) {
         CareCircleDTO careCircle = careCircleService.getCareCircle(id);

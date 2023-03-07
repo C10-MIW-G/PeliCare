@@ -78,6 +78,16 @@ public class CareCircleService {
         return returnList;
     }
 
+    public List<CareCircleDTO> findAllCareCirclesOfUser(String jwt){
+        List<CareCircleDTO> returnList = new ArrayList<>();
+
+        List<CareCircleDTO> userCirclesList = findCirclesOfUser(jwt);
+        List<CareCircleDTO> adminCirclesList = findCirclesOfAdmin(jwt);
+        returnList.addAll(userCirclesList);
+        returnList.addAll(adminCirclesList);
+        return returnList;
+    }
+
     public void deleteCareCircle(Long circleId) {
         // find the Care Circle
         CareCircle circleToDelete = findCircleToDelete(circleId);

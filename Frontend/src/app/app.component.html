@@ -6,12 +6,22 @@
           <img src="\assets\images\PeliCare-grijs.png" width="30" height="30" class="d-inline-block align-text-bottom">
         </h1>
       </a>
-
-      <div class=" navbar-nav">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
-          <li *ngIf="isLoggedIn()" class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="/carecircles">Care Circles</a>
+          <li *ngIf="isLoggedIn()" class="nav-item dropdown">
+            <a a class="nav-link active dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="getCareCircles()">
+              My Care Circles
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" routerLink="/carecircles">Overview</a>
+              <a class="dropdown-item" *ngFor="let careCircle of careCircles" routerLink="/carecircle/{{careCircle.id}}">{{careCircle.name}}</a>
+            </div>
           </li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
           <li *ngIf="!isLoggedIn()" class="nav-item">
             <a class="nav-link active" routerLink="/account/signin">Sign In</a>
           </li>
