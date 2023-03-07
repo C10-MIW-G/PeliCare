@@ -45,9 +45,14 @@ public class CareCircleController {
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<CareCircleDTO> findCareCircle(@PathVariable("id") Long id ) {
+    public ResponseEntity<CareCircleDTO> findCareCircle(@PathVariable("id") Long id,
+                                                        @RequestHeader (name="Authorization") String jwt) throws IllegalAccessException {
+        if (careCircleUserService.isUserOfCircle(id, jwt)) {
         CareCircleDTO careCircle = careCircleService.getCareCircle(id);
         return new ResponseEntity<>(careCircle, HttpStatus.OK);
+        } else {
+            throw new IllegalAccessException("You are not a member of this Care Circle");
+        }
     }
 
     @PostMapping("/create")
@@ -63,6 +68,13 @@ public class CareCircleController {
                                                            @RequestHeader (name="Authorization") String jwt) {
             boolean isAdmin = careCircleUserService.isUserAdminOfCircle(id,jwt);
             return new ResponseEntity<Boolean>(isAdmin, HttpStatus.OK);
+    }
+
+    @GetMapping("/isuser/{id}")
+    public ResponseEntity<Boolean> isUserOfCareCircle(@PathVariable("id") Long id,
+                                                           @RequestHeader (name="Authorization") String jwt) {
+        boolean isUser = careCircleUserService.isUserOfCircle(id, jwt);
+        return new ResponseEntity<>(isUser, HttpStatus.OK);
     }
 
     @PatchMapping("/toggleadminstatus")

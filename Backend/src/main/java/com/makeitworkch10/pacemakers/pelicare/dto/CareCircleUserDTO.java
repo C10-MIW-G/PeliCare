@@ -16,7 +16,7 @@ public class CareCircleUserDTO {
 
     private Long circleId;
     private Long userId;
+    private Boolean isUser;
     private Boolean isAdmin;
-
     private String email;
 }

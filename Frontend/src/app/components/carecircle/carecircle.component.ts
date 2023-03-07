@@ -13,18 +13,19 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 })
 export class CareCircleComponent implements OnInit {
 
-  faPlusCircle = faPlusCircle;
+	faPlusCircle = faPlusCircle;
 
-  public showEditButton: Boolean;
-  public isAdmin: Boolean;
+	public showEditButton: Boolean;
+	public isAdmin: Boolean;
+	public isUser: Boolean;
 	public careCircle: CareCircle;
 
-    constructor (
-      private route: ActivatedRoute,
-      private careCircleService: CareCircleService,
-	    private router: Router,
-      private errorHandlingService: ErrorHandlingService
-    ) {}
+	constructor(
+		private route: ActivatedRoute,
+		private careCircleService: CareCircleService,
+		private router: Router,
+		private errorHandlingService: ErrorHandlingService
+	) { }
 
 	ngOnInit(): void {
     this.route.params.subscribe(routeParams => {this.getCareCircle(routeParams['id'])})
@@ -32,38 +33,50 @@ export class CareCircleComponent implements OnInit {
 
 	getCareCircle(id: Number): void {
 		this.careCircleService.getCareCircleById(id)
-		.subscribe({
-			next: (response: CareCircle) => {
-			   this.careCircle = response;
-			   this.checkAdminStatus();
-			 },
-			error: (error: HttpErrorResponse) => {
-			   this.errorHandlingService.redirectUnexpectedErrors(error);
-			 }
-		   });
+			.subscribe({
+				next: (response: CareCircle) => {
+					this.careCircle = response;
+					this.checkAdminStatus();
+					this.checkUserStatus();
+				},
+				error: (error: HttpErrorResponse) => {
+					this.errorHandlingService.redirectUnexpectedErrors(error);
+				}
+			});
+	}
+	checkUserStatus() {
+		this.careCircleService.isUser(this.careCircle.id)
+			.subscribe({
+				next: (Response: boolean) => {
+					this.isUser = false;
+				},
+				error: (error: HttpErrorResponse) => {
+					this.errorHandlingService.redirectUnexpectedErrors(error);
+				}
+			});
 	}
 
 	checkAdminStatus() {
 		this.careCircleService.isAdmin(this.careCircle.id)
-		.subscribe({
-			next: (Response: boolean) => {
-				this.isAdmin = Response.valueOf();
-			},
-			error: (error: HttpErrorResponse) => {
-				this.errorHandlingService.redirectUnexpectedErrors(error);
-			}
-		});
+			.subscribe({
+				next: (Response: boolean) => {
+					this.isAdmin = Response.valueOf();
+				},
+				error: (error: HttpErrorResponse) => {
+					this.errorHandlingService.redirectUnexpectedErrors(error);
+				}
+			});
 	}
 
 	deleteCareCircle() {
 		this.careCircleService.deleteCareCircle(this.careCircle.id)
-		.subscribe({
-			complete: ()=> {
-				this.router.navigateByUrl(`/carecircles`)
-			},
-			error: (error: HttpErrorResponse)=> {
-        this.errorHandlingService.redirectUnexpectedErrors(error);
-       }
-		})
+			.subscribe({
+				complete: () => {
+					this.router.navigateByUrl(`/carecircles`)
+				},
+				error: (error: HttpErrorResponse) => {
+					this.errorHandlingService.redirectUnexpectedErrors(error);
+				}
+			})
 	}
 }

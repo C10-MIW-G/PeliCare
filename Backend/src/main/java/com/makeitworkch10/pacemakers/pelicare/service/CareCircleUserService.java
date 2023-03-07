@@ -58,6 +58,18 @@ public class CareCircleUserService {
         }
     }
 
+    public boolean isUserOfCircle(Long circleId, String jwt) {
+        String username = jwtService.extractUsername(jwt);
+        User user = userRepository.findByEmail(username).orElseThrow();
+        Long userId = user.getId();
+
+        if(user != null ) {
+            return (careCircleUserRepository.checkCareCircleUser(circleId, userId) == 1);
+        } else {
+            return false;
+        }
+    }
+
     public void deleteCareCircleUsers(Long circleId) {
         careCircleUserRepository.deleteCareCircleUsersByCircleId(circleId);
     }
