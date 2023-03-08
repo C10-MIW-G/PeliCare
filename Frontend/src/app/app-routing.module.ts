@@ -1,3 +1,4 @@
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuardService as AuthGuard } from './services/auth-guard.service';
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'task/edit/:taskId/:circleId', component: TaskComponent, canActivate: [AuthGuard] },
   { path: 'carecircle/:id/members', component: CarecircleMembersComponent, canActivate: [AuthGuard]},
   { path: 'error', component: ErrorComponent },
+  { path: 'account/settings', component: UserSettingsComponent, canActivate: [AuthGuard]},
   { path: 'account/changepassword', component: ChangePasswordComponent, canActivate: [AuthGuard] },
   { path: '**', component: NotFoundComponent }
 ];

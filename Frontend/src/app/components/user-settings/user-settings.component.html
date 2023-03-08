@@ -1,0 +1,23 @@
+<div class="row container-fluid component-body">
+  <div class="col-md-2 text-center"></div>
+
+  <div class="col-md-8">
+    <h4 class="text-dark text-center">User settings</h4>
+    <div class="row d-flex justify-content-center mt-2">
+      <div class="col-6 d-flex justify-content-center">
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-bs-toggle="modal"
+          data-bs-target="#deleteUser"
+        >
+          <fa-icon [icon]="faTrash"></fa-icon> Delete my account
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2 text-center"></div>
+</div>
+
+<app-delete-user></app-delete-user>

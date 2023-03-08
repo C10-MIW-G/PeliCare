@@ -25,6 +25,9 @@ import { TaskListComponent } from './components/task-list/task-list.component';
 import { AddTaskComponent } from './components/add-task/add-task.component';
 import { EditTaskComponent } from './components/edit-task/edit-task.component';
 import { DeleteTaskComponent } from './components/delete-task/delete-task.component';
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
+import { DeleteUserComponent } from './components/delete-user/delete-user.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,10 @@ import { DeleteTaskComponent } from './components/delete-task/delete-task.compon
     TaskListComponent,
     AddTaskComponent,
     EditTaskComponent,
-    DeleteTaskComponent
+    DeleteTaskComponent,
+    UserSettingsComponent,
+    DeleteUserComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

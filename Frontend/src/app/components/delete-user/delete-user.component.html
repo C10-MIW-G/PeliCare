@@ -1,0 +1,76 @@
+<div
+  class="modal fade"
+  id="deleteUser"
+  tabindex="-1"
+  aria-labelledby="deleteUserLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteUserLabel">Confirm delete</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete your account? This action cannot be
+        undone.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-bs-dismiss="modal"
+          (click)="deleteUser()"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<modal id="deleteUserWarning">
+  <div class="modal-header">
+    <h1 class="modal-title fs-5" id="deleteUserWarningLabel">
+      Account cannot be deleted
+    </h1>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="modalService.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row text-center">
+      <div class="col">
+        You are currently the only admin of the following Care Circles:
+      </div>
+    </div>
+    <div *ngFor="let careCircle of careCircles" class="row text-center">
+        <b> {{ careCircle }} </b>
+    </div>
+    <div class="row text-center">
+      <div class="col">
+        Please assign a different Circle Admin to these circles before deleting
+        your account.
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modalService.close()"
+    >
+      Close
+    </button>
+  </div>
+</modal>

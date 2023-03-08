@@ -15,4 +15,8 @@ export class UserService {
     return this.http.get<User>(`${this.apiBackendUrl}/user/currentuser`);
   }
 
+  public deleteUser(){
+    return this.http.delete(`${this.apiBackendUrl}/user/delete`);
+  }
+
 }

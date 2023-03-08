@@ -71,6 +71,15 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                 status.toString(), LocalDateTime.now()), status);
     }
 
+    @ExceptionHandler(DeleteUserException.class)
+    protected ResponseEntity<Object> handleDeleteUserException(
+            DeleteUserException deleteUserException
+    ) {
+        HttpStatus status = HttpStatus.CONFLICT;
+        return  buildResponseEntity(new ApiError(deleteUserException.getMessage(), status.value(),
+                status.toString(), LocalDateTime.now(), deleteUserException.getCareCircleNames()), status);
+    }
+
     private ResponseEntity<Object> buildResponseEntity(ApiError apiError, HttpStatus status) {
         return new ResponseEntity<>(apiError, status);
     }

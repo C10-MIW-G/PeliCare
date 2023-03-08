@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
- * @author: Ramon de Wilde <r.de.wilde@st.hanze.nl>
+ * @author Ramon de Wilde <r.de.wilde@st.hanze.nl>
  * <p>
  * The service for the user entity
  */
@@ -21,17 +21,15 @@ public class UserService {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
     private  final UserDTOMapper userDTOMapper;
+    private final SafeDeleteService safeDeleteService;
 
     public void updatePassword(String jwt, String newPassword){
-        String username = jwtService.extractUsername(jwt);
-        userRepository.updateUserPassword(passwordEncoder.encode(newPassword), username);
+        userRepository.updateUserPassword(passwordEncoder.encode(newPassword), jwtService.extractUsername(jwt));
     }
 
     public boolean compareOldPassword(String jwt, String oldPassword){
-        String username = jwtService.extractUsername(jwt);
-        User user = userRepository.findByEmail(username).orElseThrow();
+        User user = userRepository.findByEmail(jwtService.extractUsername(jwt)).orElseThrow();
         return passwordEncoder.matches(oldPassword, user.getPassword());
     }
 
@@ -39,13 +37,19 @@ public class UserService {
         return userRepository.findById(userId).get().getEmail();
     }
 
-    public UserDTO findUserByEmail(String email) {
-        return userRepository.findByEmail(email).map(userDTOMapper).orElseThrow();
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow();
     }
 
     public UserDTO findCurrentUser(String jwt){
-        String username = jwtService.extractUsername(jwt);
-        return findUserByEmail(username);
+        return userRepository.findByEmail(jwtService.extractUsername(jwt)).map(userDTOMapper).orElseThrow();
     }
 
+    public void deleteUser(String jwt){
+        User userToBeDeleted = findUserByEmail(jwtService.extractUsername(jwt));
+
+        if(safeDeleteService.userCanBeDeleted(userToBeDeleted)){
+            userRepository.delete(userToBeDeleted);
+        }
+    }
 }

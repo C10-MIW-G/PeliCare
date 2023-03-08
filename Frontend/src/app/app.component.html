@@ -22,14 +22,18 @@
           </li>
           </ul>
           <ul class="navbar-nav ms-auto">
+            <li *ngIf="isLoggedIn()" class="nav-item dropdown">
+              <a a class="nav-link active dropdown-toggle" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" (click)="getCareCircles()">
+                My Profile
+              </a>
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                <a class="dropdown-item" aria-current="page" routerLink="/account/settings">Settings</a>
+                <a class="dropdown-item" aria-current="page" routerLink="/account/changepassword">Change Password</a>
+                <a class="dropdown-item" (click)="logout()">Sign Out</a>
+              </div>
+            </li>
           <li *ngIf="!isLoggedIn()" class="nav-item">
             <a class="nav-link active" routerLink="/account/signin">Sign In</a>
-          </li>
-          <li *ngIf="isLoggedIn()" class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="/account/changepassword">Change Password</a>
-          </li>
-          <li *ngIf="isLoggedIn()" class="nav-item">
-            <a class="nav-link btn" (click)="logout()">Sign Out</a>
           </li>
         </ul>
       </div>

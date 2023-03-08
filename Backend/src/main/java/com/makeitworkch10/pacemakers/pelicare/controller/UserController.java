@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 /**
- * @author: Ramon de Wilde <r.de.wilde@st.hanze.nl>
+ * @author Ramon de Wilde <r.de.wilde@st.hanze.nl>
  * <p>
  * Controls the user related requests
  */
@@ -26,20 +26,27 @@ public class UserController {
     @PostMapping("/updatepassword")
     @PreAuthorize("hasRole('READ_PRIVILEGE')")
     public ResponseEntity<ChangePasswordDTO> changeUserPassword(@RequestBody ChangePasswordDTO changePasswordDTO,
-                                                                @RequestHeader (name="Authorization") String jwt){
-            boolean oldPasswordOK = userService.compareOldPassword(jwt, changePasswordDTO.getOldPassword());
-            ChangePasswordDTO responseDTO = new ChangePasswordDTO();
-            responseDTO.setOldPassword("old");
-            responseDTO.setNewPassword("new");
-            if (oldPasswordOK){
-                userService.updatePassword(jwt, changePasswordDTO.getNewPassword());
-                return new ResponseEntity<ChangePasswordDTO>(responseDTO, HttpStatus.OK);
-            } throw new WrongPasswordException("Old password is incorrect");
+                                                                @RequestHeader(name = "Authorization") String jwt) {
+        boolean oldPasswordOK = userService.compareOldPassword(jwt, changePasswordDTO.getOldPassword());
+        ChangePasswordDTO responseDTO = new ChangePasswordDTO();
+        responseDTO.setOldPassword("old");
+        responseDTO.setNewPassword("new");
+        if (oldPasswordOK) {
+            userService.updatePassword(jwt, changePasswordDTO.getNewPassword());
+            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+        }
+        throw new WrongPasswordException("Old password is incorrect");
     }
 
     @GetMapping("/currentuser")
-    public ResponseEntity<UserDTO> getCurrentUser(@RequestHeader (name="Authorization") String jwt){
+    public ResponseEntity<UserDTO> getCurrentUser(@RequestHeader(name = "Authorization") String jwt) {
         UserDTO currentUser = userService.findCurrentUser(jwt);
         return new ResponseEntity<>(currentUser, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteUser(@RequestHeader(name = "Authorization") String jwt) {
+        userService.deleteUser(jwt);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

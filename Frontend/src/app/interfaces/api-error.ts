@@ -4,5 +4,6 @@ export interface ApiError {
   statusCode: number;
   statusText: String;
   timeStamp: String;
+  errorObject: any;
   
 }
