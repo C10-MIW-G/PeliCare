@@ -29,7 +29,6 @@ isLoggedIn(): boolean {
 
 logout() {
     this.tokenStorageService.removeToken();
-        this.router.navigateByUrl('/account/signin');
   }
 
 getCareCircles(){
