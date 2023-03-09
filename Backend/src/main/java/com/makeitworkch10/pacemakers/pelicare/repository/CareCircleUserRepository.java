@@ -30,12 +30,6 @@ public interface CareCircleUserRepository extends JpaRepository<CareCircleUser, 
         )
         Optional<Boolean> isUserAdminOfCircle(Long circleId, Long userId );
 
-//        @Query(
-//                value = "SELECT id FROM care_circle_user WHERE care_circle_id = ?1 AND user_id = ?2",
-//                nativeQuery = true
-//        )
-//        Optional<Boolean> isUserOfCareCircle(Long circleId, Long userId);
-
         @Modifying
         @Transactional
         @Query(

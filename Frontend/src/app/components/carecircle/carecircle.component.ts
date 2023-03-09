@@ -37,24 +37,13 @@ export class CareCircleComponent implements OnInit {
 				next: (response: CareCircle) => {
 					this.careCircle = response;
 					this.checkAdminStatus();
-					this.checkUserStatus();
 				},
 				error: (error: HttpErrorResponse) => {
 					this.errorHandlingService.redirectUnexpectedErrors(error);
 				}
 			});
 	}
-	checkUserStatus() {
-		this.careCircleService.isUser(this.careCircle.id)
-			.subscribe({
-				next: (Response: boolean) => {
-					this.isUser = false;
-				},
-				error: (error: HttpErrorResponse) => {
-					this.errorHandlingService.redirectUnexpectedErrors(error);
-				}
-			});
-	}
+	
 
 	checkAdminStatus() {
 		this.careCircleService.isAdmin(this.careCircle.id)

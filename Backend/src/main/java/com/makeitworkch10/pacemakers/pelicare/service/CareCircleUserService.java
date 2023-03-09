@@ -62,12 +62,7 @@ public class CareCircleUserService {
         String username = jwtService.extractUsername(jwt);
         User user = userRepository.findByEmail(username).orElseThrow();
         Long userId = user.getId();
-
-        if(user != null ) {
-            return (careCircleUserRepository.checkCareCircleUser(circleId, userId) == 1);
-        } else {
-            return false;
-        }
+        return (careCircleUserRepository.checkCareCircleUser(circleId, userId) == 1);
     }
 
     public void deleteCareCircleUsers(Long circleId) {

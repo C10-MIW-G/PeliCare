@@ -70,13 +70,6 @@ public class CareCircleController {
             return new ResponseEntity<Boolean>(isAdmin, HttpStatus.OK);
     }
 
-    @GetMapping("/isuser/{id}")
-    public ResponseEntity<Boolean> isUserOfCareCircle(@PathVariable("id") Long id,
-                                                           @RequestHeader (name="Authorization") String jwt) {
-        boolean isUser = careCircleUserService.isUserOfCircle(id, jwt);
-        return new ResponseEntity<>(isUser, HttpStatus.OK);
-    }
-
     @PatchMapping("/toggleadminstatus")
     public ResponseEntity<String> toggleAdminStatus(@RequestBody ToggleAdminStatusDTO toggleAdminStatusDTO,
                                                   @RequestHeader (name="Authorization") String jwt) {
