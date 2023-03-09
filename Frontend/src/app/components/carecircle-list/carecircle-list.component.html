@@ -11,7 +11,7 @@
 
           <div class="card">
             <div class="body">
-              <h5 *ngIf="adminCircles.length > 0">You are an Admin of:</h5>
+              <h5 *ngIf="adminCircles && adminCircles.length !== 0"> You are an Admin of:</h5>
               <ul class="list-unstyled row">
                 <li class="col-lg-2 col-md-6 col-12 mt-4 pt-2" *ngFor="let careCircle of adminCircles">
 
@@ -29,8 +29,8 @@
             </div>
 
             <div class="body">
-              <h5 *ngIf="userCircles.length > 0"> You are a User of:</h5>
-              <p *ngIf="userCircles.length == 0">There are no Care Circles to display for you as a user </p>
+              <h5 *ngIf="userCircles && userCircles.length !== 0"> You are a User of:</h5>
+              <p *ngIf="userCircles && userCircles.length === 0">There are no Care Circles to display for you as a user </p>
               <ul class="list-unstyled row">
                 <li class="col-lg-2 col-md-6 col-12 mt-4 pt-2" *ngFor="let careCircle of userCircles">
                   <div class="card-body">
@@ -52,6 +52,6 @@
   </div>
 
   <div class="col-md-2">
-    <a class="btn btn-dark" routerLink="/carecircles/create">Create a new Care Circle</a>
+     <a class="btn btn-peli" routerLink="/carecircles/create"> <fa-icon [icon]="faPlusCircle"></fa-icon> Create new Circle</a>
   </div>
 </div>

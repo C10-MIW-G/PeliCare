@@ -49,7 +49,7 @@
       <div class="accordion-footer d-flex justify-content-between">
         <div
           *ngIf="task.completedTask === false"
-          class="btn bg-transparent text-primary"
+          class="btn bg-transparent text-secondary"
           (click)="fillEditTaskForm(task)"
           data-bs-toggle="modal"
           data-bs-target="#editTask"
@@ -67,10 +67,10 @@
         <button
           *ngIf="task.completedTask === false"
           type="button"
-          class="btn btn-success"
+          class="btn btn-peli"
           (click)="completeTask(task)"
         >
-          <fa-icon [icon]="faCheckCircle"></fa-icon> done
+          <fa-icon [icon]="faCheckCircle"></fa-icon> Mark as done
         </button>
       </div>
     </div>

@@ -29,7 +29,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(BadCredentialsException.class)
     protected ResponseEntity<Object> handleBadCredentialsException() {
-        String badCredentialsMessage = "Invalid username or password";
+        String badCredentialsMessage = "Email or password is invalid. Please try again.";
         HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
         return  buildResponseEntity(new ApiError(badCredentialsMessage, status.value(),
                 status.toString(), LocalDateTime.now()), status);

@@ -3,9 +3,14 @@
 
   <div class="col-md-8">
     <div class="component-body">
-      <h4 class="text-primary">Sign-In</h4>
+      <div class="row d-flex justify-content-center">
+        <div class="col-5">
+          <h4>Sign-In</h4>
       <div *ngIf="signInInvalidMessage !== undefined" class="alert alert-warning" role="alert">
-        {{signInInvalidMessage}}
+        <fa-icon
+        size="lg"
+        [icon]="faExclamationTriangle"
+      ></fa-icon> {{signInInvalidMessage}}
       </div>
       <form [formGroup]="signInForm" (ngSubmit)="onSubmitLogin()">
         <div class="form-group">
@@ -57,13 +62,15 @@
             </div>
           </div>
         </div>
-        <button type="submit" class="mt-2 btn btn-primary">Login</button>
+        <button type="submit" class="mt-2 btn btn-peli">Login</button>
       </form>
       <br />
       <p>
-        New to PeliCare? You can start here by
-        <a routerLink="/account/create">creating your account.</a>
+        New to PeliCare? Start here by
+        <a class="text-peli" routerLink="/account/create">creating your account.</a>
       </p>
+    </div>
+    </div>
     </div>
     <div class="col-md-2"></div>
   </div>

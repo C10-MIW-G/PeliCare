@@ -1,3 +1,4 @@
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { ErrorHandlingService } from '../../services/error-handling.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -15,6 +16,7 @@ export class SignInComponent implements OnInit{
   signInForm: FormGroup;
   submitted = false;
   signInInvalidMessage : String;
+  faExclamationTriangle = faExclamationTriangle;
 
   constructor(
     private fb: FormBuilder,

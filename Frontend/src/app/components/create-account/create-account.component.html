@@ -4,7 +4,10 @@
     <div class="col-md-2"></div>
 
     <div class="col-md-8">
-      <h4 class="text-primary">Create new Account</h4>
+      <div class="component-body">
+        <div class="row d-flex justify-content-center">
+          <div class="col-5">
+      <h4>Create new Account</h4>
       <form
         class="form"
         [formGroup]="registerForm"
@@ -85,10 +88,13 @@
             </div>
           </div>
         </div>
-        <button class="mt-2 btn btn-primary" type="submit">Register</button>
+        <button class="mt-2 btn btn-peli" type="submit">Register</button>
       </form>
             <br>
-      <p>Already have an account? <a routerLink="/account/signin"> Sign in here.</a></p>
+      <p>Already have an account? <a class="text-peli" routerLink="/account/signin"> Sign in here.</a></p>
+          </div>
+          </div>
+          </div>
     </div>
       <div class="col-md-2"></div>
   </div>

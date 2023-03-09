@@ -2,7 +2,7 @@ import { ErrorHandlingService } from './services/error-handling.service';
 import { CareCircleService } from './services/care-circle.service';
 import { CareCircle } from './interfaces/carecircle';
 import { TokenStorageService } from './services/token-storage.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -13,12 +13,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class AppComponent {
 
-  careCircles: CareCircle[];
-
+careCircles: CareCircle[];
 title: String = "pelicare";
+
 constructor(
   private tokenStorageService: TokenStorageService,
-  private router: Router,
   private careCircleService: CareCircleService,
   private errorHandlingService: ErrorHandlingService
 ){}

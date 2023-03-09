@@ -1,15 +1,55 @@
 /* You can add global styles to this file, and also import other style files */
 
-footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
+/* These properties define the color theme of the application */
+/* blue theme */
+:root {
+  --peli-main-color:#483D8B;
+  --peli-secondary-color:#6A5ACD;
 }
 
-.form-control {
-  max-width: 40%;
-  margin: 10px;
+/* purple theme */
+/*
+:root {
+  --peli-main-color:#8B008B;
+  --peli-secondary-color:#9932CC;
+}
+*/
+
+/* To add space between the page content and the footer */
+body {
+  padding-bottom: 50px;
+}
+
+/* Custom PeliCare color styling of buttons, navbar, text, etc...*/
+.btn-peli, .btn-peli:active, .btn-peli:visited{
+  color: white;
+  background-color: var(--peli-main-color);
+}
+
+.btn-peli:hover, .btn-peli:disabled{
+  color: white;
+  background-color: var(--peli-secondary-color);
+}
+
+.bg-peli {
+  background-color: var(--peli-main-color);
+}
+
+.text-peli {
+  color: var(--peli-main-color);
+}
+
+.text-peli:hover{
+  color: var(--peli-secondary-color);
+}
+
+.form-control:focus {
+  border-color: var(--peli-main-color);
+  box-shadow: 0 0 0 0.2rem rgba(106,90,205, 0.25);
+}
+
+.circleimage {
+  background-color: pink;
 }
 
 .errorMessage {
@@ -26,6 +66,9 @@ footer {
   align-content: center;
 }
 
-.circleimage {
-  background-color: pink;
-}
+
+
+
+
+
+

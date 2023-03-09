@@ -1,3 +1,4 @@
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -13,6 +14,7 @@ export class CarecirclelistComponent implements OnInit{
 
   public adminCircles: CareCircle[]; // I am admin of these circles
   public userCircles: CareCircle[]; // I am only a user here
+  faPlusCircle = faPlusCircle;
 
 constructor(
   private careCircleService: CareCircleService,

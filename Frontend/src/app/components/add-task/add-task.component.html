@@ -6,7 +6,7 @@
   aria-labelledby="addTaskLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="addTaskLabel">Add new Task</h1>
@@ -21,11 +21,10 @@
         <div class="container-fluid">
           <form [formGroup]="addTaskForm">
             <div class="row mt-2">
-              <div class="col text-center">
+              <div class="col">
                 <label for="title" class="form-label">Title</label>
                 <input
                   type="text"
-                  placeholder="Task Title"
                   name="title"
                   class="form-control"
                   id="title"
@@ -47,15 +46,14 @@
               </div>
             </div>
             <div class="row mt-2">
-              <div class="col text-center">
+              <div class="col">
                 <label for="description" class="form-label">Description</label>
                 <textarea
                   type="text"
-                  placeholder="Task description"
                   name="description"
                   class="form-control"
                   id="description"
-                  rows="5"
+                  rows="3"
                   formControlName="description"
                   [ngClass]="{
                     'is-invalid':
@@ -84,7 +82,7 @@
         </button>
         <button
           type="button"
-          class="btn btn-primary"
+          class="btn btn-peli"
           data-bs-dismiss="modal"
           (click)="submitTask(careCircleId)"
           [disabled]="!addTaskForm.valid"
