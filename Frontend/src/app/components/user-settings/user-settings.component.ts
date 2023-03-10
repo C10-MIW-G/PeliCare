@@ -1,5 +1,11 @@
+import { ActivatedRoute, Router } from '@angular/router';
+import { ErrorHandlingService } from './../../services/error-handling.service';
+import { UserService } from './../../services/user.service';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+import { User } from 'src/app/interfaces/user';
 
 @Component({
   selector: 'app-user-settings',
@@ -7,5 +13,59 @@ import { Component } from '@angular/core';
   styleUrls: ['./user-settings.component.css']
 })
 export class UserSettingsComponent {
+  userDetailsForm: FormGroup;
   faTrash = faTrash;
+  email = String(this.route.snapshot.paramMap.get('email'))
+
+  user: User;
+
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private errorHandlingService: ErrorHandlingService,
+    private route: ActivatedRoute,
+    private router: Router){}
+
+  ngOnInit(): void {
+  this.userDetailsForm = this.fb.group({
+    name: [''],
+    phoneNumber: [''],
+  });
+  this.getUser(this.email);
+}
+
+get userDetailsFormControl() {
+  return this.userDetailsForm.controls;
+}
+
+public getUser(email: string): User {
+  this.userService.getUserInformation(email).subscribe({
+    next: (response: User) => {
+      this.user = response;
+    },
+    error: (error: HttpErrorResponse) => {
+      this.errorHandlingService.redirectUnexpectedErrors(error);
+    }
+  })
+  return this.user;
+}
+
+fillUserDetailsForm(): void{
+  this.userDetailsForm.controls['name'].setValue(this.user.name);
+  this.userDetailsForm.controls['phoneNumber'].setValue(this.user.phoneNumber);
+}
+
+onSubmitEdit() {
+  if (this.userDetailsForm.valid) {
+    this.userService.editUserDetails(this.email, this.userDetailsFormControl['name'].value, this.userDetailsFormControl['phoneNumber'].value)
+    .subscribe({
+      next: () => {
+        this.router.navigateByUrl('carecircles');
+      },
+      error: (error: HttpErrorResponse) => {
+          this.errorHandlingService.redirectUnexpectedErrors(error);
+        }
+    });
+  }
+}
 }

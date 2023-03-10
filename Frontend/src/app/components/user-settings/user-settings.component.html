@@ -4,6 +4,63 @@
   <div class="col-md-8">
     <h4 class="text-dark text-center">User settings</h4>
     <div class="row d-flex justify-content-center mt-2">
+      <div class="col-6 w-50 justify-content-center">
+        <div *ngIf="user" class="accordion" id="accordion">
+          <div class="accordion-item mt-2">
+            <h2 class="accordion-header" id="accordionUser">
+              <button
+                class="accordion-button collapsed text-center"
+                data-bs-toggle="collapse"
+                data-bs-target="#userInformation"
+                aria-expanded="false"
+                aria-controls="userInformation"
+                (click)="fillUserDetailsForm()"
+              >
+                Edit your information
+              </button>
+            </h2>
+            <div
+              class="accordion-body"
+              id="userInformation"
+              class="collapse"
+              aria-labelledby="accordionUser"
+              data-bs-parent="#accordion"
+            >
+              <div class="container-fluid p-2">
+                <form [formGroup]="userDetailsForm" (ngSubmit)="onSubmitEdit()">
+                  <div class="form-group">
+                    <label for="inputName">Name:</label>
+                    <input
+                      type="name"
+                      class="form-control"
+                      id="inputName"
+                      name="name"
+                      aria-describedby="nameHelp"
+                      placeholder="Enter name"
+                      formControlName="name"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="inputPhoneNumber">Phone Number:</label>
+                    <input
+                      type="phoneNumber"
+                      class="form-control"
+                      id="inputPhoneNumber"
+                      name="phoneNumber"
+                      placeholder="phoneNumber"
+                      formControlName="phoneNumber"
+                    />
+                  </div>
+                </form>
+                <button type="submit" class="mt-2 btn btn-peli">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="row d-flex justify-content-center mt-2">
       <div class="col-6 d-flex justify-content-center">
         <button
           type="button"

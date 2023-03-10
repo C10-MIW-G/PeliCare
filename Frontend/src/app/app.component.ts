@@ -1,10 +1,11 @@
+import { UserService } from './services/user.service';
 import { ErrorHandlingService } from './services/error-handling.service';
 import { CareCircleService } from './services/care-circle.service';
 import { CareCircle } from './interfaces/carecircle';
 import { TokenStorageService } from './services/token-storage.service';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { User } from './interfaces/user';
 
 @Component({
   selector: 'app-root',
@@ -13,11 +14,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class AppComponent {
 
-careCircles: CareCircle[];
+  careCircles: CareCircle[];
+  user: User;
+
 title: String = "pelicare";
 
 constructor(
   private tokenStorageService: TokenStorageService,
+  private userService: UserService,
   private careCircleService: CareCircleService,
   private errorHandlingService: ErrorHandlingService
 ){}
@@ -40,5 +44,17 @@ getCareCircles(){
       this.errorHandlingService.redirectUnexpectedErrors(error);
       }
     });
+  }
+
+  getCurrentUser(){
+    this.userService.getCurrentUser().subscribe({
+      next: (Response: User) => {
+        this.user = Response;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.errorHandlingService.redirectUnexpectedErrors(error);
+      }
+    });
+    return this.user;
   }
 }

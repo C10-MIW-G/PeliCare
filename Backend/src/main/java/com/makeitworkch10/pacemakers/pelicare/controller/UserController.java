@@ -2,6 +2,7 @@ package com.makeitworkch10.pacemakers.pelicare.controller;
 
 import com.makeitworkch10.pacemakers.pelicare.dto.ChangePasswordDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.UserDTO;
+import com.makeitworkch10.pacemakers.pelicare.dto.UserInformationDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.WrongPasswordException;
 import com.makeitworkch10.pacemakers.pelicare.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,19 @@ public class UserController {
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteUser(@RequestHeader(name = "Authorization") String jwt) {
         userService.deleteUser(jwt);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{email}")
+    public ResponseEntity<UserInformationDTO> getUser(@PathVariable("email") String email){
+        UserInformationDTO user = userService.getUserInformationByEmail(email);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PostMapping("/{email}/edit")
+    public ResponseEntity<UserInformationDTO> editUserInformation(@PathVariable("email") String email,
+                                                                  @RequestBody UserInformationDTO user){
+        userService.saveUserInformation(email, user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -17,5 +17,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
             value = "UPDATE user user SET user.password = ?1 WHERE user.email = ?2",
             nativeQuery = true)
     void updateUserPassword(String encodedPassword, String userEmail);
-
 }

@@ -2,7 +2,9 @@ package com.makeitworkch10.pacemakers.pelicare.service;
 
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtService;
 import com.makeitworkch10.pacemakers.pelicare.dto.UserDTO;
+import com.makeitworkch10.pacemakers.pelicare.dto.UserInformationDTO;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.UserDTOMapper;
+import com.makeitworkch10.pacemakers.pelicare.service.mappers.UserInformationDTOMapper;
 import com.makeitworkch10.pacemakers.pelicare.user.User;
 import com.makeitworkch10.pacemakers.pelicare.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private  final UserDTOMapper userDTOMapper;
     private final SafeDeleteService safeDeleteService;
+    private final UserInformationDTOMapper userInformationDTOMapper;
 
     public void updatePassword(String jwt, String newPassword){
         userRepository.updateUserPassword(passwordEncoder.encode(newPassword), jwtService.extractUsername(jwt));
@@ -39,6 +42,16 @@ public class UserService {
 
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow();
+    }
+    public UserInformationDTO getUserInformationByEmail(String email) {
+        return userRepository.findByEmail(email).map(userInformationDTOMapper).orElseThrow();
+    }
+
+    public void saveUserInformation(String email, UserInformationDTO user){
+        User userToEdit = userRepository.findByEmail(email).orElseThrow();
+        userToEdit.setName(user.getName());
+        userToEdit.setPhoneNumber(user.getPhoneNumber());
+        userRepository.save(userToEdit);
     }
 
     public UserDTO findCurrentUser(String jwt){

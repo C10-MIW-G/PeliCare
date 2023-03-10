@@ -1,0 +1,18 @@
+<div class="row container-fluid component-body">
+  <div class="col-md-2 text-center"></div>
+
+  <div class="col-md-8">
+    <div class="row d-flex justify-content-center mt-2">
+    <div class="card w-50" *ngIf="user">
+      <div class="card-body">
+        <h5 class="card-title text-center">{{user.name}}</h5>
+        </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><span><fa-icon [icon]="faAt"></fa-icon></span> : {{user.email}}</li>
+        <li class="list-group-item"><span><fa-icon [icon]="faPhone"></fa-icon></span> : {{user.phoneNumber}}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-md-2 text-center"></div>
+</div>

@@ -37,9 +37,19 @@ public class User implements UserDetails {
     @JsonManagedReference
     List<CareCircleUser> careCircleUsers;
 
+    @Column
+    private String name;
+    @Column
+    private String phoneNumber;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
