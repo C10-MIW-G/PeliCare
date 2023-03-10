@@ -42,6 +42,7 @@ export class EditTaskComponent {
   private getUpdatedTaskFromForm(): Task{
     return {
       id: this.editTaskFormControl['id'].value,
+      date: this.editTaskFormControl['date'].value,
       title: this.editTaskFormControl['title'].value,
       description: this.editTaskFormControl['description'].value,
       completedTask:this.editTaskFormControl['completedTask'].value

@@ -36,6 +36,7 @@ export class TaskListComponent implements OnInit {
   ngOnInit() {
     this.editTaskForm = this.fb.group({
       id: [0],
+      date: [''],
       title: ['', Validators.required],
       description: ['', Validators.required],
       completedTask: [''],
@@ -113,6 +114,7 @@ export class TaskListComponent implements OnInit {
 
   public fillEditTaskForm(task: Task): void {
     this.editTaskForm.controls['id'].setValue(task.id);
+    this.editTaskForm.controls['date'].setValue(task.date);
     this.editTaskForm.controls['title'].setValue(task.title);
     this.editTaskForm.controls['description'].setValue(task.description);
     this.editTaskForm.controls['completedTask'].setValue(task.completedTask);

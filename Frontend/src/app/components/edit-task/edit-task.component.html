@@ -1,82 +1,49 @@
-<div
-  class="modal fade"
-  id="editTask"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="editTaskLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="editTask" tabindex="-1" role="dialog" aria-labelledby="editTaskLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="editTaskLabel">Edit this Task</h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
           <form [formGroup]="editTaskForm">
             <div class="row mt-2">
-              <input
-                type="hidden"
-                name="id"
-                formControlName="id"
-              />
+              <input type="hidden" name="id" formControlName="id" />
               <div class="col">
-                <label for="title" class="form-label">Title</label>
-                <input
-                  type="text"
-                  name="title"
-                  class="form-control"
-                  id="title"
-                  formControlName="title"
-                  [ngClass]="{
+
+                <div class="col text-center">
+                  <label for="date" class="form-label">Date and time (optional)</label>
+                  <input type="datetime-local" name="date" class="form-control" id="date" formControlName="date" />
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col text-center">
+                  <label for="title" class="form-label">Title</label>
+                  <input type="text" name="title" class="form-control" id="title" formControlName="title" [ngClass]="{
                     'is-invalid':
                       (editTaskFormControl['title'].touched || submitted) &&
                       editTaskFormControl['title'].invalid
-                  }"
-                />
-                <div
-                  *ngIf="editTaskFormControl['title'].invalid"
-                  class="invalid-feedback"
-                >
-                  <div
-                    *ngIf="editTaskFormControl['title'].errors?.['required']"
-                  >
-                    Title is required
+                  }" />
+                  <div *ngIf="editTaskFormControl['title'].invalid" class="invalid-feedback">
+                    <div *ngIf="editTaskFormControl['title'].errors?.['required']">
+                      Title is required
+                    </div>
                   </div>
-                </div>
-                <div class="row mt-2">
-                  <div class="col">
-                    <label for="description" class="form-label"
-                      >Description</label
-                    >
-                    <textarea
-                      type="text"
-                      name="description"
-                      class="form-control"
-                      id="description"
-                      rows="5"
-                      formControlName="description"
-                      [ngClass]="{
+                  <div class="row mt-2">
+                    <div class="col">
+                      <label for="description" class="form-label">Description</label>
+                      <textarea type="text" name="description" class="form-control" id="description" rows="5"
+                        formControlName="description" [ngClass]="{
                         'is-invalid':
                           (editTaskFormControl['description'].touched ||
                             submitted) &&
                           editTaskFormControl['description'].invalid
-                      }"
-                    ></textarea>
-                    <div
-                      *ngIf="editTaskFormControl['description'].invalid"
-                      class="invalid-feedback"
-                    >
-                      <div
-                        *ngIf="editTaskFormControl['description'].errors?.['required']"
-                      >
-                        Description is required
+                      }"></textarea>
+                      <div *ngIf="editTaskFormControl['description'].invalid" class="invalid-feedback">
+                        <div *ngIf="editTaskFormControl['description'].errors?.['required']">
+                          Description is required
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -88,25 +55,16 @@
       </div>
       <div class="modal-footer">
 
-        <div
-        class="btn bg-transparent text-danger me-auto"
-        data-bs-toggle="modal"
-        data-bs-target="#deleteTask"
-        (click)="setTaskToDelete()"
-        >
+        <div class="btn bg-transparent text-danger me-auto" data-bs-toggle="modal" data-bs-target="#deleteTask"
+          (click)="setTaskToDelete()">
           <fa-icon [icon]="faTrash"></fa-icon> delete
         </div>
 
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <button
-          type="button"
-          class="btn btn-peli"
-          data-bs-dismiss="modal"
-          (click)="emitUpdateTask()"
-          [disabled]="!editTaskForm.valid"
-        >
+        <button type="button" class="btn btn-peli" data-bs-dismiss="modal" (click)="emitUpdateTask()"
+          [disabled]="!editTaskForm.valid">
           Save changes
         </button>
 

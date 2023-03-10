@@ -28,9 +28,11 @@
             task.completedTask === true
               ? 'task-completed'
               : 'task-not-completed'
-          "
-          >{{ task.title }}</span
-        >
+             "
+          >{{ task.title}}:  {{task.date | date : "MMM d, y h:mm a" : "en-US"}}
+          
+            </span>
+         
       </button>
     </h2>
     <div

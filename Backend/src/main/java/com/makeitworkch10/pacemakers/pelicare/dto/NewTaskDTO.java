@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 /**
  * @author Paul Moonen
  * <p>
@@ -23,4 +25,5 @@ public class NewTaskDTO {
     private String description;
     private String title;
     private Long careCircleId;
+    private LocalDateTime date;
 }

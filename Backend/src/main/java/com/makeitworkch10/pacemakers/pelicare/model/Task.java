@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 /**
  * @author Paul Moonen
  * <p>
@@ -26,6 +28,9 @@ public class Task {
     @Column(nullable = false)
     private String title;
     private boolean completedTask;
+
+    @Column
+    private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(name = "care_circle_id")

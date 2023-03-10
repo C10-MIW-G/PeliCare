@@ -20,6 +20,7 @@ export class AddTaskComponent implements OnInit{
 
   ngOnInit() {
     this.addTaskForm = this.fb.group({
+      date: [],
       title: ['', Validators.required],
       description: ['', Validators.required],
       completedTask: [''],
@@ -43,6 +44,7 @@ export class AddTaskComponent implements OnInit{
 
   private getNewTaskFromForm(careCircleId: number): NewTask{
     return {
+      date: this.taskFormControl['date'].value,
       title: this.taskFormControl['title'].value,
       description: this.taskFormControl['description'].value,
       careCircleId: careCircleId

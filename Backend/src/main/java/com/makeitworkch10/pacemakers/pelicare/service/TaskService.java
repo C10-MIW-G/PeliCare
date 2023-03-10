@@ -50,6 +50,7 @@ public class TaskService {
 
     public TaskDTO saveTask(NewTaskDTO newTaskDTO) {
         Task task = new Task();
+        task.setDate(newTaskDTO.getDate());
         task.setTitle(newTaskDTO.getTitle());
         task.setDescription(newTaskDTO.getDescription());
         task.setCareCircle(careCircleRepository.findById(newTaskDTO.getCareCircleId())
@@ -65,10 +66,12 @@ public class TaskService {
         Task taskToUpdate = taskRepository.findById(taskDTO.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(
                 "this Task could not be found"));
+        taskToUpdate.setDate(taskDTO.getDate());
         taskToUpdate.setTitle(taskDTO.getTitle());
         taskToUpdate.setDescription(taskDTO.getDescription());
         taskRepository.save(taskToUpdate);
         return new TaskDTO(taskToUpdate.getId(),
+                                taskToUpdate.getDate(),
                                 taskToUpdate.getTitle(),
                                 taskToUpdate.getDescription(),
                                 taskToUpdate.isCompletedTask());

@@ -22,6 +22,19 @@
           <form [formGroup]="addTaskForm">
             <div class="row mt-2">
               <div class="col">
+              <div class="col text-center">
+                <label for="date" class="form-label">Date and time (optional)</label>
+                <input 
+                type="datetime-local" 
+                name="date"
+                class="form-control"
+                id="date" 
+                formControlName="date"               
+                />
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col text-center">
                 <label for="title" class="form-label">Title</label>
                 <input
                   type="text"
@@ -72,6 +85,7 @@
                   </div>
                 </div>
               </div>
+            </div>
             </div>
           </form>
         </div>

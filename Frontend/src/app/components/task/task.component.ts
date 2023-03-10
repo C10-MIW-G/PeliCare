@@ -26,6 +26,7 @@ export class TaskComponent implements OnInit{
 	public careCircleId: number;
 	public completedTask: boolean;
 
+
   constructor (
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -36,8 +37,9 @@ export class TaskComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-
+	
   this.taskForm = this.fb.group({
+	date: [''],
     title: ['', Validators.required],
     description: ['', Validators.required],
     completedTask: [''],
@@ -62,6 +64,7 @@ export class TaskComponent implements OnInit{
 		this.taskService.getTaskById(this.taskId)
 			.subscribe({
 				next: (response: Task) => {
+					this.taskFormControl['date'].setValue(response.date);
 					this.taskFormControl['title'].setValue(response.title);
 					this.taskFormControl['description'].setValue(response.description);
 					this.taskFormControl['completedTask'].setValue(response.completedTask);
@@ -100,6 +103,7 @@ export class TaskComponent implements OnInit{
 
 	updateTask() {
 		this.taskService.updateTask({
+			date: this.taskFormControl['date'].value,
 			title: this.taskFormControl['title'].value,
 			description: this.taskFormControl['description'].value,
 			id: this.taskId,
@@ -117,6 +121,7 @@ export class TaskComponent implements OnInit{
 
   	saveNewTask() {
 		this.taskService.saveNewTaskData({
+			date: this.taskFormControl['date'].value,
 			title: this.taskFormControl['title'].value,
 			description: this.taskFormControl['description'].value,
 			careCircleId: this.careCircleId
