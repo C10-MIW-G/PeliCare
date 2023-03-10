@@ -60,7 +60,7 @@ onSubmitEdit() {
     this.userService.editUserDetails(this.email, this.userDetailsFormControl['name'].value, this.userDetailsFormControl['phoneNumber'].value)
     .subscribe({
       next: () => {
-        this.router.navigateByUrl('carecircles');
+        window.location.reload();
       },
       error: (error: HttpErrorResponse) => {
           this.errorHandlingService.redirectUnexpectedErrors(error);
