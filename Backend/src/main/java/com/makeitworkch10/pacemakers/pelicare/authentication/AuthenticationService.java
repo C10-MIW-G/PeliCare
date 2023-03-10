@@ -23,6 +23,8 @@ public class AuthenticationService {
         var user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .name(request.getName())
+                .phoneNumber(request.getPhoneNumber())
                 .role(Role.USER)
                 .build();
         userRepository.save(user);

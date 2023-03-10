@@ -29,6 +29,8 @@ export class CreateAccountComponent implements OnInit {
         email: ['', [Validators.required, Validators.email], this.customValidator.userEmailValidator.bind(this.customValidator)],
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', [Validators.required]],
+        name: [''],
+        phoneNumber: [''],
         captchaResponse: ['', [Validators.required]],
       },
       {
@@ -52,6 +54,8 @@ export class CreateAccountComponent implements OnInit {
         .register(
           this.registerFormControl['email'].value,
           this.registerFormControl['password'].value,
+          this.registerFormControl['name'].value,
+          this.registerFormControl['phoneNumber'].value,
           this.registerFormControl['captchaResponse'].value
         )
         .subscribe({

@@ -25,10 +25,12 @@ export class AuthService {
       .pipe(tap((res) => this.tokenStorageService.setSession(res)));
   }
 
-  register(email: string, password: string, captchaResponse: string | undefined) {
+  register(email: string, password: string, name: string, phoneNumber: string, captchaResponse: string | undefined) {
     return this.http.post<User>(`${this.apiBackendUrl}/account/register`, {
       email,
       password,
+      name,
+      phoneNumber,
       captchaResponse,
     });
   }
