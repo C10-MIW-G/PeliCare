@@ -11,6 +11,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NewTask } from 'src/app/interfaces/new-task';
+import { formatDate } from '@angular/common';
+
 
 @Component({
   selector: 'app-task-list',
@@ -31,7 +33,9 @@ export class TaskListComponent implements OnInit {
     private taskService: TaskService,
     private errorHandlingService: ErrorHandlingService,
     private fb: FormBuilder
-  ) {}
+  ) { }
+
+
 
   ngOnInit() {
     this.editTaskForm = this.fb.group({
@@ -102,15 +106,22 @@ export class TaskListComponent implements OnInit {
 
   undoTask(task: Task) {
     task.completedTask = false;
-
     this.toggleTaskCompleted(task);
+  }
+
+  isInThePast(date: Date): boolean {
+    const today = new Date();
+    return (date.getDate() < today.getDate());
   }
 
   completeTask(task: Task) {
-    task.completedTask = true;
+    if (this.isInThePast(task.date)) {
+      task.completedTask = true;
+      this.toggleTaskCompleted(task);
+    }
 
-    this.toggleTaskCompleted(task);
   }
+
 
   public fillEditTaskForm(task: Task): void {
     this.editTaskForm.controls['id'].setValue(task.id);

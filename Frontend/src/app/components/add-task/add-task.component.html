@@ -1,91 +1,52 @@
-<div
-  class="modal fade"
-  id="addTask"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="addTaskLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="addTask" tabindex="-1" role="dialog" aria-labelledby="addTaskLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="addTaskLabel">Add new Task</h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
           <form [formGroup]="addTaskForm">
-            <div class="row mt-2">
-              <div class="col">
-              <div class="col text-center">
-                <label for="date" class="form-label">Date and time (optional)</label>
-                <input 
-                type="datetime-local" 
-                name="date"
-                class="form-control"
-                id="date" 
-                formControlName="date"               
-                />
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col text-center">
-                <label for="title" class="form-label">Title</label>
-                <input
-                  type="text"
-                  name="title"
-                  class="form-control"
-                  id="title"
-                  formControlName="title"
-                  [ngClass]="{
+            
+              <div class="row mt-2">
+                <div class="col">
+                <div class="col text-center">
+                  <label for="date" class="form-label">Date and time (optional)</label>
+                  <input type="datetime-local" name="date" class="form-control" id="date" formControlName="date" />
+                </div>
+                <div class="row mt-2">
+                  <div class="col text-center">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" name="title" class="form-control" id="title" formControlName="title" [ngClass]="{
                     'is-invalid':
                       (taskFormControl['title'].touched || submitted) &&
                       taskFormControl['title'].invalid
-                  }"
-                />
-                <div
-                  *ngIf="taskFormControl['title'].invalid"
-                  class="invalid-feedback"
-                >
-                  <div *ngIf="taskFormControl['title'].errors?.['required']">
-                    Title is required
+                  }" />
+                    <div *ngIf="taskFormControl['title'].invalid" class="invalid-feedback">
+                      <div *ngIf="taskFormControl['title'].errors?.['required']">
+                        Title is required
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="row mt-2">
-              <div class="col">
-                <label for="description" class="form-label">Description</label>
-                <textarea
-                  type="text"
-                  name="description"
-                  class="form-control"
-                  id="description"
-                  rows="3"
-                  formControlName="description"
-                  [ngClass]="{
+                <div class="row mt-2">
+                  <div class="col text-center">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea type="text" name="description" class="form-control" id="description" rows="3"
+                      formControlName="description" [ngClass]="{
                     'is-invalid':
                       (taskFormControl['description'].touched || submitted) &&
                       taskFormControl['description'].invalid
-                  }"
-                ></textarea>
-                <div
-                  *ngIf="taskFormControl['description'].invalid"
-                  class="invalid-feedback"
-                >
-                  <div
-                    *ngIf="taskFormControl['description'].errors?.['required']"
-                  >
-                    Description is required
+                  }"></textarea>
+                    <div *ngIf="taskFormControl['description'].invalid" class="invalid-feedback">
+                      <div *ngIf="taskFormControl['description'].errors?.['required']">
+                        Description is required
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
             </div>
           </form>
         </div>
@@ -94,13 +55,8 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <button
-          type="button"
-          class="btn btn-peli"
-          data-bs-dismiss="modal"
-          (click)="submitTask(careCircleId)"
-          [disabled]="!addTaskForm.valid"
-        >
+        <button type="button" class="btn btn-peli" data-bs-dismiss="modal" (click)="submitTask(careCircleId)"
+          [disabled]="!addTaskForm.valid">
           Save changes
         </button>
       </div>
