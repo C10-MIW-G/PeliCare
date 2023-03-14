@@ -8,6 +8,7 @@ import {
   faCheckSquare,
   faPencil,
   faSquare,
+  faClock,
 } from '@fortawesome/free-solid-svg-icons';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NewTask } from 'src/app/interfaces/new-task';
@@ -28,6 +29,7 @@ export class TaskListComponent implements OnInit {
   faPencil = faPencil;
   faCheckSquare = faCheckSquare;
   faSquare = faSquare;
+  faClock = faClock;
 
   constructor(
     private taskService: TaskService,
@@ -109,18 +111,12 @@ export class TaskListComponent implements OnInit {
     this.toggleTaskCompleted(task);
   }
 
-  isInThePast(date: Date): boolean {
-    const today = new Date();
-    return (date.getDate() < today.getDate());
-  }
 
   completeTask(task: Task) {
-    if (this.isInThePast(task.date)) {
+    
       task.completedTask = true;
       this.toggleTaskCompleted(task);
     }
-
-  }
 
 
   public fillEditTaskForm(task: Task): void {

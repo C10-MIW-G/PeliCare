@@ -29,9 +29,13 @@
               ? 'task-completed'
               : 'task-not-completed'
              "
-          >{{ task.title}}: {{task.date | date : "MMM d, y h:mm a" : "en-US"}}
+          >{{ task.title}} &nbsp;
           
-            </span>
+          <fa-icon 
+          size="lg"
+          *ngIf="task.date != null"
+          [icon]="faClock"></fa-icon>            
+        </span>
          
       </button>
     </h2>
@@ -46,7 +50,10 @@
       [attr.data-bs-parent]="'#accordionTask-' + task.id"
     >
       <div class="accordion-body">
+        {{task.date | date : "MMM d, y h:mm a" : "en-US"}}
+        <br *ngIf="task.date !=null">
         {{ task.description }}
+        
       </div>
       <div class="accordion-footer d-flex justify-content-between">
         <div

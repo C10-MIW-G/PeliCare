@@ -8,40 +8,45 @@
       <div class="modal-body">
         <div class="container-fluid">
           <form [formGroup]="addTaskForm">
-            
+
+
+            <div class="col">
+
               <div class="row mt-2">
                 <div class="col">
-                <div class="col text-center">
-                  <label for="date" class="form-label">Date and time (optional)</label>
-                  <input type="datetime-local" name="date" class="form-control" id="date" formControlName="date" />
-                </div>
-                <div class="row mt-2">
-                  <div class="col text-center">
-                    <label for="title" class="form-label">Title</label>
-                    <input type="text" name="title" class="form-control" id="title" formControlName="title" [ngClass]="{
+                  <label for="title" class="form-label">Title</label>
+                  <input type="text" name="title" class="form-control" id="title" formControlName="title" [ngClass]="{
                     'is-invalid':
                       (taskFormControl['title'].touched || submitted) &&
                       taskFormControl['title'].invalid
                   }" />
-                    <div *ngIf="taskFormControl['title'].invalid" class="invalid-feedback">
-                      <div *ngIf="taskFormControl['title'].errors?.['required']">
-                        Title is required
-                      </div>
+                  <div *ngIf="taskFormControl['title'].invalid" class="invalid-feedback">
+                    <div *ngIf="taskFormControl['title'].errors?.['required']">
+                      Title is required
                     </div>
+
+
                   </div>
-                </div>
-                <div class="row mt-2">
-                  <div class="col text-center">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea type="text" name="description" class="form-control" id="description" rows="3"
-                      formControlName="description" [ngClass]="{
+                  <div class="row mt-3">
+                    <div class="col">
+                      <label for="description" class="form-label">Description</label>
+                      <textarea type="text" name="description" class="form-control" id="description" rows="3"
+                        formControlName="description" [ngClass]="{
                     'is-invalid':
                       (taskFormControl['description'].touched || submitted) &&
                       taskFormControl['description'].invalid
                   }"></textarea>
-                    <div *ngIf="taskFormControl['description'].invalid" class="invalid-feedback">
-                      <div *ngIf="taskFormControl['description'].errors?.['required']">
-                        Description is required
+                      <div *ngIf="taskFormControl['description'].invalid" class="invalid-feedback">
+                        <div *ngIf="taskFormControl['description'].errors?.['required']">
+                          Description is required
+                        </div>
+                      </div>
+                      <div class="row mt-3">
+                        <div class="col">
+                          <label for="date" class="form-label">Date and time (optional)</label>
+                          <input type="datetime-local" name="date" class="form-control" id="date"
+                            formControlName="date" />
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -6,6 +6,7 @@ import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundExceptio
 import com.makeitworkch10.pacemakers.pelicare.model.Task;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
 import com.makeitworkch10.pacemakers.pelicare.repository.TaskRepository;
+import com.makeitworkch10.pacemakers.pelicare.service.mappers.NewTaskDTOMapper;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.TaskDTOMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final CareCircleRepository careCircleRepository;
     private final TaskDTOMapper taskDTOMapper;
+    private final NewTaskDTOMapper newTaskDTOMapper;
 
     public List<TaskDTO> findAllTasks() {
         return taskRepository.findAll()
@@ -49,13 +51,7 @@ public class TaskService {
     }
 
     public TaskDTO saveTask(NewTaskDTO newTaskDTO) {
-        Task task = new Task();
-        task.setDate(newTaskDTO.getDate());
-        task.setTitle(newTaskDTO.getTitle());
-        task.setDescription(newTaskDTO.getDescription());
-        task.setCareCircle(careCircleRepository.findById(newTaskDTO.getCareCircleId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Care Circle of this new task could not be found")));
+        Task task = newTaskDTOMapper.apply(newTaskDTO);
         Long taskId = taskRepository.save(task).getId();
         return taskRepository.findById(taskId)
                 .map(taskDTOMapper)
