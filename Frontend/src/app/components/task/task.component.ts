@@ -26,7 +26,6 @@ export class TaskComponent implements OnInit{
 	public careCircleId: number;
 	public completedTask: boolean;
 
-
   constructor (
     private fb: FormBuilder,
     private route: ActivatedRoute,
