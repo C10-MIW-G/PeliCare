@@ -2,7 +2,6 @@ package com.makeitworkch10.pacemakers.pelicare;
 
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtService;
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtSettings;
-import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.CreateCareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.model.Task;
@@ -37,12 +36,12 @@ public class CareCircleServiceTests {
     private CareCircleRepository careCircleRepository;
     @Mock
     private CareCircleDTOMapper careCircleDTOMapper;
-    private JwtSettings jwtSettings = new JwtSettings(
+    private final JwtSettings jwtSettings = new JwtSettings(
             "0AJ7Wdyt5x0rQpgQaRibL5Z5DS3A48Gwv3jLM9iCIWxSSd87eJHaB1kGsopXx0FLhCMfZkeOur7LyZ26eZ4RVw");
 
     @Mock
     private CreateCareCircleDTOMapper createCareCircleDTOMapper;
-    private JwtService jwtService = new JwtService(jwtSettings);
+    private final JwtService jwtService = new JwtService(jwtSettings);
     @Mock
     private CareCircleUserRepository careCircleUserRepository;
     @Mock

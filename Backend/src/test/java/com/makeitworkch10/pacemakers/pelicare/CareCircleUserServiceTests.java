@@ -45,20 +45,19 @@ public class CareCircleUserServiceTests {
     private UserDTOMapper userDTOMapper;
     @Mock
     private SafeDeleteService safeDeleteService;
-    private JwtSettings jwtSettings = new JwtSettings(
+    private final JwtSettings jwtSettings = new JwtSettings(
             "0AJ7Wdyt5x0rQpgQaRibL5Z5DS3A48Gwv3jLM9iCIWxSSd87eJHaB1kGsopXx0FLhCMfZkeOur7LyZ26eZ4RVw");
 
     @Mock
     private UserInformationDTOMapper informationDTOMapper;
     private JwtService jwtService;
-    private UserService userService;
     private CareCircleUserService careCircleUserService;
 
     @BeforeEach
-    public void CareCircleUserServiceTests() {
+    public void initServices() {
         jwtService = new JwtService(jwtSettings);
 
-        userService = new UserService(
+        UserService userService = new UserService(
                 jwtService, userRepository, passwordEncoder, userDTOMapper, safeDeleteService, informationDTOMapper);
         careCircleUserService = new CareCircleUserService(
                 jwtService, userRepository, careCircleUserRepository, careCircleRepository, userService);
@@ -75,6 +74,6 @@ public class CareCircleUserServiceTests {
         CareCircleUser careCircleUser = new CareCircleUser(user, careCircle, true);
         when(careCircleUserRepository.isUserAdminOfCircle(careCircle.getId(), user.getId()))
                 .thenReturn(Optional.of(careCircleUser.isCircleAdmin()));
-        assertThat(careCircleUserService.isUserAdminOfCircle(careCircleUser.getId(), jwt));
+        assertThat(careCircleUserService.isUserAdminOfCircle(careCircleUser.getId(), jwt)).isTrue();
     }
 }
