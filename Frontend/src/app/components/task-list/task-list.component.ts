@@ -12,8 +12,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NewTask } from 'src/app/interfaces/new-task';
-import { formatDate } from '@angular/common';
-
 
 @Component({
   selector: 'app-task-list',

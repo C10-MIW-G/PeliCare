@@ -12,7 +12,7 @@ import java.util.function.Function;
 /**
  * @author Maaike Feenstra <mk.feenstra@st.hanze.nl><
  * <p>
- * het programma doet
+ * create mapping for the newTaskDTO's
  */
 
 @Service

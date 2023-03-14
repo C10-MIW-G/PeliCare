@@ -4,7 +4,6 @@ import com.makeitworkch10.pacemakers.pelicare.dto.TaskCompleteDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.TaskDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;
 import com.makeitworkch10.pacemakers.pelicare.model.Task;
-import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
 import com.makeitworkch10.pacemakers.pelicare.repository.TaskRepository;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.NewTaskDTOMapper;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.TaskDTOMapper;
@@ -24,7 +23,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TaskService {
     private final TaskRepository taskRepository;
-    private final CareCircleRepository careCircleRepository;
     private final TaskDTOMapper taskDTOMapper;
     private final NewTaskDTOMapper newTaskDTOMapper;
 
