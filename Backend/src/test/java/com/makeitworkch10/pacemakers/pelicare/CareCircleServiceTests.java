@@ -2,6 +2,8 @@ package com.makeitworkch10.pacemakers.pelicare;
 
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtService;
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtSettings;
+import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
+import com.makeitworkch10.pacemakers.pelicare.dto.CreateCareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.model.Task;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
@@ -10,6 +12,7 @@ import com.makeitworkch10.pacemakers.pelicare.service.CareCircleService;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleUserService;
 import com.makeitworkch10.pacemakers.pelicare.service.TaskService;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.CareCircleDTOMapper;
+import com.makeitworkch10.pacemakers.pelicare.service.mappers.CreateCareCircleDTOMapper;
 import com.makeitworkch10.pacemakers.pelicare.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,7 +40,8 @@ public class CareCircleServiceTests {
     private JwtSettings jwtSettings = new JwtSettings(
             "0AJ7Wdyt5x0rQpgQaRibL5Z5DS3A48Gwv3jLM9iCIWxSSd87eJHaB1kGsopXx0FLhCMfZkeOur7LyZ26eZ4RVw");
 
-
+    @Mock
+    private CreateCareCircleDTOMapper createCareCircleDTOMapper;
     private JwtService jwtService = new JwtService(jwtSettings);
     @Mock
     private CareCircleUserRepository careCircleUserRepository;
@@ -54,16 +58,19 @@ public class CareCircleServiceTests {
         careCircleService = new CareCircleService(
                 careCircleRepository, careCircleDTOMapper,
                 jwtService, careCircleUserRepository,
-                careCircleUserService, userRepository, taskService
+                careCircleUserService, userRepository,
+                taskService, createCareCircleDTOMapper
         );
     }
 
     @Test
     public void createCareCircleTest(){
         List<Task> taskList = new ArrayList<>();
-        CareCircle careCircle = new CareCircle (null, "Grandma's Circle", taskList);
+        CreateCareCircleDTO createCareCircleDTO = new CreateCareCircleDTO ("Grandma's Circle");
+        CareCircle careCircle = new CareCircle(null, "Grandma's Circle", taskList);
         when(careCircleRepository.save(careCircle)).thenReturn(careCircle);
-        CareCircle savedCareCircle = careCircleService.createCareCircle(careCircle);
+        when(createCareCircleDTOMapper.apply(createCareCircleDTO)).thenReturn(careCircle);
+        CareCircle savedCareCircle = careCircleService.createCareCircle(createCareCircleDTO);
         assertThat(savedCareCircle.getName()).isNotEmpty();
     }
 }

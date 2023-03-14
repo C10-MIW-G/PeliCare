@@ -56,7 +56,7 @@ public class CareCircleController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createCareCircle(@RequestBody CareCircle newCareCircle,
+    public ResponseEntity<String> createCareCircle(@RequestBody CreateCareCircleDTO newCareCircle,
                                                    @RequestHeader (name="Authorization") String jwt){
         CareCircle savedCareCircle = careCircleService.createCareCircle(newCareCircle);
         careCircleUserService.addCircleAdminToCareCircle(jwt, savedCareCircle);
