@@ -1,0 +1,54 @@
+<modal id="addCareCircle">
+  <div class="modal-header">
+    <h1 class="modal-title fs-5" id="addCareCircleLabel">
+      Add new Care Circle
+    </h1>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="modalService.close()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="createCircleForm">
+      <div class="form-group">
+        <label for="inputName">Name:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputName"
+          name="name"
+          aria-describedby="nameHelp"
+          placeholder="Enter name"
+          formControlName="name"
+          [ngClass]="{
+            'is-invalid':
+              (createCircleFormControl['name'].touched || submitted) &&
+              createCircleFormControl['name'].invalid
+          }"
+        />
+        <div
+          *ngIf="createCircleFormControl['name'].invalid"
+          class="invalid-feedback"
+        >
+          <div *ngIf="createCircleFormControl['name'].errors?.['required']">
+            Name is required
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-secondary"
+      (click)="modalService.close()"
+    >
+      Close
+    </button>
+    <button type="button" class="btn btn-peli" data-bs-dismiss="modal" (click)="create()"
+    [disabled]="!createCircleForm.valid">
+    Save changes
+  </button>
+  </div>
+</modal>

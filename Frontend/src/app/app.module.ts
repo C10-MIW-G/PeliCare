@@ -1,3 +1,4 @@
+import { TooltipModule } from './components/ui/tooltip/tooltip.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CareCircleService } from './services/care-circle.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -15,7 +16,6 @@ import { CreateAccountComponent } from './components/create-account/create-accou
 import { InterceptorService } from './services/interceptor.service';
 import { CreateCarecircleComponent } from './components/create-carecircle/create-carecircle.component';
 import { environment } from 'src/environments/environment.development';
-import { TaskComponent } from './components/task/task.component';
 import { CarecircleMembersComponent } from './components/carecircle-members/carecircle-members.component';
 import { ErrorComponent } from './components/error/error.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -29,6 +29,8 @@ import { UserSettingsComponent } from './components/user-settings/user-settings.
 import { DeleteUserComponent } from './components/delete-user/delete-user.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { CarecircleInfoWidgetComponent } from './components/carecircle-info-widget/carecircle-info-widget.component';
+import { AddCarecircleComponent } from './components/add-carecircle/add-carecircle.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,6 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     SignInComponent,
     CreateAccountComponent,
     CreateCarecircleComponent,
-    TaskComponent,
     CarecircleMembersComponent,
     ErrorComponent,
     NotFoundComponent,
@@ -51,7 +52,9 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     UserSettingsComponent,
     DeleteUserComponent,
     ModalComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    CarecircleInfoWidgetComponent,
+    AddCarecircleComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +65,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     RecaptchaModule,
     RecaptchaFormsModule,
     FontAwesomeModule,
+    TooltipModule
   ],
   providers: [CareCircleService, {
     provide: HTTP_INTERCEPTORS,

@@ -1,0 +1,12 @@
+.info-widget li a {
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  color: #fff;
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  width: 30px;
+  font-size: 15px;
+  text-decoration: none;
+}

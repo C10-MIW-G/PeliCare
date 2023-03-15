@@ -13,7 +13,6 @@ import { CarecirclelistComponent } from './components/carecircle-list/carecircle
 import { CareCircleComponent } from './components/carecircle/carecircle.component';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
-import { TaskComponent } from './components/task/task.component';
 import { HomeComponent } from './components/home/home.component';
 
 const routes: Routes = [
@@ -23,8 +22,6 @@ const routes: Routes = [
   { path: 'account/create', component: CreateAccountComponent },
   { path: 'account/signin', component: SignInComponent },
   { path: 'carecircles/create', component: CreateCarecircleComponent, canActivate: [AuthGuard] },
-  { path: 'task/create/:circleId', component: TaskComponent, canActivate: [AuthGuard] },
-  { path: 'task/edit/:taskId/:circleId', component: TaskComponent, canActivate: [AuthGuard] },
   { path: 'carecircle/:id/members', component: CarecircleMembersComponent, canActivate: [AuthGuard]},
   { path: 'account/settings', component: UserSettingsComponent, canActivate: [AuthGuard]},
   { path: 'account/changepassword', component: ChangePasswordComponent, canActivate: [AuthGuard] },
