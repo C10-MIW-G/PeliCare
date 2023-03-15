@@ -65,8 +65,8 @@ public class CareCircleUserServiceTests {
 
     @Test
     void userIsAdminOfCircle(){
-        User user  = new User("admintest", "admintestpw");
-        when(userRepository.findByEmail("admintest")).thenReturn(Optional.of(user));
+        User user  = new User("joke@pelicare.nl", "jokepw");
+        when(userRepository.findByEmail("joke@pelicare.nl")).thenReturn(Optional.of(user));
         String jwt = jwtService.generateToken(user);
         CareCircle careCircle = new CareCircle();
 
