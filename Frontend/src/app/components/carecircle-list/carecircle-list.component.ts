@@ -12,7 +12,6 @@ import { CareCircle } from '../../interfaces/carecircle';
   styleUrls: ['./carecircle-list.component.css'],
 })
 export class CarecirclelistComponent implements OnInit {
-  public adminCircles: CareCircle[];
   public userCircles: CareCircle[];
   faPlusCircle = faPlusCircle;
 
@@ -23,23 +22,11 @@ export class CarecirclelistComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getAdminCircles();
-    this.getUserCircles();
+    this.getCirclesOfUser();
   }
 
-  public getAdminCircles(): void {
-    this.careCircleService.getAdminCircles().subscribe({
-      next: (response: CareCircle[]) => {
-        this.adminCircles = response;
-      },
-      error: (error: HttpErrorResponse) => {
-        this.errorHandlingService.redirectUnexpectedErrors(error);
-      },
-    });
-  }
-
-  public getUserCircles(): void {
-    this.careCircleService.getUserCircles().subscribe({
+  public getCirclesOfUser(): void {
+    this.careCircleService.getAllCircles().subscribe({
       next: (response: CareCircle[]) => {
         this.userCircles = response;
       },
@@ -48,30 +35,4 @@ export class CarecirclelistComponent implements OnInit {
       },
     });
   }
-
-  isAdminInCircle(careCircle: CareCircle) {
-    var i;
-    if (this.adminCircles) {
-      for (i = 0; i < this.adminCircles.length; i++) {
-        if (this.adminCircles[i] === careCircle) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
-  get allCircles(): CareCircle[] {
-    if (this.adminCircles && this.adminCircles.length > 0) {
-      if (this.userCircles && this.userCircles.length > 0) {
-        return this.adminCircles.concat(this.userCircles);
-      } else {
-        return this.adminCircles;
-      }
-    } else {
-      return this.userCircles;
-    }
-  }
-
 }

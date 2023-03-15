@@ -10,8 +10,6 @@ import java.util.*;
 
 public interface CareCircleUserRepository extends JpaRepository<CareCircleUser, Long> {
 
-
-
         @Query(
                 value = "SELECT care_circle_id FROM care_circle_user WHERE user_id = ?1 AND is_circle_admin = true",
                 nativeQuery = true
@@ -19,10 +17,10 @@ public interface CareCircleUserRepository extends JpaRepository<CareCircleUser, 
         Set<Long> findCareCirclesOfAdmin(Long userId);
 
         @Query(
-                value = "SELECT care_circle_id FROM care_circle_user WHERE user_id = ?1 AND is_circle_admin = false",
+                value = "SELECT care_circle_id FROM care_circle_user WHERE user_id = ?1",
                 nativeQuery = true
         )
-        Set<Long> findCareCirclesOfUser(Long userId);
+        Set<Long> findAllCareCirclesOfUser(Long userId);
 
         @Query(
                 value = "SELECT is_circle_admin FROM care_circle_user WHERE care_circle_id = ?1 AND user_id = ?2",

@@ -26,18 +26,6 @@ public class CareCircleController {
     private final CareCircleService careCircleService;
     private final CareCircleUserService careCircleUserService;
 
-    @GetMapping("/admin")
-    public ResponseEntity<List<CareCircleDTO>> getAdminCircles(@RequestHeader (name="Authorization") String jwt) {
-        List<CareCircleDTO> responseList = careCircleService.findCirclesOfAdmin(jwt);
-        return new ResponseEntity<>(responseList, HttpStatus.OK);
-    }
-
-    @GetMapping("/user")
-    public ResponseEntity<List<CareCircleDTO>> getUserCircles(@RequestHeader (name="Authorization") String jwt) {
-        List<CareCircleDTO> responseList = careCircleService.findCirclesOfUser(jwt);
-        return new ResponseEntity<>(responseList, HttpStatus.OK);
-    }
-
     @GetMapping("/all")
     public ResponseEntity<List<CareCircleDTO>> getAllCircles(@RequestHeader (name="Authorization") String jwt){
         List<CareCircleDTO> responseList = careCircleService.findAllCareCirclesOfUser(jwt);

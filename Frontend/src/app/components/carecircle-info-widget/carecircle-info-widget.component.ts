@@ -15,9 +15,10 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './carecircle-info-widget.component.html',
   styleUrls: ['./carecircle-info-widget.component.css'],
 })
+
 export class CarecircleInfoWidgetComponent implements OnInit {
   @Input() careCircle: CareCircle;
-  @Input() isAdmin: boolean;
+  isAdmin: boolean;
   faUserShield = faUserShield;
   faUser = faUser;
   faTasks = faTasks;
@@ -31,6 +32,7 @@ export class CarecircleInfoWidgetComponent implements OnInit {
 
   ngOnInit() {
     this.getMemberCount();
+    this.getAdminStatus();
   }
 
   getMemberCount() {
@@ -46,7 +48,20 @@ export class CarecircleInfoWidgetComponent implements OnInit {
       });
   }
 
-  get taskCountMessage() {
+  getAdminStatus() {
+    this.careCircleService
+      .isAdmin(this.careCircle.id)
+      .subscribe({
+        next: (result: boolean) => {
+          this.isAdmin = result;
+        },
+        error: (error: HttpErrorResponse) => {
+          this.errorHandlingService.redirectUnexpectedErrors(error);
+        }
+      });
+  }
+
+  get taskCountMessage(): string {
     if (this.careCircle.taskList.length == 0) {
       return 'This circle has no tasks';
     } else if (this.careCircle.taskList.length == 1) {
@@ -56,7 +71,7 @@ export class CarecircleInfoWidgetComponent implements OnInit {
     }
   }
 
-  get memberCountMessage() {
+  get memberCountMessage(): string {
     if (this.memberCount == 1) {
       return 'You are the only member of this circle';
     } else {

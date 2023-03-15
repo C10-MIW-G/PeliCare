@@ -51,23 +51,10 @@ public class CareCircleService {
         return careCircleRepository.save(careCircle);
     }
 
-    public List<CareCircleDTO> findCirclesOfAdmin(String jwt) {
+    public List<CareCircleDTO> findAllCareCirclesOfUser(String jwt) {
         String username = jwtService.extractUsername(jwt);
         Long userId = userRepository.findByEmail(username).orElseThrow().getId();
-        Set<Long> careCircleIds = careCircleUserRepository.findCareCirclesOfAdmin(userId);
-        List<CareCircleDTO> returnList = new ArrayList<>();
-        for (Long circleId : careCircleIds) {
-            returnList.add(careCircleRepository.findById(circleId).
-                    map(careCircleDTOMapper)
-                    .orElseThrow(() -> new ResourceNotFoundException(
-                    "CareCircle not found")));
-        }
-        return returnList;
-    }
-    public List<CareCircleDTO> findCirclesOfUser(String jwt) {
-        String username = jwtService.extractUsername(jwt);
-        Long userId = userRepository.findByEmail(username).orElseThrow().getId();
-        Set<Long> careCircleIds = careCircleUserRepository.findCareCirclesOfUser(userId);
+        Set<Long> careCircleIds = careCircleUserRepository.findAllCareCirclesOfUser(userId);
         List<CareCircleDTO> returnList = new ArrayList<>();
         for (Long circleId : careCircleIds) {
             returnList.add(careCircleRepository.findById(circleId).
@@ -75,16 +62,6 @@ public class CareCircleService {
                     .orElseThrow(() -> new ResourceNotFoundException(
                             "CareCircle not found")));
         }
-        return returnList;
-    }
-
-    public List<CareCircleDTO> findAllCareCirclesOfUser(String jwt){
-        List<CareCircleDTO> returnList = new ArrayList<>();
-
-        List<CareCircleDTO> userCirclesList = findCirclesOfUser(jwt);
-        List<CareCircleDTO> adminCirclesList = findCirclesOfAdmin(jwt);
-        returnList.addAll(userCirclesList);
-        returnList.addAll(adminCirclesList);
         return returnList;
     }
 
