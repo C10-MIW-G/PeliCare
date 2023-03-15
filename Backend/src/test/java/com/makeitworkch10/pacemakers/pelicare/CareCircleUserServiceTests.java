@@ -76,4 +76,32 @@ public class CareCircleUserServiceTests {
                 .thenReturn(Optional.of(careCircleUser.isCircleAdmin()));
         assertThat(careCircleUserService.isUserAdminOfCircle(careCircleUser.getId(), jwt)).isTrue();
     }
+    @Test
+    void userIsMemberOfCircle(){
+        User kees  = new User("kees@pelicare.nl", "keespw");
+        when(userRepository.findByEmail("kees@pelicare.nl")).thenReturn(Optional.of(kees));
+        String jwtKees = jwtService.generateToken(kees);
+
+        User joke  = new User("joke@pelicare.nl", "jokepw");
+        when(userRepository.findByEmail("joke@pelicare.nl")).thenReturn(Optional.of(joke));
+        String jwtJoke = jwtService.generateToken(joke);
+
+        User piet  = new User("piet@pelicare.nl", "pietpw");
+        when(userRepository.findByEmail("piet@pelicare.nl")).thenReturn(Optional.of(piet));
+        String jwtPiet = jwtService.generateToken(piet);
+
+        CareCircle auntEmma = new CareCircle();
+        
+        when(careCircleUserRepository.checkCareCircleUser(auntEmma.getId(), kees.getId()))
+                .thenReturn(1);
+        assertThat(careCircleUserService.isUserOfCircle(auntEmma.getId(), jwtKees)).isTrue();
+
+        when(careCircleUserRepository.checkCareCircleUser(auntEmma.getId(), joke.getId()))
+                .thenReturn(1);
+        assertThat(careCircleUserService.isUserOfCircle(auntEmma.getId(), jwtJoke)).isTrue();
+
+        when(careCircleUserRepository.checkCareCircleUser(auntEmma.getId(), piet.getId()))
+                .thenReturn(0);
+        assertThat(careCircleUserService.isUserOfCircle(auntEmma.getId(), jwtPiet)).isFalse();
+    }
 }
