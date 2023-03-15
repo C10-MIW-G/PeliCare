@@ -43,14 +43,14 @@ public class UserService {
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow();
     }
-    public UserInformationDTO getUserInformationByEmail(String email) {
+    public UserInformationDTO getUserInformationByEmail(String jwt) {
+        String email = jwtService.extractUsername(jwt);
         return userRepository.findByEmail(email).map(userInformationDTOMapper).orElseThrow();
     }
 
-    public void saveUserInformation(String email, UserInformationDTO user){
-        User userToEdit = userRepository.findByEmail(email).orElseThrow();
-        userToEdit.setName(user.getName());
-        userToEdit.setPhoneNumber(user.getPhoneNumber());
+    public void saveUserInformation(String jwt, UserInformationDTO user){
+        String email = jwtService.extractUsername(jwt);
+        User userToEdit = userInformationDTOMapper.mapFromDTO(email, user);
         userRepository.save(userToEdit);
     }
 

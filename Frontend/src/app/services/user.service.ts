@@ -19,12 +19,12 @@ export class UserService {
     return this.http.delete(`${this.apiBackendUrl}/user/delete`);
   }
 
-  public getUserInformation(email: string): Observable<User> {
-    return this.http.get<User>(`${this.apiBackendUrl}/user/${email}`)
+  public getUserInformation(): Observable<User> {
+    return this.http.get<User>(`${this.apiBackendUrl}/user/settings`)
   }
 
-  public editUserDetails(email: string, name: string, phoneNumber: string){
-    return this.http.post(`${this.apiBackendUrl}/user/${email}/edit`, {name, phoneNumber})
+  public editUserDetails(name: string, phoneNumber: string){
+    return this.http.post(`${this.apiBackendUrl}/user/settings/edit`, {name, phoneNumber})
   }
 
 }

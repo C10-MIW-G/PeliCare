@@ -28,8 +28,8 @@
               </a>
               <div class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                 <div *ngIf="user">
-                <a class="dropdown-item" routerLink="/account/{{user.email}}">Profile</a>
-                <a class="dropdown-item" routerLink="/account/settings/{{user.email}}">Settings</a>
+                <a class="dropdown-item" routerLink="/account/profile">Profile</a>
+                <a class="dropdown-item" routerLink="/account/settings">Settings</a>
                 <a class="dropdown-item" routerLink="/account/changepassword">Change Password</a>
                 <a class="dropdown-item" routerLink="/account/signin" (click)="logout()">Sign Out</a>
               </div>

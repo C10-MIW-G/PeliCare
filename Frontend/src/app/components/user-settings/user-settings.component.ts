@@ -1,4 +1,4 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ErrorHandlingService } from './../../services/error-handling.service';
 import { UserService } from './../../services/user.service';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -23,23 +23,22 @@ export class UserSettingsComponent {
     private fb: FormBuilder,
     private userService: UserService,
     private errorHandlingService: ErrorHandlingService,
-    private route: ActivatedRoute,
-    private router: Router){}
+    private route: ActivatedRoute){}
 
   ngOnInit(): void {
   this.userDetailsForm = this.fb.group({
     name: [''],
     phoneNumber: [''],
   });
-  this.getUser(this.email);
+  this.getUser();
 }
 
 get userDetailsFormControl() {
   return this.userDetailsForm.controls;
 }
 
-public getUser(email: string): User {
-  this.userService.getUserInformation(email).subscribe({
+public getUser(): User {
+  this.userService.getUserInformation().subscribe({
     next: (response: User) => {
       this.user = response;
     },
@@ -57,7 +56,7 @@ fillUserDetailsForm(): void{
 
 onSubmitEdit() {
   if (this.userDetailsForm.valid) {
-    this.userService.editUserDetails(this.email, this.userDetailsFormControl['name'].value, this.userDetailsFormControl['phoneNumber'].value)
+    this.userService.editUserDetails(this.userDetailsFormControl['name'].value, this.userDetailsFormControl['phoneNumber'].value)
     .subscribe({
       next: () => {
         window.location.reload();

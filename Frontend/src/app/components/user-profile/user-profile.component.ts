@@ -1,5 +1,4 @@
 import { ErrorHandlingService } from './../../services/error-handling.service';
-import { ActivatedRoute } from '@angular/router';
 import { UserService } from './../../services/user.service';
 import { User } from './../../interfaces/user';
 import { Component, OnInit } from '@angular/core';
@@ -23,15 +22,14 @@ export class UserProfileComponent implements OnInit{
 
   constructor(
     private userService: UserService,
-    private route: ActivatedRoute,
     private errorHandlingService: ErrorHandlingService){}
 
   ngOnInit(): void {
-    this.route.params.subscribe(routeParams => {this.getUser(routeParams['email'])})
+    this.getUser();
   }
 
-  public getUser(email: string): void {
-    this.userService.getUserInformation(email).subscribe({
+  public getUser(): void {
+    this.userService.getUserInformation().subscribe({
       next: (response: User) => {
         this.user = response;
       },

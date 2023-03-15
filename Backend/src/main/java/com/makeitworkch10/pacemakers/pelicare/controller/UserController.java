@@ -51,16 +51,16 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<UserInformationDTO> getUser(@PathVariable("email") String email){
-        UserInformationDTO user = userService.getUserInformationByEmail(email);
+    @GetMapping("/settings")
+    public ResponseEntity<UserInformationDTO> getUser(@RequestHeader(name = "Authorization") String jwt){
+        UserInformationDTO user = userService.getUserInformationByEmail(jwt);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/{email}/edit")
-    public ResponseEntity<UserInformationDTO> editUserInformation(@PathVariable("email") String email,
+    @PostMapping("/settings/edit")
+    public ResponseEntity<UserInformationDTO> editUserInformation(@RequestHeader(name = "Authorization") String jwt,
                                                                   @RequestBody UserInformationDTO user){
-        userService.saveUserInformation(email, user);
+        userService.saveUserInformation(jwt, user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

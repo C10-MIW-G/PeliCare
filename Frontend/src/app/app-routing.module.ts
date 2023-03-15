@@ -26,9 +26,9 @@ const routes: Routes = [
   { path: 'task/create/:circleId', component: TaskComponent, canActivate: [AuthGuard] },
   { path: 'task/edit/:taskId/:circleId', component: TaskComponent, canActivate: [AuthGuard] },
   { path: 'carecircle/:id/members', component: CarecircleMembersComponent, canActivate: [AuthGuard]},
-  { path: 'account/settings/:email', component: UserSettingsComponent, canActivate: [AuthGuard]},
+  { path: 'account/settings', component: UserSettingsComponent, canActivate: [AuthGuard]},
   { path: 'account/changepassword', component: ChangePasswordComponent, canActivate: [AuthGuard] },
-  { path: 'account/:email', component: UserProfileComponent, canActivate: [AuthGuard]},
+  { path: 'account/profile', component: UserProfileComponent, canActivate: [AuthGuard]},
   { path: 'error', component: ErrorComponent },
   { path: '**', component: NotFoundComponent }
 ];
