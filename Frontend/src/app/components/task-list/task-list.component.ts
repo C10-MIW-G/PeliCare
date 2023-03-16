@@ -1,7 +1,7 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { TaskService } from './../../services/task.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Task } from 'src/app/interfaces/task';
 import {
   faCheckCircle,
@@ -18,10 +18,10 @@ import { NewTask } from 'src/app/interfaces/new-task';
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.css'],
 })
-export class TaskListComponent implements OnInit {
+export class TaskListComponent implements OnInit, OnChanges {
   @Input() careCircleId: number;
 
-  taskList: Task[];
+  taskList: Task[] = [];
   editTaskForm: FormGroup;
   faCheckCircle = faCheckCircle;
   faPencil = faPencil;
@@ -36,6 +36,11 @@ export class TaskListComponent implements OnInit {
   ) { }
 
 
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // reload TaskList component after navigating to other CarCircle via drop down menu 
+    this.getTasks(this.careCircleId);
+  }
 
   ngOnInit() {
     this.editTaskForm = this.fb.group({

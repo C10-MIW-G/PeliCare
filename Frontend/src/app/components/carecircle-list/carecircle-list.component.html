@@ -1,41 +1,38 @@
 <div class="row container-fluid component-body">
-  <div class="col-md-2"></div>
+	<div class="col-md-2"></div>
 
-  <div class="col-md-8">
-    <h4 class="text-dark mb-3 text-center">My Care Circles</h4>
-    <div
-      *ngIf="userCircles && userCircles.length !== null"
-      class="row row-cols-1 row-cols-md-4 g-4 d-flex justify-content-center"
-    >
-      <div *ngFor="let careCircle of userCircles" class="col">
-        <div class="card" style="width: 14rem">
-          <h4 class="card-title">{{ careCircle.name }}</h4>
-          <a
-            routerLink="/carecircle/{{ careCircle.id }}"
-            class="list-group-item"
-          >
-            <div class="rounded-circle p-1" width="110"></div>
-          </a>
-          <div class="card-body">
-            <info-widget
-              [careCircle]="careCircle"
-            ></info-widget>
-          </div>
-        </div>
-      </div>
-    </div>
+	<div class="col-md-8">
+		<h4 class="text-dark mb-3 text-center">My Care Circles</h4>
+		<div *ngIf="userCircles && userCircles.length !== null"
+			class="row row-cols-1 row-cols-md-4 g-4 d-flex justify-content-center">
+			<div *ngFor="let careCircle of userCircles" class="col">
+				<div class="card" style="width: 14rem">
+					<h4 class="card-title">{{ careCircle.name }}</h4>
+					<a routerLink="/carecircle/{{ careCircle.id }}" class="list-group-item">
+						<app-circleimage [imagefilename]="careCircle.imagefilename"></app-circleimage>
 
-    <div *ngIf="userCircles && userCircles.length === 0">
-      <p class="text-dark text-center mt-4">
-        You are currently not part of any Care Circles.
-      </p>
-    </div>
-  </div>
-  <div class="col-md-2">
-    <button class="btn btn-peli" (click)="modalService.open('addCareCircle')">
-      <fa-icon [icon]="faPlusCircle"></fa-icon> Add new Circle
-    </button>
-  </div>
+					</a>
+					<div class="card-body">
+						<info-widget [careCircle]="careCircle"></info-widget>
+					</div>
+				</div>
+			</div>
+		</div>
 
-  <add-carecircle (onAddCircle)="getCirclesOfUser()"></add-carecircle>
+		<div *ngIf="userCircles && userCircles.length === 0">
+			<p class="text-dark text-center mt-4">
+				You are currently not part of any Care Circles.
+			</p>
+		</div>
+	</div>
+	<div class="col-md-2">
+		<button class="btn btn-peli" (click)="modalService.open('addCareCircle')">
+			<fa-icon [icon]="faPlusCircle"></fa-icon> Add new Circle
+		</button>		
+	</div>
+
+	<add-carecircle (onAddCircle)="getCirclesOfUser()"></add-carecircle>
+	
+	<div class="col-md-2">		
+	</div>
 </div>

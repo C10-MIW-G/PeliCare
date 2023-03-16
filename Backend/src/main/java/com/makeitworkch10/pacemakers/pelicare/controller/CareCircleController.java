@@ -4,11 +4,20 @@ import com.makeitworkch10.pacemakers.pelicare.dto.*;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleService;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleUserService;
+import com.makeitworkch10.pacemakers.pelicare.service.FileStorageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import static java.nio.file.Paths.get;
+
+import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -23,8 +32,36 @@ import java.util.List;
 @RequestMapping("/carecircle")
 public class CareCircleController {
 
+    private final FileStorageService fileStorageService;
     private final CareCircleService careCircleService;
     private final CareCircleUserService careCircleUserService;
+
+    @PostMapping("/upload")
+    public ResponseEntity<String> makeNewCareCircle(@RequestParam("files") List<MultipartFile> multipartFiles,
+                                                    @RequestParam("carecirclename")String carecirclename,
+                                                    @RequestHeader (name="Authorization") String jwt) {
+
+        CareCircle savedCareCircle = careCircleService.createNewCareCircle(carecirclename);
+        careCircleUserService.addCircleAdminToCareCircle(jwt, savedCareCircle);
+
+        // handle image upload
+        String newFileNameOfImage = fileStorageService.saveImage(multipartFiles, savedCareCircle.getId());
+        careCircleService.setImageFilaname(savedCareCircle.getId(), newFileNameOfImage);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/download/{filename}")
+    public ResponseEntity<Resource> downloadPhoto(@PathVariable("filename") String filename,
+                                                  @RequestHeader (name="Authorization") String jwt)
+            throws IOException {
+        Path filePath = get("src/main/resources/images").toAbsolutePath().normalize().resolve(filename);
+        Resource resource = fileStorageService.loadAsResource(filename);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(Files.probeContentType(filePath)))
+                .body(resource);
+    }
 
     @GetMapping("/all")
     public ResponseEntity<List<CareCircleDTO>> getAllCircles(@RequestHeader (name="Authorization") String jwt){

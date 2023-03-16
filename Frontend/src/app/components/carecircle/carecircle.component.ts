@@ -1,11 +1,10 @@
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse, HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CareCircleService } from '../../services/care-circle.service';
 import { CareCircle } from '../../interfaces/carecircle';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-
 @Component({
 	selector: 'app-carecircle',
 	templateUrl: './careCircle.component.html',
@@ -19,16 +18,20 @@ export class CareCircleComponent implements OnInit {
 	public isAdmin: Boolean;
 	public isUser: Boolean;
 	public careCircle: CareCircle;
+	public imageBlobUrl: string | ArrayBuffer | null;
+	
+
 
 	constructor(
 		private route: ActivatedRoute,
 		private careCircleService: CareCircleService,
 		private router: Router,
-		private errorHandlingService: ErrorHandlingService
+		private errorHandlingService: ErrorHandlingService,
+
 	) { }
 
 	ngOnInit(): void {
-    this.route.params.subscribe(routeParams => {this.getCareCircle(routeParams['id'])})
+		this.route.params.subscribe(routeParams => { this.getCareCircle(routeParams['id']) });
 	}
 
 	getCareCircle(id: Number): void {
@@ -36,14 +39,13 @@ export class CareCircleComponent implements OnInit {
 			.subscribe({
 				next: (response: CareCircle) => {
 					this.careCircle = response;
-					this.checkAdminStatus();
+					this.checkAdminStatus();												
 				},
 				error: (error: HttpErrorResponse) => {
 					this.errorHandlingService.redirectUnexpectedErrors(error);
 				}
 			});
-	}
-	
+	}	
 
 	checkAdminStatus() {
 		this.careCircleService.isAdmin(this.careCircle.id)

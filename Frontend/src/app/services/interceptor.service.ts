@@ -17,7 +17,8 @@ export class InterceptorService {
 
     if (jwtToken) {
       const cloned = req.clone({
-        headers: req.headers.set('Authorization', 'Bearer ' + jwtToken),
+        headers: req.headers.set('Authorization', 'Bearer ' + jwtToken)
+        
       });
 
       return next.handle(cloned);

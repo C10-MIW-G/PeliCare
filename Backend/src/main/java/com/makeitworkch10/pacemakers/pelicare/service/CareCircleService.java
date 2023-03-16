@@ -37,6 +37,7 @@ public class CareCircleService {
     private final UserRepository userRepository;
     private final TaskService taskService;
     private final CreateCareCircleDTOMapper createCareCircleDTOMapper;
+    private final FileStorageService fileStorageService;
 
     public CareCircleDTO getCareCircle(Long id) throws ResourceNotFoundException {
 
@@ -75,6 +76,9 @@ public class CareCircleService {
         // delete the appropriate entries from care_circle_user table
         careCircleUserService.deleteCareCircleUsers(circleId);
 
+        // delete the picture
+        fileStorageService.deleteImage(circleToDelete.getImagefilename());
+
         // finally: delete the Care Circle
         careCircleRepository.deleteById(circleId);
     }
@@ -91,5 +95,17 @@ public class CareCircleService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                 "CareCircle not found"
         ));
+    }
+
+    public CareCircle createNewCareCircle(String carecirclename) {
+        CareCircle newCareCircle = new CareCircle();
+        newCareCircle.setName(carecirclename);
+        return careCircleRepository.save(newCareCircle);
+    }
+
+    public void setImageFilaname(Long id, String filaname) {
+        CareCircle circleToUpdate = careCircleRepository.findById(id).orElseThrow();
+        circleToUpdate.setImagefilename(filaname);
+        careCircleRepository.save(circleToUpdate);
     }
 }

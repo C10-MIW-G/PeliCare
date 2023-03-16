@@ -8,7 +8,6 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ErrorComponent } from './components/error/error.component';
 import { CarecircleMembersComponent } from './components/carecircle-members/carecircle-members.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
-import { CreateCarecircleComponent } from './components/create-carecircle/create-carecircle.component';
 import { CarecirclelistComponent } from './components/carecircle-list/carecircle-list.component';
 import { CareCircleComponent } from './components/carecircle/carecircle.component';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
@@ -21,7 +20,6 @@ const routes: Routes = [
   { path: 'carecircle/:id', component: CareCircleComponent, canActivate: [AuthGuard] },
   { path: 'account/create', component: CreateAccountComponent },
   { path: 'account/signin', component: SignInComponent },
-  { path: 'carecircles/create', component: CreateCarecircleComponent, canActivate: [AuthGuard] },
   { path: 'carecircle/:id/members', component: CarecircleMembersComponent, canActivate: [AuthGuard]},
   { path: 'account/settings', component: UserSettingsComponent, canActivate: [AuthGuard]},
   { path: 'account/changepassword', component: ChangePasswordComponent, canActivate: [AuthGuard] },

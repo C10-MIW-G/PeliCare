@@ -12,9 +12,9 @@ import { CareCircle } from '../../interfaces/carecircle';
   styleUrls: ['./carecircle-list.component.css'],
 })
 export class CarecirclelistComponent implements OnInit {
-  public userCircles: CareCircle[];
+  public userCircles: CareCircle[];  
   faPlusCircle = faPlusCircle;
-
+  
   constructor(
     private careCircleService: CareCircleService,
     private errorHandlingService: ErrorHandlingService,
@@ -36,3 +36,5 @@ export class CarecirclelistComponent implements OnInit {
     });
   }
 }
+
+

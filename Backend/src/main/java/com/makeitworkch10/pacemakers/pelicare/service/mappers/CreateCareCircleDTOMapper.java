@@ -20,6 +20,7 @@ public class CreateCareCircleDTOMapper implements Function<CreateCareCircleDTO, 
         return new CareCircle(
                 null,
                 createCareCircleDTO.getName(),
+                "", // image filename
                 new ArrayList<>()
         );
     }

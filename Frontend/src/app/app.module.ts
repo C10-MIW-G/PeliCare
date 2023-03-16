@@ -14,7 +14,6 @@ import { CareCircleComponent } from './components/carecircle/carecircle.componen
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
 import { InterceptorService } from './services/interceptor.service';
-import { CreateCarecircleComponent } from './components/create-carecircle/create-carecircle.component';
 import { environment } from 'src/environments/environment.development';
 import { CarecircleMembersComponent } from './components/carecircle-members/carecircle-members.component';
 import { ErrorComponent } from './components/error/error.component';
@@ -31,6 +30,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { CarecircleInfoWidgetComponent } from './components/carecircle-info-widget/carecircle-info-widget.component';
 import { AddCarecircleComponent } from './components/add-carecircle/add-carecircle.component';
+import { CircleimageComponent } from './components/circleimage/circleimage.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,6 @@ import { AddCarecircleComponent } from './components/add-carecircle/add-carecirc
     CareCircleComponent,
     SignInComponent,
     CreateAccountComponent,
-    CreateCarecircleComponent,
     CarecircleMembersComponent,
     ErrorComponent,
     NotFoundComponent,
@@ -54,7 +53,8 @@ import { AddCarecircleComponent } from './components/add-carecircle/add-carecirc
     ModalComponent,
     UserProfileComponent,
     CarecircleInfoWidgetComponent,
-    AddCarecircleComponent
+    AddCarecircleComponent,
+    CircleimageComponent,
   ],
   imports: [
     BrowserModule,

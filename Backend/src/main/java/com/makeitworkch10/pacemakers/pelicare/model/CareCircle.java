@@ -27,6 +27,9 @@ public class CareCircle {
     @Column(nullable = false)
     private String name;
 
+    @Column
+    private String imagefilename;
+
     @OneToMany(mappedBy = "careCircle")
     @JsonManagedReference
     private List<Task> taskList;

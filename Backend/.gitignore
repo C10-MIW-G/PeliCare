@@ -7,6 +7,9 @@ target/
 ## database credentials are stored in config/application.properties
 /config/application.properties
 
+## Care Circle profile pictures
+/images/**
+
 ### STS ###
 .apt_generated
 .classpath
