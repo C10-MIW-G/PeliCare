@@ -8,7 +8,7 @@ target/
 /config/application.properties
 
 ## Care Circle profile pictures
-/images/**
+/images
 
 ### STS ###
 .apt_generated
