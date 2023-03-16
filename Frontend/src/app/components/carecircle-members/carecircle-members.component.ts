@@ -3,7 +3,7 @@ import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CareCircleService } from '../../services/care-circle.service';
 import { CareCircleUserStatus } from 'src/app/interfaces/carecircle-user-status';
 import { User } from 'src/app/interfaces/user';
@@ -22,20 +22,22 @@ export class CarecircleMembersComponent implements OnInit {
 	errorMessage: string;
 	submitted: boolean;
 	circleId: number;
-  currentUser: string;
+	currentUser: string;
 
 	constructor(
 		private route: ActivatedRoute,
 		private fb: FormBuilder,
 		private careCircleService: CareCircleService,
 		private errorHandlingService: ErrorHandlingService,
-    private userService: UserService
+		private userService: UserService,
+		private router: Router,
 	) {
 		this.form = this.fb.group({
 			email: ['', Validators.required],
 		});
 	}
 	ngOnInit(): void {
+		this.getCurrentUser();
 		this.getAllMembersOfCareCircle();
 		// the template modal data need to have some initialisation
 		this.selectedUserStatus = { email: "test mail", isAdmin: false, circleId: -1 };
@@ -51,7 +53,7 @@ export class CarecircleMembersComponent implements OnInit {
 			next: (response: CareCircleUserStatus[]) => {
 				this.carecirclemembers = response;
 				this.checkAdminStatus();
-        this.getCurrentUser();
+				this.getCurrentUser();
 			},
 			error: (error: HttpErrorResponse) => {
 				this.errorHandlingService.redirectUnexpectedErrors(error);
@@ -83,19 +85,33 @@ export class CarecircleMembersComponent implements OnInit {
 		}
 	}
 
-  removeUserFromCareCircle(user: CareCircleUserStatus) {
-    const id = Number(this.route.snapshot.paramMap.get('id'))
-    var userEmail = user.email
-    this.careCircleService.removeUserFromCareCircle(id, userEmail).subscribe({
-      complete: () => {
-        console.log('User is removed');
-        this.reload();
-      },
-      error: (error: HttpErrorResponse) => {
-        this.errorHandlingService.redirectUnexpectedErrors(error);
-      }
-    })
-  }
+	removeUserFromCareCircle(user: CareCircleUserStatus) {
+		const id = Number(this.route.snapshot.paramMap.get('id'))
+		var userEmail = user.email
+		this.careCircleService.removeUserFromCareCircle(id, userEmail).subscribe({
+			complete: () => {
+				console.log('User is removed');
+				this.reload();
+			},
+			error: (error: HttpErrorResponse) => {
+				this.errorHandlingService.redirectUnexpectedErrors(error);
+			}
+		})
+	}
+
+	leaveCareCircle(currentUser: CareCircleUserStatus) {
+		const id = Number(this.route.snapshot.paramMap.get('id'))
+		var userEmail = currentUser.email
+		this.careCircleService.removeYourselfFromCareCircle(id, userEmail).subscribe({
+			complete: () => {
+				console.log('User left Circle')
+				this.router.navigateByUrl(`/carecircles`)
+			},
+			error: (error: HttpErrorResponse) => {
+				this.errorHandlingService.redirectUnexpectedErrors(error);
+			}
+		})
+	}
 
 	showModal(userstatus: CareCircleUserStatus) {
 		this.selectedUserStatus = userstatus;
@@ -122,17 +138,17 @@ export class CarecircleMembersComponent implements OnInit {
 		});
 	}
 
-  getCurrentUser(){
-    this.userService.getCurrentUser().subscribe({
-      next: (Response: User) => {
-        this.currentUser = Response.email;
-      },
-      error: (error: HttpErrorResponse) => {
-        this.errorHandlingService.redirectUnexpectedErrors(error);
-      }
-    });
-    return this.currentUser;
-  }
+	getCurrentUser() {
+		this.userService.getCurrentUser().subscribe({
+			next: (Response: User) => {
+				this.currentUser = Response.email;
+			},
+			error: (error: HttpErrorResponse) => {
+				this.errorHandlingService.redirectUnexpectedErrors(error);
+			}
+		});
+		return this.currentUser;
+	}
 
 	reload() {
 		this.ngOnInit();
@@ -143,14 +159,14 @@ export class CarecircleMembersComponent implements OnInit {
 			email: email,
 			circleId: this.circleId
 		})
-		.subscribe({
-			complete: () => {
-				console.log("admin status of user is turned around");
-				this.reload();
-			},
-			error: (error: HttpErrorResponse) => {
-				this.errorHandlingService.redirectUnexpectedErrors(error);
-			}
-		});
+			.subscribe({
+				complete: () => {
+					console.log("admin status of user is turned around");
+					this.reload();
+				},
+				error: (error: HttpErrorResponse) => {
+					this.errorHandlingService.redirectUnexpectedErrors(error);
+				}
+			});
 	}
 }

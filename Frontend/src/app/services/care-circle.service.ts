@@ -9,9 +9,10 @@ import { ToggleUserAdmin } from '../interfaces/toggle-user-admin';
 	providedIn: 'root'
 })
 export class CareCircleService {
-
-	private apiBackendUrl = 'http://localhost:8080';
-	constructor(private http: HttpClient) { }
+    
+  private apiBackendUrl='http://localhost:8080';
+  constructor(private http: HttpClient) { 
+  }
 
 	public getAdminCircles(): Observable<CareCircle[]> {
 		return this.http.get<CareCircle[]>(`${this.apiBackendUrl}/carecircle/admin`);
@@ -65,10 +66,6 @@ export class CareCircleService {
 		});
 	}
 
-	public removeUserFromCareCircle(id: Number, userEmail: string) {
-		return this.http.delete(`${this.apiBackendUrl}/carecircle/get/${id}/members/remove/${userEmail}`);
-	}
-
 	// functie om een bestand te downloaden
 	public download(filename: string): Observable<HttpEvent<Blob>> {
 		return this.http.get(`${this.apiBackendUrl}/carecircle/download/${filename}`, {
@@ -77,4 +74,11 @@ export class CareCircleService {
 			responseType: 'blob'
 		});
 	}
+  public removeUserFromCareCircle( id: Number, userEmail: string) {
+    return this.http.delete(`${this.apiBackendUrl}/carecircle/get/${id}/members/remove/${userEmail}`);
+  }
+
+  public removeYourselfFromCareCircle(id: number, userEmail: string) {
+	  return this.http.delete(`${this.apiBackendUrl}/carecircle/get/${id}/members/removeyourself/${userEmail}`);
+  }
 }

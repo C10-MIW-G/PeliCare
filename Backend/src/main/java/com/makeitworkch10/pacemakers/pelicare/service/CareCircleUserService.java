@@ -99,6 +99,21 @@ public class CareCircleUserService {
         }
     }
 
+    public void removeYourselfFromCareCircle(String jwt, String email, Long careCircleId) {
+        if (isUserOfCircle(careCircleId, jwt))  {
+            CareCircle careCircle = careCircleRepository.findById(careCircleId).orElseThrow(
+                    () -> new UserNotFoundException("CareCircle does not exist")
+            );
+            User currentUser = userRepository.findByEmail(email).orElseThrow(
+                    () -> new UserNotFoundException("User does not exist")
+            );
+            careCircleUserRepository.deleteCareCircleUserByCircleIdAndUserId
+                    (currentUser.getId(), careCircle.getId());
+        } else {
+            throw new ErrorResponseException(HttpStatus.FORBIDDEN);
+        }
+    }
+
     public void toggleUserAdmin(String jwt, ToggleAdminStatusDTO toggleAdminStatusDTO) {
 
         Long circleId = toggleAdminStatusDTO.getCircleId();
