@@ -34,9 +34,7 @@ public class SafeDeleteService {
     private boolean checkIfUserIsTheOnlyAdminLeft(Set<Long> careCircleUserList) {
         ArrayList<String> careCircleNames = new ArrayList<>();
         for (Long careCircleId : careCircleUserList) {
-            if(careCircleUserRepository.countAdmins(careCircleId) == 1){
-                careCircleNames.add(careCircleRepository.findById(careCircleId).orElseThrow().getName());
-            }
+            addCircleNamesToException(careCircleNames, careCircleId);
         }
 
         if(!careCircleNames.isEmpty()){
@@ -44,5 +42,11 @@ public class SafeDeleteService {
         }
 
         return true;
+    }
+
+    private void addCircleNamesToException(ArrayList<String> careCircleNames, Long careCircleId) {
+        if(careCircleUserRepository.countAdmins(careCircleId) == 1){
+            careCircleNames.add(careCircleRepository.findById(careCircleId).orElseThrow().getName());
+        }
     }
 }
