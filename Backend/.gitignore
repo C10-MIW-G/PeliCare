@@ -8,8 +8,8 @@ target/
 /config/application.properties
 
 ## Care Circle profile pictures
-/src/main/resources/images
-!/src/main/resources/images/saturnus.jpg
+src/main/resources/images
+!src/main/resources/images/saturnus.jpg
 # one picture uploaded to pus a folder to remote
 
 ### STS ###
