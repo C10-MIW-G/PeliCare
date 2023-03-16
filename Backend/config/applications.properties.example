@@ -5,6 +5,8 @@ databaseUsername=
 databasePassword=
 jwt.private.key=
 google.recaptcha.key.secret=
+filestoragelocation=src/main/resources/images
+
 
 ## Write username and password without " String " quotation marks
 ## filename application.properties is necessary and not unique in this project
