@@ -85,7 +85,7 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<p>Are you sure you want to remove {{selectedUserStatus.email}} from this Care Circle?</p>
+				<p>Are you sure you want to remove {{selectedUserStatus.email}} from this Care Circle?</p>				
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Go Back</button>
@@ -108,11 +108,12 @@
 			<div class="modal-body">
 				<p *ngIf="selectedUserStatus.isAdmin && numberOfAdmins == 1" class="errorMessage">You are the last
 					remaining Admin of this Care Circle.<br>The Care Circle should have at least one Admin.</p>
+				<p *ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)">Are you sure you want to leave this Care Circle?</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Go Back</button>
 				<button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-					(click)="leaveCareCircle(selectedUserStatus)"
+					(click)="removeUserFromCareCircle(selectedUserStatus)"
 					*ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)">Yes</button>
 			</div>
 		</div>

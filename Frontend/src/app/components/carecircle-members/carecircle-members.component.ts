@@ -23,6 +23,7 @@ export class CarecircleMembersComponent implements OnInit {
 	submitted: boolean;
 	circleId: number;
 	currentUser: string;
+	public isUser: Boolean
 
 	constructor(
 		private route: ActivatedRoute,
@@ -90,33 +91,22 @@ export class CarecircleMembersComponent implements OnInit {
 		var userEmail = user.email
 		this.careCircleService.removeUserFromCareCircle(id, userEmail).subscribe({
 			complete: () => {
-				console.log('User is removed');
-				this.reload();
+				console.log('User is removed')
+				if (this.currentUser === userEmail) {
+					this.router.navigateByUrl(`/carecircles`);
+				} else {
+					this.reload();
+				}
 			},
 			error: (error: HttpErrorResponse) => {
 				this.errorHandlingService.redirectUnexpectedErrors(error);
 			}
-		})
-	}
-
-	leaveCareCircle(currentUser: CareCircleUserStatus) {
-		const id = Number(this.route.snapshot.paramMap.get('id'))
-		var userEmail = currentUser.email
-		this.careCircleService.removeYourselfFromCareCircle(id, userEmail).subscribe({
-			complete: () => {
-				console.log('User left Circle')
-				this.router.navigateByUrl(`/carecircles`)
-			},
-			error: (error: HttpErrorResponse) => {
-				this.errorHandlingService.redirectUnexpectedErrors(error);
-			}
-		})
+		});
 	}
 
 	showModal(userstatus: CareCircleUserStatus) {
 		this.selectedUserStatus = userstatus;
 		this.countNumberOfAdminsInCircle();
-
 	}
 
 	countNumberOfAdminsInCircle() {

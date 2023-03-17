@@ -130,12 +130,4 @@ public class CareCircleController {
         careCircleUserService.removeUserFromCareCircle(jwt, email, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    @DeleteMapping("/get/{id}/members/removeyourself/{email}")
-    public ResponseEntity<String> removeYourselfFromCareCircle(@PathVariable("id") Long id,
-                                                           @PathVariable("email") String email,
-                                                           @RequestHeader (name="Authorization") String jwt) {
-        careCircleUserService.removeYourselfFromCareCircle(jwt, email, id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }
