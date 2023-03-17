@@ -15,7 +15,7 @@
 				<button *ngIf="isAdmin && userstatus.email!=currentUser" class="mt-2 btn btn-danger mt-1 col-2"
 					data-bs-toggle="modal" data-bs-target="#removeusermodal" (click)="showModal(userstatus)">Remove
 					User</button>
-				<button *ngIf="userstatus.email==currentUser" class="mt-2 btn btn-peli mt-1 col-2"
+				<button *ngIf="userstatus.email==currentUser" class="mt-2 btn btn-danger mt-1 col-2"
 					data-bs-toggle="modal" data-bs-target="#leavemodal" (click)="showModal(userstatus)">Leave Care
 					Circle</button>
 			</span>
