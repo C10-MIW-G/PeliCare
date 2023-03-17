@@ -15,4 +15,8 @@ import lombok.Setter;
 public class  CreateCareCircleDTO {
     private String name;
 
+    public CreateCareCircleDTO(String name) {
+        this.name = name;
+    }
+
 }

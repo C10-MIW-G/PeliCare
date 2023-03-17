@@ -9,6 +9,7 @@ import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleUserRepository;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleService;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleUserService;
+import com.makeitworkch10.pacemakers.pelicare.service.FileStorageService;
 import com.makeitworkch10.pacemakers.pelicare.service.TaskService;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.CareCircleDTOMapper;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.CreateCareCircleDTOMapper;
@@ -50,6 +51,8 @@ public class CareCircleServiceTests {
     private UserRepository userRepository;
     @Mock
     private TaskService taskService;
+    @Mock
+    private FileStorageService fileStorageService;
     private CareCircleService careCircleService;
 
     @BeforeEach
@@ -58,7 +61,8 @@ public class CareCircleServiceTests {
                 careCircleRepository, careCircleDTOMapper,
                 jwtService, careCircleUserRepository,
                 careCircleUserService, userRepository,
-                taskService, createCareCircleDTOMapper
+                taskService, createCareCircleDTOMapper,
+                fileStorageService
         );
     }
 
@@ -66,7 +70,7 @@ public class CareCircleServiceTests {
     public void createCareCircleTest(){
         List<Task> taskList = new ArrayList<>();
         CreateCareCircleDTO createCareCircleDTO = new CreateCareCircleDTO ("Grandma's Circle");
-        CareCircle careCircle = new CareCircle(null, "Grandma's Circle", taskList);
+        CareCircle careCircle = new CareCircle(null, "Grandma's Circle", "no file selected", taskList);
         when(careCircleRepository.save(careCircle)).thenReturn(careCircle);
         when(createCareCircleDTOMapper.apply(createCareCircleDTO)).thenReturn(careCircle);
         CareCircle savedCareCircle = careCircleService.createCareCircle(createCareCircleDTO);

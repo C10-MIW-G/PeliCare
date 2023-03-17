@@ -1,6 +1,6 @@
 import { ModalService } from './../../services/modal.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CareCircleService } from 'src/app/services/care-circle.service';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
@@ -18,18 +18,18 @@ export class AddCarecircleComponent {
   selectedFile?: File;
 	filenames: string[] = [];
 	formData!: FormData;
-
+  
   // used to remove the file selection from form, for next use 
-  @ViewChild('myFileSelect')
+  @ViewChild('myFileSelect', {static: false})
   myFileSelector: ElementRef
 
   constructor(
     private fb: FormBuilder,
     private careCircleService: CareCircleService,
     private errorHandlingService: ErrorHandlingService,
-    protected modalService: ModalService
-    
+    protected modalService: ModalService    
   ) {}
+  
 
   ngOnInit() {
     this.createCircleForm = this.fb.group({
@@ -42,13 +42,12 @@ export class AddCarecircleComponent {
   }
 
   fileSelected(event: any) {
-		this.selectedFile = event.target.files[0];
+		this.selectedFile = event.target.files[0];     
 	}
 
   create() {    
 
     this.submitted = true;
-
 		if (this.createCircleForm.valid) {
 			this.formData = new FormData();
 			this.formData.append('carecirclename', this.createCircleFormControl['name'].value);
@@ -63,9 +62,9 @@ export class AddCarecircleComponent {
 				complete: () => {
 					console.log('image is uploaded');
           this.filenames = [];
-          this.modalService.close();
-          this.resetForm();
-          this.onAddCircle.emit();
+          this.modalService.close();          
+          this.onAddCircle.emit();      
+          this.resetForm();    
 				},
 				error: (error: HttpErrorResponse) => {
 					this.errorHandlingService.redirectUnexpectedErrors(error);
@@ -76,7 +75,8 @@ export class AddCarecircleComponent {
 
   private resetForm() {
     this.createCircleForm.reset();
-    this.submitted = false;    
-    this.myFileSelector.nativeElement.value = "";    
+    this.submitted = false; 
+    this.myFileSelector.nativeElement.valueOf = ""; 
+    
   }
 }
