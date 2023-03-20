@@ -30,10 +30,6 @@ export class CareCircleService {
 		return this.http.get<CareCircle>(`${this.apiBackendUrl}/carecircle/get/${id}`);
 	}
 
-	public createNewCareCircle(name: string) {
-		return this.http.post(`${this.apiBackendUrl}/carecircle/create`, { name });
-	}
-
 	public uploadFile(formdata: FormData) {
 
 		return this.http.post(`${this.apiBackendUrl}/carecircle/upload`, formdata);

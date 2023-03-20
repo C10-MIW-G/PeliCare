@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Answers;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -29,12 +31,14 @@ import static org.mockito.Mockito.when;
  */
 @ExtendWith(MockitoExtension.class)
 public class TaskServiceTest {
-    @Mock
+    @Mock(answer = Answers.RETURNS_DEEP_STUBS)
     private TaskRepository taskRepository;
     @Mock
     private TaskDTOMapper taskDTOMapper;
     @Mock
     private NewTaskDTOMapper newTaskDTOMapper;
+
+    @InjectMocks
     private TaskService taskService;
     public List<TaskDTO> testTaskDTOList1;
     public List<TaskDTO> testTaskDTOList2;
@@ -92,6 +96,6 @@ public class TaskServiceTest {
 
         List<TaskDTO> tasksOfCareCircle1 =  taskService.findAllTasksByCareCircle(1L);
         assertEquals(tasksOfCareCircle1.size(), 2);
-
     }
 }
+

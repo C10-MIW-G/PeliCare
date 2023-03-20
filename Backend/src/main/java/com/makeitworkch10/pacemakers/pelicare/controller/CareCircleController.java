@@ -1,7 +1,6 @@
 package com.makeitworkch10.pacemakers.pelicare.controller;
 
 import com.makeitworkch10.pacemakers.pelicare.dto.*;
-import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleService;
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleUserService;
 import com.makeitworkch10.pacemakers.pelicare.service.FileStorageService;
@@ -41,19 +40,13 @@ public class CareCircleController {
                                                     @RequestParam("carecirclename")String carecirclename,
                                                     @RequestHeader (name="Authorization") String jwt) {
 
-        CareCircle savedCareCircle = careCircleService.createNewCareCircle(carecirclename);
-        careCircleUserService.addCircleAdminToCareCircle(jwt, savedCareCircle);
-
-        // handle image upload
-        String newFileNameOfImage = fileStorageService.saveImage(multipartFiles, savedCareCircle.getId());
-        careCircleService.setImageFilaname(savedCareCircle.getId(), newFileNameOfImage);
+        careCircleService.saveNewCareCircleWithImage(multipartFiles, carecirclename, jwt);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/download/{filename}")
-    public ResponseEntity<Resource> downloadPhoto(@PathVariable("filename") String filename,
-                                                  @RequestHeader (name="Authorization") String jwt)
+    public ResponseEntity<Resource> downloadPhoto(@PathVariable("filename") String filename)
             throws IOException {
         Path filePath = get("src/main/resources/images").toAbsolutePath().normalize().resolve(filename);
         Resource resource = fileStorageService.loadAsResource(filename);
@@ -80,26 +73,18 @@ public class CareCircleController {
         }
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<String> createCareCircle(@RequestBody CreateCareCircleDTO newCareCircle,
-                                                   @RequestHeader (name="Authorization") String jwt){
-        CareCircle savedCareCircle = careCircleService.createCareCircle(newCareCircle);
-        careCircleUserService.addCircleAdminToCareCircle(jwt, savedCareCircle);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
     @GetMapping("/isadmin/{id}")
     public ResponseEntity<Boolean> isUserAdminOfCareCircle(@PathVariable("id") Long id,
                                                            @RequestHeader (name="Authorization") String jwt) {
             boolean isAdmin = careCircleUserService.isUserAdminOfCircle(id,jwt);
-            return new ResponseEntity<Boolean>(isAdmin, HttpStatus.OK);
+            return new ResponseEntity<>(isAdmin, HttpStatus.OK);
     }
 
     @PatchMapping("/toggleadminstatus")
     public ResponseEntity<String> toggleAdminStatus(@RequestBody ToggleAdminStatusDTO toggleAdminStatusDTO,
                                                   @RequestHeader (name="Authorization") String jwt) {
         careCircleUserService.toggleUserAdmin(jwt, toggleAdminStatusDTO);
-        return new ResponseEntity<String>( HttpStatus.OK);
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

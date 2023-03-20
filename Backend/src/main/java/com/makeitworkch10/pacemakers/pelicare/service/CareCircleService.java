@@ -2,17 +2,16 @@ package com.makeitworkch10.pacemakers.pelicare.service;
 
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtService;
 import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
-import com.makeitworkch10.pacemakers.pelicare.dto.CreateCareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.model.Task;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleUserRepository;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.CareCircleDTOMapper;
-import com.makeitworkch10.pacemakers.pelicare.service.mappers.CreateCareCircleDTOMapper;
 import com.makeitworkch10.pacemakers.pelicare.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,6 @@ public class CareCircleService {
     private final CareCircleUserService careCircleUserService;
     private final UserRepository userRepository;
     private final TaskService taskService;
-    private final CreateCareCircleDTOMapper createCareCircleDTOMapper;
     private final FileStorageService fileStorageService;
 
     public CareCircleDTO getCareCircle(Long id) throws ResourceNotFoundException {
@@ -47,9 +45,14 @@ public class CareCircleService {
                         "CareCircle with id: " + id + " not found"
                 ));
     }
-    public CareCircle createCareCircle(CreateCareCircleDTO createCareCircleDTO){
-        CareCircle careCircle = createCareCircleDTOMapper.apply(createCareCircleDTO);
-        return careCircleRepository.save(careCircle);
+
+    public void saveNewCareCircleWithImage(List<MultipartFile> multipartFiles, String carecirclename, String jwt) {
+        CareCircle savedCareCircle = createNewCareCircle(carecirclename);
+        careCircleUserService.addCircleAdminToCareCircle(jwt, savedCareCircle);
+
+        // handle image upload
+        String newFileNameOfImage = fileStorageService.saveImage(multipartFiles, savedCareCircle.getId());
+        addImageToCareCircle(savedCareCircle.getId(), newFileNameOfImage);
     }
 
     public List<CareCircleDTO> findAllCareCirclesOfUser(String jwt) {
@@ -103,9 +106,9 @@ public class CareCircleService {
         return careCircleRepository.save(newCareCircle);
     }
 
-    public void setImageFilaname(Long id, String filaname) {
-        CareCircle circleToUpdate = careCircleRepository.findById(id).orElseThrow();
-        circleToUpdate.setImagefilename(filaname);
-        careCircleRepository.save(circleToUpdate);
+    public void addImageToCareCircle(Long id, String filaname) {
+        CareCircle circleReceivingTheImage = careCircleRepository.findById(id).orElseThrow();
+        circleReceivingTheImage.setImagefilename(filaname);
+        careCircleRepository.save(circleReceivingTheImage);
     }
 }

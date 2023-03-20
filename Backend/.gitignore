@@ -10,7 +10,7 @@ target/
 ## Care Circle profile pictures
 /src/main/resources/images/*
 !saturnus.jpg
-# one picture uploaded to pus a folder to remote
+# one picture uploaded to push a folder to remote
 
 ### STS ###
 .apt_generated
