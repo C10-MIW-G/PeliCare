@@ -84,33 +84,25 @@ public class CareCircleUserService {
             }
         }
     }
+
     public void removeUserFromCareCircle(String jwt, String email, Long careCircleId) {
-        if (isUserAdminOfCircle(careCircleId, jwt)) {
             CareCircle careCircle = careCircleRepository.findById(careCircleId).orElseThrow(
                     () -> new UserNotFoundException("CareCircle does not exist")
             );
+        if (isUserAdminOfCircle(careCircleId, jwt)) {
             User removeUser = userRepository.findByEmail(email).orElseThrow(
                     () -> new UserNotFoundException("User does not exist")
             );
+            careCircleUserRepository.deleteCareCircleUserByCircleIdAndUserId
+                    (removeUser.getId(), careCircle.getId());
+        } else if (isUserOfCircle(careCircleId, jwt)) {
+                User currentUser = userRepository.findByEmail(email).orElseThrow(
+                        () -> new UserNotFoundException("User does not exist")
+                );
                 careCircleUserRepository.deleteCareCircleUserByCircleIdAndUserId
-                        (removeUser.getId(), careCircle.getId());
+                        (currentUser.getId(), careCircle.getId());
             } else {
                 throw new ErrorResponseException(HttpStatus.FORBIDDEN);
-        }
-    }
-
-    public void removeYourselfFromCareCircle(String jwt, String email, Long careCircleId) {
-        if (isUserOfCircle(careCircleId, jwt))  {
-            CareCircle careCircle = careCircleRepository.findById(careCircleId).orElseThrow(
-                    () -> new UserNotFoundException("CareCircle does not exist")
-            );
-            User currentUser = userRepository.findByEmail(email).orElseThrow(
-                    () -> new UserNotFoundException("User does not exist")
-            );
-            careCircleUserRepository.deleteCareCircleUserByCircleIdAndUserId
-                    (currentUser.getId(), careCircle.getId());
-        } else {
-            throw new ErrorResponseException(HttpStatus.FORBIDDEN);
         }
     }
 

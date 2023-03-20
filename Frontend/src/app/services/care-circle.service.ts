@@ -77,8 +77,4 @@ export class CareCircleService {
   public removeUserFromCareCircle( id: Number, userEmail: string) {
     return this.http.delete(`${this.apiBackendUrl}/carecircle/get/${id}/members/remove/${userEmail}`);
   }
-
-  public removeYourselfFromCareCircle(id: number, userEmail: string) {
-	  return this.http.delete(`${this.apiBackendUrl}/carecircle/get/${id}/members/removeyourself/${userEmail}`);
-  }
 }
