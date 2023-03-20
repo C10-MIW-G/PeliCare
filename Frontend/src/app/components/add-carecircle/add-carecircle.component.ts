@@ -19,7 +19,7 @@ export class AddCarecircleComponent {
 	filenames: string[] = [];
 	formData!: FormData;
   
-  // used to remove the file selection from form, for next use 
+  // used to remove the file selection, for next use 
   @ViewChild('myFileSelect', {static: false})
   myFileSelector: ElementRef
 
@@ -75,8 +75,9 @@ export class AddCarecircleComponent {
 
   private resetForm() {
     this.createCircleForm.reset();
-    this.submitted = false; 
-    this.myFileSelector.nativeElement.valueOf = ""; 
-    
+    this.submitted = false;  
+
+    this.myFileSelector.nativeElement.value = ""; 
+    this.selectedFile = undefined;      
   }
 }
