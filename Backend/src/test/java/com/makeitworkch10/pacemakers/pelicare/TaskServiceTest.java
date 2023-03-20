@@ -97,5 +97,16 @@ public class TaskServiceTest {
         List<TaskDTO> tasksOfCareCircle1 =  taskService.findAllTasksByCareCircle(1L);
         assertEquals(tasksOfCareCircle1.size(), 2);
     }
+
+//    @Test
+//    void getTaskByIdTest() {
+//
+//        TaskDTO testTaskDTO = taskDTOMapper.apply(task1);
+//        when(taskRepository.findById(task1.getId())).thenReturn(Optional.ofNullable(task1));
+//        when(taskDTOMapper.apply(task1)).thenReturn(testTaskDTO);
+//
+//        TaskDTO taskWithId2 = taskService.getTask(1L);
+//        assertEquals(taskWithId2.getId(), 1L);
+//    }
 }
 
