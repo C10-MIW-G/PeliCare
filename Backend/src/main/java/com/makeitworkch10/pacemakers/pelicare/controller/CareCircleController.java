@@ -69,7 +69,7 @@ public class CareCircleController {
         CareCircleDTO careCircle = careCircleService.getCareCircle(id);
         return new ResponseEntity<>(careCircle, HttpStatus.OK);
         } else {
-            throw new IllegalAccessException("You are not a member of this Care Circle");
+            throw new IllegalAccessException("Page not found");
         }
     }
 
