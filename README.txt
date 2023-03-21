@@ -17,4 +17,5 @@ Step 3: Create a new user with full access and authorization to the ‘pelicare’ s
 Step 4: In the map 'config' make a new file called 'application.properties'
 	Set the databaseUsername and databasePassword as shown in
 	application.properties.example with the userdata you created in step 3
+Step 5: Set the secret key in application.properties with the key you received from your team
 

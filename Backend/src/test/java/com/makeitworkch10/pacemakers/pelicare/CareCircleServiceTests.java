@@ -2,7 +2,9 @@ package com.makeitworkch10.pacemakers.pelicare;
 
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtService;
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtSettings;
+import com.makeitworkch10.pacemakers.pelicare.dto.CareCircleDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.CreateCareCircleDTO;
+import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.model.Task;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
@@ -23,6 +25,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 /**
@@ -75,5 +78,22 @@ public class CareCircleServiceTests {
         when(createCareCircleDTOMapper.apply(createCareCircleDTO)).thenReturn(careCircle);
         CareCircle savedCareCircle = careCircleService.createCareCircle(createCareCircleDTO);
         assertThat(savedCareCircle.getName()).isNotEmpty();
+    }
+
+    @Test
+    public void getCareCircleTest(){
+        List<Task> taskList = new ArrayList<>();
+        CareCircle careCircle = new CareCircle(1L, "Grandma's Circle", "no file selected", taskList);
+        CareCircleDTO careCircleDTO = new CareCircleDTO(1L, "Grandma's Circle", "no file selected", taskList);
+        when(careCircleRepository.findById(careCircle.getId())).thenReturn(Optional.of(careCircle));
+        when((careCircleDTOMapper.apply(careCircle))).thenReturn(careCircleDTO);
+        assertThat(careCircle.getName()).isEqualTo(careCircleService.getCareCircle(careCircleDTO.getId()).getName());
+    }
+
+    @Test
+    public void getCareCircleThrowException() throws ResourceNotFoundException {
+        long id = 2L;
+        when(careCircleRepository.findById(id)).thenThrow(new ResourceNotFoundException("CareCircle with id: " + id + " not found"));
+        assertThrows(ResourceNotFoundException.class, ()-> this.careCircleService.getCareCircle(id));
     }
 }

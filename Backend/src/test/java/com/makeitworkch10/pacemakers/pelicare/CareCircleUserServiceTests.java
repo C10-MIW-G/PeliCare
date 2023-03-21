@@ -2,6 +2,9 @@ package com.makeitworkch10.pacemakers.pelicare;
 
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtService;
 import com.makeitworkch10.pacemakers.pelicare.authentication.JwtSettings;
+import com.makeitworkch10.pacemakers.pelicare.dto.UserDTO;
+import com.makeitworkch10.pacemakers.pelicare.exception.DuplicateUserException;
+import com.makeitworkch10.pacemakers.pelicare.exception.UserNotFoundException;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircleUser;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
@@ -9,6 +12,7 @@ import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleUserRepositor
 import com.makeitworkch10.pacemakers.pelicare.service.CareCircleUserService;
 import com.makeitworkch10.pacemakers.pelicare.service.SafeDeleteService;
 import com.makeitworkch10.pacemakers.pelicare.service.UserService;
+import com.makeitworkch10.pacemakers.pelicare.service.mappers.CareCircleUserDTOMapper;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.UserDTOMapper;
 import com.makeitworkch10.pacemakers.pelicare.service.mappers.UserInformationDTOMapper;
 import com.makeitworkch10.pacemakers.pelicare.user.User;
@@ -23,7 +27,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 /**
  * @author Maaike de Jong
@@ -50,6 +55,8 @@ public class CareCircleUserServiceTests {
 
     @Mock
     private UserInformationDTOMapper informationDTOMapper;
+    @Mock
+    private CareCircleUserDTOMapper careCircleUserDTOMapper;
     private JwtService jwtService;
     private CareCircleUserService careCircleUserService;
 
@@ -60,7 +67,8 @@ public class CareCircleUserServiceTests {
         UserService userService = new UserService(
                 jwtService, userRepository, passwordEncoder, userDTOMapper, safeDeleteService, informationDTOMapper);
         careCircleUserService = new CareCircleUserService(
-                jwtService, userRepository, careCircleUserRepository, careCircleRepository, userService);
+                jwtService, userRepository, careCircleUserRepository, careCircleRepository,
+                userService, careCircleUserDTOMapper);
     }
 
     @Test
@@ -69,12 +77,36 @@ public class CareCircleUserServiceTests {
         when(userRepository.findByEmail("joke@pelicare.nl")).thenReturn(Optional.of(user));
         String jwt = jwtService.generateToken(user);
         CareCircle careCircle = new CareCircle();
-
-
         CareCircleUser careCircleUser = new CareCircleUser(user, careCircle, true);
         when(careCircleUserRepository.isUserAdminOfCircle(careCircle.getId(), user.getId()))
                 .thenReturn(Optional.of(careCircleUser.isCircleAdmin()));
         assertThat(careCircleUserService.isUserAdminOfCircle(careCircleUser.getId(), jwt)).isTrue();
+    }
+
+    @Test
+    void userIsNotAdminOfCircle(){
+        User user  = new User("joke@pelicare.nl", "jokepw");
+        when(userRepository.findByEmail("joke@pelicare.nl")).thenReturn(Optional.of(user));
+        String jwt = jwtService.generateToken(user);
+        CareCircle careCircle = new CareCircle();
+        CareCircleUser careCircleUser = new CareCircleUser(user, careCircle, false);
+        when(careCircleUserRepository.isUserAdminOfCircle(careCircle.getId(), user.getId()))
+                .thenReturn(Optional.of(careCircleUser.isCircleAdmin()));
+        assertThat(careCircleUserService.isUserAdminOfCircle(careCircleUser.getId(), jwt)).isFalse();
+    }
+
+    @Test
+    void userIsAdminOfDifferentCircle(){
+        User user  = new User("joke@pelicare.nl", "jokepw");
+        when(userRepository.findByEmail("joke@pelicare.nl")).thenReturn(Optional.of(user));
+        String jwt = jwtService.generateToken(user);
+        CareCircle careCircle = new CareCircle();
+        CareCircle careCircleOther = new CareCircle();
+        CareCircleUser careCircleUser = new CareCircleUser(user, careCircle, false);
+        CareCircleUser careCircleUserOther = new CareCircleUser(user, careCircleOther, true);
+        when(careCircleUserRepository.isUserAdminOfCircle(careCircle.getId(), user.getId()))
+                .thenReturn(Optional.of(careCircleUser.isCircleAdmin()));
+        assertThat(careCircleUserService.isUserAdminOfCircle(careCircleUser.getId(), jwt)).isFalse();
     }
 
     @Test
@@ -97,5 +129,38 @@ public class CareCircleUserServiceTests {
         when(careCircleUserRepository.checkCareCircleUser(auntEmma.getId(), piet.getId()))
                 .thenReturn(0);
         assertThat(careCircleUserService.isUserOfCircle(auntEmma.getId(), jwtPiet)).isFalse();
+    }
+
+    @Test
+    void AddDuplicateUserToCareCircle() throws DuplicateUserException {
+        UserDTO newUser = new UserDTO(2L, "joke@pelicare.nl");
+        User joke = new User(2l, "joke@pelicare.nl", "jokepw");
+        User kees = new User("kees@pelicare.nl", "keespw");
+        String jwtKees = jwtService.generateToken(kees);
+        CareCircle careCircle = new CareCircle();
+        CareCircleUser careCircleUser = new CareCircleUser(joke, careCircle, false);
+        when(userRepository.findByEmail(kees.getEmail())).thenReturn(Optional.of(kees));
+        when(careCircleRepository.findById(careCircle.getId())).thenReturn(Optional.of(careCircle));
+        when(userRepository.findByEmail(newUser.getEmail())).thenReturn(Optional.of(joke));
+        when(careCircleUserRepository.isUserAdminOfCircle(careCircle.getId(), kees.getId()))
+                .thenReturn(Optional.of(true));
+        when(careCircleUserRepository.findByUserIdAndCareCircle(newUser.getId(), careCircle.getId()))
+                .thenReturn(careCircleUser.getUser().getId());
+        assertThrows(DuplicateUserException.class,
+                ()-> careCircleUserService.addUserToCareCircle(jwtKees, newUser, careCircle.getId()));
+    }
+
+    @Test
+    void AddNonExistentUserToCareCircle() throws UserNotFoundException {
+        UserDTO newUser = new UserDTO(2L, "joke@pelicare.nl");
+        User kees = new User("kees@pelicare.nl", "keespw");
+        String jwtKees = jwtService.generateToken(kees);
+        CareCircle careCircle = new CareCircle();
+        when(userRepository.findByEmail(kees.getEmail())).thenReturn(Optional.of(kees));
+        when(careCircleRepository.findById(careCircle.getId())).thenReturn(Optional.of(careCircle));
+        when(careCircleUserRepository.isUserAdminOfCircle(careCircle.getId(), kees.getId()))
+                .thenReturn(Optional.of(true));
+        assertThrows(UserNotFoundException.class,
+                ()-> careCircleUserService.addUserToCareCircle(jwtKees, newUser, careCircle.getId()));
     }
 }

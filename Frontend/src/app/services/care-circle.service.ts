@@ -9,9 +9,9 @@ import { ToggleUserAdmin } from '../interfaces/toggle-user-admin';
 	providedIn: 'root'
 })
 export class CareCircleService {
-    
+
   private apiBackendUrl='http://localhost:8080';
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
   }
 
 	public getAdminCircles(): Observable<CareCircle[]> {
@@ -45,7 +45,7 @@ export class CareCircleService {
 
 	public isAdmin(circleId: Number): Observable<boolean> {
 		return this.http.get<boolean>(`${this.apiBackendUrl}/carecircle/isadmin/${circleId}`);
-	}	
+	}
 
 	public addUserToCareCircle(id: Number, email: string) {
 		return this.http.post(`${this.apiBackendUrl}/carecircle/get/${id}/members/add`, { email });

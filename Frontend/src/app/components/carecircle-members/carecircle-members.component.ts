@@ -1,3 +1,4 @@
+import { CareCircle } from './../../interfaces/carecircle';
 import { UserService } from './../../services/user.service';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -7,6 +8,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CareCircleService } from '../../services/care-circle.service';
 import { CareCircleUserStatus } from 'src/app/interfaces/carecircle-user-status';
 import { User } from 'src/app/interfaces/user';
+import {
+  faPhone,
+  faAt,
+  faUserMinus,
+  faUserShield,
+  faUser,
+  faToggleOff,
+  faToggleOn,
+  faUserPlus
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
 	selector: 'app-carecircle-members',
@@ -24,6 +35,15 @@ export class CarecircleMembersComponent implements OnInit {
 	circleId: number;
 	currentUser: string;
 	public isUser: Boolean
+  currentCareCircle: CareCircle;
+  faPhone = faPhone;
+  faAt = faAt;
+  faUserMinus = faUserMinus;
+  faUserShield = faUserShield;
+  faUser = faUser;
+  faToggleOff = faToggleOff;
+  faToggleOn = faToggleOn;
+  faUserPlus = faUserPlus;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -41,7 +61,7 @@ export class CarecircleMembersComponent implements OnInit {
 		this.getCurrentUser();
 		this.getAllMembersOfCareCircle();
 		// the template modal data need to have some initialisation
-		this.selectedUserStatus = { email: "test mail", isAdmin: false, circleId: -1 };
+		this.selectedUserStatus = { email: "test mail", isAdmin: false, circleId: -1, name: "test name", phoneNumber: "test phonenumber" };
 	}
 
 	get formControl() {
@@ -55,12 +75,24 @@ export class CarecircleMembersComponent implements OnInit {
 				this.carecirclemembers = response;
 				this.checkAdminStatus();
 				this.getCurrentUser();
+        this.getCurrentCareCircle(this.circleId);
 			},
 			error: (error: HttpErrorResponse) => {
 				this.errorHandlingService.redirectUnexpectedErrors(error);
 			},
 		});
 	}
+
+  getCurrentCareCircle(circleId: Number): void {
+    this.careCircleService.getCareCircleById(circleId).subscribe({
+      next: (response: CareCircle) => {
+        this.currentCareCircle = response;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.errorHandlingService.redirectUnexpectedErrors(error);
+      }
+    });
+  }
 
 	addUserToCareCircle() {
 		this.submitted = true;

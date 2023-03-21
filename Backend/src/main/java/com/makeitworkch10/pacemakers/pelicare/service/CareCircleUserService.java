@@ -11,6 +11,7 @@ import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircleUser;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleUserRepository;
+import com.makeitworkch10.pacemakers.pelicare.service.mappers.CareCircleUserDTOMapper;
 import com.makeitworkch10.pacemakers.pelicare.user.User;
 import com.makeitworkch10.pacemakers.pelicare.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class CareCircleUserService {
     private final CareCircleUserRepository careCircleUserRepository;
     private final CareCircleRepository careCircleRepository;
     private final UserService userService;
+    private final CareCircleUserDTOMapper careCircleUserDTOMapper;
 
     public void addCircleAdminToCareCircle(String jwt, CareCircle careCircle) {
         String userName = jwtService.extractUsername(jwt);
@@ -128,15 +130,9 @@ public class CareCircleUserService {
     public List<CareCircleUserDTO> usersOfCareCircle(Long circleId) {
         // list to return
         List<CareCircleUserDTO> responseList = new ArrayList<>();
-
-        List<Long> userIdList = careCircleUserRepository.findUsersOfCareCircle(circleId);
-        for (Long userId : userIdList) {
-            Boolean isAdmin = careCircleUserRepository.isUserAdminOfCircle(circleId, userId).get();
-            String email = userService.geEmailOfUser(userId);
-            CareCircleUserDTO careCircleUserDTO = new CareCircleUserDTO();
-            careCircleUserDTO.setCircleId(circleId);
-            careCircleUserDTO.setEmail(email);
-            careCircleUserDTO.setIsAdmin(isAdmin);
+        List<CareCircleUser> careCircleUsers = careCircleUserRepository.findAllCareCircleUsersByCareCircleId(circleId);
+        for (CareCircleUser careCircleUser : careCircleUsers) {
+            CareCircleUserDTO careCircleUserDTO = careCircleUserDTOMapper.apply(careCircleUser);
             responseList.add(careCircleUserDTO);
         }
         return responseList;

@@ -19,4 +19,6 @@ public class CareCircleUserDTO {
     private Boolean isUser;
     private Boolean isAdmin;
     private String email;
+    private String name;
+    private String phoneNumber;
 }

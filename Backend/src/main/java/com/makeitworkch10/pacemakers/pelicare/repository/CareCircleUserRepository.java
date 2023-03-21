@@ -81,4 +81,9 @@ public interface CareCircleUserRepository extends JpaRepository<CareCircleUser, 
                 nativeQuery = true
         )
         void deleteCareCircleUserByCircleIdAndUserId(Long userId, Long careCircleId);
+        @Query(
+                value = "SELECT * FROM care_circle_user WHERE care_circle_id = ?1",
+                nativeQuery = true
+        )
+        List<CareCircleUser> findAllCareCircleUsersByCareCircleId(Long careCircleId);
     }

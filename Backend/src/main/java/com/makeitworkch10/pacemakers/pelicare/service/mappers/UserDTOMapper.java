@@ -9,7 +9,7 @@ import java.util.function.Function;
 
 /**
  * @author Maaike de Jong
- * Dit is wat het programma doet
+ * DTO to send userID and UserEmail to the front end
  */
 @Service
 @RequiredArgsConstructor

@@ -1,122 +1,326 @@
 <div class="row container-fluid component-body">
-	<div class="col-md-2"></div>
+  <div *ngIf="currentCareCircle" class="col-md-2 text-center">
+    <app-circleimage
+      [imagefilename]="currentCareCircle.imagefilename"
+    ></app-circleimage>
+    <br />
+    <a class="btn btn-peli m-1" routerLink="carecircle">Overview</a>
+    <br />
+    <a class="btn btn-peli m-1" routerLink="carecircle"
+      >Task List<span class="ps-2"></span>
+    </a>
+    <br />
+    <button
+      class="btn btn-peli m-1"
+      aria-disabled="true"
+      routerLink="/carecircle/{{ currentCareCircle.id }}/members"
+      disabled
+    >
+      Members
+    </button>
+  </div>
 
-	<div class="col-md-8">
-		<h4>Members</h4>
-		<div *ngFor="let userstatus of carecirclemembers">
-			<span class="row">
-				<p class="col-3">{{ userstatus.email }}</p>
-				<button *ngIf="isAdmin && !userstatus.isAdmin" class="mt-2 btn btn-warning mt-1 col-3"
-					data-bs-toggle="modal" data-bs-target="#adminstatusmodal" (click)="showModal(userstatus)">Grant
-					Circle Admin privileges</button>
-				<button *ngIf="isAdmin && userstatus.isAdmin" class="mt-2 btn btn-success mt-1 col-3"
-					data-bs-toggle="modal" data-bs-target="#adminstatusmodal" (click)="showModal(userstatus)">Revoke
-					Circle Admin privileges</button>
-				<button *ngIf="isAdmin && userstatus.email!=currentUser" class="mt-2 btn btn-danger mt-1 col-2"
-					data-bs-toggle="modal" data-bs-target="#removeusermodal" (click)="showModal(userstatus)">Remove
-					User</button>
-				<button *ngIf="userstatus.email==currentUser" class="mt-2 btn btn-danger mt-1 col-2"
-					data-bs-toggle="modal" data-bs-target="#leavemodal" (click)="showModal(userstatus)">Leave Care
-					Circle</button>
-			</span>
-		</div>
-	</div>
-	<div class="col-md-2">
-		<div *ngIf="isAdmin">
-			<h6>Add User to your Circle</h6>
-			<div *ngIf="errorMessage !== undefined" class="alert alert-warning" role="alert">
-				{{ errorMessage }}
-			</div>
-			<form [formGroup]="form" autocomplete="off">
-				<div class="form-group">
-					<input type="text" class="form-control" id="inputEmail" name="email" aria-describedby="emailHelp"
-						placeholder="Enter email" formControlName="email" [ngClass]="{
-              'is-invalid':
-                (formControl['email'].touched || submitted) &&
-                formControl['email'].invalid
-            }" />
-					<div *ngIf="formControl['email'].invalid" class="invalid-feedback">
-						<div *ngIf="formControl['email'].errors?.['required']">
-							Email is required
-						</div>
-					</div>
-				</div>
-				<button class="mt-2 btn btn-peli" type="button" (click)="addUserToCareCircle()">
-					Add User
-				</button>
-			</form>
-		</div>
-	</div>
+  <div class="col-md-8">
+    <h4 class="text-center">Members of {{ currentCareCircle.name }}</h4>
+    <br />
+    <div class="row row-cols-1 row-cols-md-1 g-4 d-flex justify-content-center">
+      <div *ngFor="let userstatus of carecirclemembers">
+        <div class="card" style="width: 40rem">
+          <h4 class="card-title">{{ userstatus.name }}</h4>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <span><fa-icon [icon]="faAt"></fa-icon></span> :
+                {{ userstatus.email }}
+              </li>
+              <li
+                *ngIf="userstatus.phoneNumber != null"
+                class="list-group-item"
+              >
+                <span><fa-icon [icon]="faPhone"></fa-icon></span> :
+                {{ userstatus.phoneNumber }}
+              </li>
+            </ul>
+          </div>
+          <div class="card-footer" *ngIf="isAdmin">
+            <ul class="list-inline pt-3">
+              <button
+                class="list-inline-item btn btn-peli"
+                *ngIf="!userstatus.isAdmin"
+                data-bs-toggle="modal"
+                data-bs-target="#adminstatusmodal"
+                (click)="showModal(userstatus)"
+              >
+                Grant <fa-icon class="ps-1" [icon]="faUserShield"></fa-icon>
+              </button>
+              <button
+                class="btn btn-peli list-inline-item"
+                *ngIf="userstatus.isAdmin"
+                data-bs-toggle="modal"
+                data-bs-target="#adminstatusmodal"
+                (click)="showModal(userstatus)"
+              >
+                Revoke <fa-icon class="ps-1" [icon]="faUserShield"></fa-icon>
+              </button>
+              <div
+                *ngIf="userstatus.email != currentUser"
+                class="list-inline-item ps-2"
+              ></div>
+              <button
+                *ngIf="userstatus.email != currentUser"
+                class="list-inline-item btn btn-outline-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#removeusermodal"
+                (click)="showModal(userstatus)"
+              >
+                Remove <fa-icon class="ps-1" [icon]="faUserMinus"></fa-icon>
+              </button>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <div>
+      <button
+        *ngIf="isAdmin"
+        class="btn btn-peli"
+        data-bs-toggle="modal"
+        data-bs-target="#addusermodal"
+      >
+        <fa-icon class="pe-1" [icon]="faUserPlus"></fa-icon>
+        Add Member
+      </button>
+      <div class="pt-2" *ngFor="let userstatus of carecirclemembers">
+        <button
+          *ngIf="userstatus.email == currentUser"
+          class="btn btn-danger"
+          data-bs-toggle="modal"
+          data-bs-target="#leavemodal"
+          (click)="showModal(userstatus)"
+        >
+          <fa-icon class="pe-1" [icon]="faUserMinus"></fa-icon>
+          Leave Circle <span class="ps-2"></span>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- modal -->
-<div class="modal fade" id="adminstatusmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="exampleModalLabel">Change of Care Circle Admin status</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<p *ngIf="selectedUserStatus.isAdmin && numberOfAdmins > 1">Are you sure you want to <b>revoke the admin
-						rights</b><br>of Care Circle member {{selectedUserStatus.email}}?</p>
-				<p *ngIf="selectedUserStatus.isAdmin && numberOfAdmins == 1" class="errorMessage">You are the last
-					remaining Admin of this Care Circle.<br>The Care Circle should have at least one Admin.</p>
-				<p *ngIf="!selectedUserStatus.isAdmin">Are you sure you want to <b>grant Admin rights</b><br>to Care
-					Circle Member
-					{{selectedUserStatus.email}}?</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Go Back</button>
-				<button type="button" class="btn btn-warning" data-bs-dismiss="modal"
-					(click)="toggleAdminStatus(selectedUserStatus.email)"
-					*ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)">Yes</button>
-			</div>
-		</div>
-	</div>
+<div
+  class="modal fade"
+  id="adminstatusmodal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Change of Care Circle Admin status
+        </h1>
+        <button
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p *ngIf="selectedUserStatus.isAdmin && numberOfAdmins > 1">
+          Are you sure you want to <b>revoke the admin rights</b> of Care
+          Circle member {{ selectedUserStatus.email }}?
+        </p>
+        <p
+          *ngIf="selectedUserStatus.isAdmin && numberOfAdmins == 1"
+          class="errorMessage"
+        >
+          You are the last remaining Admin of this Care Circle. The Care
+          Circle should have at least one Admin.
+        </p>
+        <p *ngIf="!selectedUserStatus.isAdmin">
+          Are you sure you want to <b>grant Admin rights</b> to Care Circle
+          Member {{ selectedUserStatus.email }}?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          Go Back
+        </button>
+        <button
+          class="btn btn-peli"
+          data-bs-dismiss="modal"
+          (click)="toggleAdminStatus(selectedUserStatus.email)"
+          *ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)"
+        >
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- modal -->
-<div class="modal fade" id="removeusermodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="exampleModalLabel">Remove User from Care Circle</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<p>Are you sure you want to remove {{selectedUserStatus.email}} from this Care Circle?</p>				
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Go Back</button>
-				<button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-					(click)="removeUserFromCareCircle(selectedUserStatus)"
-					*ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)">Yes</button>
-			</div>
-		</div>
-	</div>
+<div
+  class="modal fade"
+  id="removeusermodal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Remove User from Care Circle
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Are you sure you want to remove {{ selectedUserStatus.email }} from
+          this Care Circle?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          Go Back
+        </button>
+        <button
+          class="btn btn-danger"
+          data-bs-dismiss="modal"
+          (click)="removeUserFromCareCircle(selectedUserStatus)"
+          *ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)"
+        >
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- modal -->
-<div class="modal fade" id="leavemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h1 class="modal-title fs-5" id="exampleModalLabel">Leave Care Circle</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<p *ngIf="selectedUserStatus.isAdmin && numberOfAdmins == 1" class="errorMessage">You are the last
-					remaining Admin of this Care Circle.<br>The Care Circle should have at least one Admin.</p>
-				<p *ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)">Are you sure you want to leave this Care Circle?</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Go Back</button>
-				<button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-					(click)="removeUserFromCareCircle(selectedUserStatus)"
-					*ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)">Yes</button>
-			</div>
-		</div>
-	</div>
+<div
+  class="modal fade"
+  id="leavemodal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Leave Care Circle
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p
+          *ngIf="selectedUserStatus.isAdmin && numberOfAdmins == 1"
+          class="errorMessage"
+        >
+          You are the last remaining Admin of this Care Circle.<br />The Care
+          Circle should have at least one Admin.
+        </p>
+        <p *ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)">
+          Are you sure you want to leave this Care Circle?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          Go Back
+        </button>
+        <button
+          class="btn btn-danger"
+          data-bs-dismiss="modal"
+          (click)="removeUserFromCareCircle(selectedUserStatus)"
+          *ngIf="!(selectedUserStatus.isAdmin && numberOfAdmins == 1)"
+        >
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
-	
+
+<!-- modal -->
+<div
+  class="modal fade"
+  id="addusermodal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          Add User to Care Circle
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div
+          *ngIf="errorMessage !== undefined"
+          class="alert alert-warning"
+          role="alert"
+        >
+          {{ errorMessage }}
+        </div>
+        <form [formGroup]="form" autocomplete="off">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control"
+              id="inputEmail"
+              name="email"
+              aria-describedby="emailHelp"
+              placeholder="Enter email"
+              formControlName="email"
+              [ngClass]="{
+                'is-invalid':
+                  (formControl['email'].touched || submitted) &&
+                  formControl['email'].invalid
+              }"
+            />
+            <div *ngIf="formControl['email'].invalid" class="invalid-feedback">
+              <div *ngIf="formControl['email'].errors?.['required']">
+                Email is required
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          Go Back
+        </button>
+        <button
+          class="btn btn-peli"
+          data-bs-dismiss="modal"
+          (click)="addUserToCareCircle()"
+        >
+          Add User
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
