@@ -1,3 +1,4 @@
+import { ModalService } from './../../services/modal.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NewTask } from 'src/app/interfaces/new-task';
@@ -16,6 +17,7 @@ export class AddTaskComponent implements OnInit{
 
   constructor (
     private fb: FormBuilder,
+    protected modalService: ModalService
   ) {}
 
   ngOnInit() {
@@ -32,6 +34,7 @@ export class AddTaskComponent implements OnInit{
     if(this.addTaskForm.valid){
       this.addTask(careCircleId);
     }
+    this.modalService.close();
   }
 
   addTask(careCircleId : number){

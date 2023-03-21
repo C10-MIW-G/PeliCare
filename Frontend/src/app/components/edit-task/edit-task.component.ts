@@ -1,3 +1,4 @@
+import { ModalService } from './../../services/modal.service';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup } from '@angular/forms';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
@@ -15,15 +16,21 @@ export class EditTaskComponent {
   @Output() onDeleteTask: EventEmitter<number> = new EventEmitter;
 
   taskId: number;
+  taskTitle: string;
   submitted = false;
   faTrash = faTrash;
+
+  constructor(protected modalService: ModalService) {}
 
   get editTaskFormControl(){
     return this.editTaskForm.controls;
   }
 
   setTaskToDelete(){
+    this.modalService.close();
+    this.modalService.open('deleteTask');
     this.taskId = this.editTaskFormControl['id'].value;
+    this.taskTitle = this.editTaskFormControl['title'].value;
   }
 
   emitDeleteTask(taskId : number){
@@ -32,9 +39,7 @@ export class EditTaskComponent {
   }
 
   emitUpdateTask(){
-
     const updatedTask = this.getUpdatedTaskFromForm();
-
     this.onUpdateTask.emit(updatedTask);
     this.resetForm();
   }
@@ -52,6 +57,7 @@ export class EditTaskComponent {
   private resetForm(){
     this.editTaskForm.reset();
     this.submitted = false;
+    this.modalService.close();
   }
 
 }

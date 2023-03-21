@@ -1,6 +1,7 @@
 <div class="row container-fluid component-body">
   <div *ngIf="careCircle" class="col-md-2 text-center">
-    <a class="btn btn-peli" routerLink="/carecircle/{{ careCircle.id }}/members"
+    <app-circleimage [imagefilename]="careCircle.imagefilename"></app-circleimage>
+    <a class="btn btn-peli mt-2" routerLink="/carecircle/{{ careCircle.id }}/members"
       >Members</a
     >
   </div>
@@ -8,7 +9,6 @@
 	<div class="col-md-8">
 		<div *ngIf="careCircle">
 			<h4 class="text-dark text-center">Task List for {{ careCircle.name }}</h4>
-			<app-circleimage [imagefilename]="careCircle.imagefilename"></app-circleimage>
 			<div class="row d-flex justify-content-center">
 				<div class="col-6">
 					<app-task-list [careCircleId]="careCircle.id"></app-task-list>
@@ -21,8 +21,7 @@
     <button
       type="button"
       class="btn btn-peli"
-      data-bs-toggle="modal"
-      data-bs-target="#addTask"
+      (click)="modalService.open('addTask')"
     >
       <fa-icon [icon]="faPlusCircle"></fa-icon> Add new Task
     </button>

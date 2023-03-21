@@ -1,43 +1,56 @@
 <div *ngFor="let task of taskList" class="accordion" id="accordionTaskList">
   <div class="accordion-item mt-2">
     <h2 class="accordion-header" [attr.id]="'heading-' + task.id">
-      <button
-        [ngClass]="
-          taskList[0] === task
-            ? 'accordion-button'
-            : 'accordion-button collapsed'
-        "
-        type="button"
-        data-bs-toggle="collapse"
-        [attr.data-bs-target]="'#collapse-' + task.id"
-        [attr.aria-expanded]="taskList[0] === task ? 'false' : 'true'"
-        [attr.aria-controls]="'collapse-' + task.id"
-      >
-        <fa-icon
-          size="lg"
+      <div class="d-flex align-items-center position-relative">
+        <button
           [ngClass]="
-            task.completedTask === true
-              ? 'task-completed'
-              : 'task-not-completed'
+            taskList[0] === task
+              ? 'accordion-button'
+              : 'accordion-button collapsed'
           "
-          [icon]="task.completedTask === true ? faCheckSquare : faSquare"
-        ></fa-icon>
-        &nbsp; &nbsp;
-        <span
+          type="button"
+          data-bs-toggle="collapse"
+          [attr.data-bs-target]="'#collapse-' + task.id"
+          [attr.aria-expanded]="taskList[0] === task ? 'false' : 'true'"
+          [attr.aria-controls]="'collapse-' + task.id"
+        ></button>
+        <div
           [ngClass]="
             task.completedTask === true
-              ? 'task-completed'
-              : 'task-not-completed'
-             "
-          >{{ task.title}} &nbsp;
-          
-          <fa-icon 
-          size="lg"
-          *ngIf="task.date != null"
-          [icon]="faClock"></fa-icon>            
-        </span>
-         
-      </button>
+              ? 'task-header task-completed'
+              : 'task-header task-not-completed'
+          "
+        >
+          <div>
+            <fa-icon
+              type="button"
+              size="lg"
+              [ngClass]="
+                task.completedTask === true
+                  ? 'task-completed'
+                  : 'task-not-completed'
+              "
+              [icon]="task.completedTask === true ? faCheckSquare : faSquare"
+              (click)="completeTask(task)"
+            ></fa-icon>
+            &nbsp;
+            <span
+              [ngClass]="
+                task.completedTask === true
+                  ? 'task-completed'
+                  : 'task-not-completed'
+              "
+              >{{ task.title }} &nbsp;
+            </span>
+          </div>
+          <fa-icon
+            size="lg"
+            *ngIf="task.date != null"
+            [tooltip]="formatDate(task.date)"
+            [icon]="faClock"
+          ></fa-icon>
+        </div>
+      </div>
     </h2>
     <div
       [attr.id]="'collapse-' + task.id"
@@ -50,44 +63,28 @@
       [attr.data-bs-parent]="'#accordionTask-' + task.id"
     >
       <div class="accordion-body">
-        {{task.date | date : "MMM d, y h:mm a" : "en-US"}}
-        <br *ngIf="task.date !=null">
-        {{ task.description }}
-        
-      </div>
-      <div class="accordion-footer d-flex justify-content-between">
-        <div
-          *ngIf="task.completedTask === false"
-          class="btn bg-transparent text-secondary"
-          (click)="fillEditTaskForm(task)"
-          data-bs-toggle="modal"
-          data-bs-target="#editTask"
-        >
-          <fa-icon [icon]="faPencil"></fa-icon> edit
+        <div class="edit-task" type="button" (click)="fillEditTaskForm(task)">
+          <div *ngIf="task.date != null" class="mb-2">
+            <b>Date</b> <br />
+            {{ formatDate(task.date) }}
+          </div>
+          <div>
+            <b>Description</b> <br />
+            {{ task.description }}
+          </div>
         </div>
-        <button
-          *ngIf="task.completedTask === true"
-          type="button"
-          class="btn btn-secondary"
-          (click)="undoTask(task)"
-        >
-          undo
-        </button>
-        <button
-          *ngIf="task.completedTask === false"
-          type="button"
-          class="btn btn-peli"
-          (click)="completeTask(task)"
-        >
-          <fa-icon [icon]="faCheckCircle"></fa-icon> Mark as done
-        </button>
+        <div class="text-secondary hidden-message mt-2">
+          Click to edit this task
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <div *ngIf="taskList.length === 0">
-  <p>The List is empty</p>
+  <p class="text-dark text-center mt-4">
+    There are currently no tasks to be done.
+  </p>
 </div>
 
 <app-edit-task
@@ -99,4 +96,3 @@
   [careCircleId]="careCircleId"
   (onAddTask)="addTask($event)"
 ></app-add-task>
-

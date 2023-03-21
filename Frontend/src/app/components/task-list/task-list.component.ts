@@ -1,17 +1,17 @@
+import { ModalService } from './../../services/modal.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { TaskService } from './../../services/task.service';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Task } from 'src/app/interfaces/task';
 import {
-  faCheckCircle,
   faCheckSquare,
-  faPencil,
   faSquare,
   faClock,
 } from '@fortawesome/free-solid-svg-icons';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NewTask } from 'src/app/interfaces/new-task';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-task-list',
@@ -19,12 +19,10 @@ import { NewTask } from 'src/app/interfaces/new-task';
   styleUrls: ['./task-list.component.css'],
 })
 export class TaskListComponent implements OnInit, OnChanges {
-  @Input() careCircleId: number;
 
+  @Input() careCircleId: number;
   taskList: Task[] = [];
   editTaskForm: FormGroup;
-  faCheckCircle = faCheckCircle;
-  faPencil = faPencil;
   faCheckSquare = faCheckSquare;
   faSquare = faSquare;
   faClock = faClock;
@@ -32,13 +30,12 @@ export class TaskListComponent implements OnInit, OnChanges {
   constructor(
     private taskService: TaskService,
     private errorHandlingService: ErrorHandlingService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private modalService: ModalService
   ) { }
 
-
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // reload TaskList component after navigating to other CarCircle via drop down menu 
+  ngOnChanges(): void {
+    // reload TaskList component after navigating to other CarCircle via drop down menu
     this.getTasks(this.careCircleId);
   }
 
@@ -89,12 +86,9 @@ export class TaskListComponent implements OnInit, OnChanges {
 
   toggleTaskCompleted(task: Task) {
     this.taskService.setTaskToComplete(task).subscribe({
-      complete: () => {
-        this.getTasks(this.careCircleId);
-      },
       error: (error: HttpErrorResponse) => {
         this.errorHandlingService.redirectUnexpectedErrors(error);
-      },
+      }
     });
   }
 
@@ -109,18 +103,15 @@ export class TaskListComponent implements OnInit, OnChanges {
     });
   }
 
-  undoTask(task: Task) {
-    task.completedTask = false;
-    this.toggleTaskCompleted(task);
-  }
-
-
   completeTask(task: Task) {
-    
-      task.completedTask = true;
+      if(task.completedTask == false){
+        task.completedTask = true;
+      }
+      else {
+        task.completedTask = false;
+      }
       this.toggleTaskCompleted(task);
     }
-
 
   public fillEditTaskForm(task: Task): void {
     this.editTaskForm.controls['id'].setValue(task.id);
@@ -128,5 +119,18 @@ export class TaskListComponent implements OnInit, OnChanges {
     this.editTaskForm.controls['title'].setValue(task.title);
     this.editTaskForm.controls['description'].setValue(task.description);
     this.editTaskForm.controls['completedTask'].setValue(task.completedTask);
+
+    this.modalService.open('editTask');
+  }
+
+  formatDate(taskDate: Date): string{
+    const datepipe: DatePipe = new DatePipe('en-US')
+
+    if(taskDate !== null){
+      return datepipe.transform(taskDate, 'EEEE dd MMMM YYYY h:mm a')!.toString();
+    }
+    else {
+      return 'No date';
+    }
   }
 }
