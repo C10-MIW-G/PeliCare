@@ -27,6 +27,7 @@
       <div *ngFor="let userstatus of carecirclemembers">
         <div class="card" style="width: 40rem">
           <h4 class="card-title">{{ userstatus.name }}</h4>
+          <div *ngIf="userstatus.isAdmin" class="badge rounded-pill bg-peli position-absolute top-1 start-1 translate-middle-y" style="width: 5rem"><fa-icon class="pe-1" [icon]="faUserShield"></fa-icon> Admin</div>
           <div class="card-body">
             <ul class="list-group list-group-flush">
               <li class="list-group-item">
