@@ -15,7 +15,7 @@ export class TokenStorageService {
     localStorage.setItem(JWT_TOKEN, authResult.jwt);
     
     const expiresAt = moment().add(authResult.expiresIn, 'second');
-    const sessionDuration = 1000 * 60 * 24; //24 minutes - same as backend
+    const sessionDuration = 1000 * 60 * 300; //300 minutes - same as backend
     localStorage.setItem(
       EXPIRES_AT,
       JSON.stringify(expiresAt.valueOf() + sessionDuration)
