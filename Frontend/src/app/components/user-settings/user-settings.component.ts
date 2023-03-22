@@ -1,7 +1,7 @@
 import { ActivatedRoute } from '@angular/router';
 import { ErrorHandlingService } from './../../services/error-handling.service';
 import { UserService } from './../../services/user.service';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faPhone, faAt, faUserEdit, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -15,6 +15,10 @@ import { User } from 'src/app/interfaces/user';
 export class UserSettingsComponent {
   userDetailsForm: FormGroup;
   faTrash = faTrash;
+  faPhone = faPhone;
+  faAt = faAt;
+  faUserEdit = faUserEdit;
+  faPenToSquare = faPenToSquare;
   email = String(this.route.snapshot.paramMap.get('email'))
 
   user: User;

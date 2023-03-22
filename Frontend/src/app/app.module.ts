@@ -27,7 +27,6 @@ import { DeleteTaskComponent } from './components/delete-task/delete-task.compon
 import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 import { DeleteUserComponent } from './components/delete-user/delete-user.component';
 import { ModalComponent } from './components/modal/modal.component';
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { CarecircleInfoWidgetComponent } from './components/carecircle-info-widget/carecircle-info-widget.component';
 import { AddCarecircleComponent } from './components/add-carecircle/add-carecircle.component';
 import { CircleimageComponent } from './components/circleimage/circleimage.component';
@@ -52,7 +51,6 @@ import { CarecircleOverviewComponent } from './components/carecircle-overview/ca
     UserSettingsComponent,
     DeleteUserComponent,
     ModalComponent,
-    UserProfileComponent,
     CarecircleInfoWidgetComponent,
     AddCarecircleComponent,
     CircleimageComponent,

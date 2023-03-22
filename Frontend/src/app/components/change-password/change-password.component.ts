@@ -2,8 +2,8 @@ import { ErrorHandlingService } from '../../services/error-handling.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CustomvalidationService } from '../../services/custom-validation.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { ChangePasswordService } from '../../services/change-password.service';
 
 @Component({
@@ -18,7 +18,6 @@ export class ChangePasswordComponent implements OnInit {
 
   constructor(
     private errorHandlingService: ErrorHandlingService,
-    private route: ActivatedRoute,
     private changepasswordservice: ChangePasswordService,
     private router: Router,
     private fb: FormBuilder,

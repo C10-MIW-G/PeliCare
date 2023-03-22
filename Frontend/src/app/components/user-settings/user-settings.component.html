@@ -2,79 +2,116 @@
   <div class="col-md-2 text-center"></div>
 
   <div class="col-md-8">
-    <h4 class="text-dark text-center">User settings</h4>
-    <div class="row d-flex justify-content-center mt-2">
-      <div class="col-6 w-50 justify-content-center">
-        <div *ngIf="user" class="accordion" id="accordion">
-          <div class="accordion-item mt-2">
-            <h2 class="accordion-header" id="accordionUser">
-              <button
-                class="accordion-button collapsed text-center"
-                data-bs-toggle="collapse"
-                data-bs-target="#userInformation"
-                aria-expanded="false"
-                aria-controls="userInformation"
-                (click)="fillUserDetailsForm()"
-              >
-                Edit your information
-              </button>
-            </h2>
-            <div
-              class="accordion-body"
-              id="userInformation"
-              class="collapse"
-              aria-labelledby="accordionUser"
-              data-bs-parent="#accordion"
-            >
-              <div class="container-fluid p-2">
-                <form [formGroup]="userDetailsForm" (ngSubmit)="onSubmitEdit()">
-                  <div class="form-group">
-                    <label for="inputName">Name:</label>
-                    <input
-                      type="name"
-                      class="form-control"
-                      id="inputName"
-                      name="name"
-                      aria-describedby="nameHelp"
-                      placeholder="Enter name"
-                      formControlName="name"
-                    />
-                  </div>
-                  <div class="form-group">
-                    <label for="inputPhoneNumber">Phone number:</label>
-                    <input
-                      type="phoneNumber"
-                      class="form-control"
-                      id="inputPhoneNumber"
-                      name="phoneNumber"
-                      placeholder="Enter phone number"
-                      formControlName="phoneNumber"
-                    />
-                  </div>
-                  <button type="submit" class="mt-2 btn btn-peli">Save</button>
-                </form>
-              </div>
-            </div>
-          </div>
+    <div class="row d-flex justify-content-center">
+      <div class="card w-50" *ngIf="user">
+        <div class="card-body">
+          <h5 class="card-title text-center">{{ user.name }}</h5>
         </div>
-      </div>
-    </div>
-    <br />
-    <div class="row d-flex justify-content-center mt-2">
-      <div class="col-6 d-flex justify-content-center">
-        <button
-          type="button"
-          class="btn btn-danger"
-          data-bs-toggle="modal"
-          data-bs-target="#deleteUser"
-        >
-          <fa-icon [icon]="faTrash"></fa-icon> Delete my account
-        </button>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <span><fa-icon [icon]="faAt"></fa-icon></span> : {{ user.email }}
+          </li>
+          <li class="list-group-item">
+            <span><fa-icon [icon]="faPhone"></fa-icon></span> :
+            {{ user.phoneNumber }}
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <div class="col-md-2 text-center"></div>
-</div>
+  <div class="col-md-2 text-center">
+    <button
+      class="btn btn-peli"
+      data-bs-toggle="modal"
+      data-bs-target="#editUserInformation"
+      (click)="fillUserDetailsForm()"
+    >
+      <fa-icon class="pe-1" [icon]="faUserEdit"></fa-icon> Edit information
+      <span class="ps-2"></span>
+    </button>
+    <button
+      class="btn btn-peli mt-2"
+      data-bs-toggle="modal"
+      data-bs-target="#changePassword"
+    >
+      <fa-icon class="pe-1" [icon]="faPenToSquare"></fa-icon> Change password
+      <span class="ps-1"></span>
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger mt-2"
+      data-bs-toggle="modal"
+      data-bs-target="#deleteUser"
+    >
+      <fa-icon class="pe-1" [icon]="faTrash"></fa-icon> Delete account
+      <span class="ps-4"></span>
+    </button>
+  </div>
 
-<app-delete-user></app-delete-user>
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="editUserInformation"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">
+            Edit my information
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="userDetailsForm" (ngSubmit)="onSubmitEdit()">
+            <div class="form-group">
+              <label for="inputName">Name:</label>
+              <input
+                type="name"
+                class="form-control"
+                id="inputName"
+                name="name"
+                aria-describedby="nameHelp"
+                placeholder="Enter name"
+                formControlName="name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputPhoneNumber">Phone number:</label>
+              <input
+                type="phoneNumber"
+                class="form-control"
+                id="inputPhoneNumber"
+                name="phoneNumber"
+                placeholder="Enter phone number"
+                formControlName="phoneNumber"
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">
+            Go Back
+          </button>
+          <button
+            class="btn btn-peli"
+            data-bs-dismiss="modal"
+            (click)="onSubmitEdit()"
+          >
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+<app-change-password></app-change-password>
+  <app-delete-user></app-delete-user>
+</div>
