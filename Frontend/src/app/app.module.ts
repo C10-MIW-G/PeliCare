@@ -31,6 +31,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { CarecircleInfoWidgetComponent } from './components/carecircle-info-widget/carecircle-info-widget.component';
 import { AddCarecircleComponent } from './components/add-carecircle/add-carecircle.component';
 import { CircleimageComponent } from './components/circleimage/circleimage.component';
+import { CarecircleOverviewComponent } from './components/carecircle-overview/carecircle-overview.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { CircleimageComponent } from './components/circleimage/circleimage.compo
     CarecircleInfoWidgetComponent,
     AddCarecircleComponent,
     CircleimageComponent,
+    CarecircleOverviewComponent
   ],
   imports: [
     BrowserModule,

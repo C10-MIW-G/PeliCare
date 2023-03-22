@@ -8,7 +8,7 @@
 			<div *ngFor="let careCircle of userCircles" class="col">
 				<div class="card" style="width: 14rem">
 					<h4 class="card-title">{{ careCircle.name }}</h4>
-					<a routerLink="/carecircle/{{ careCircle.id }}" class="list-group-item">
+					<a routerLink="/carecircle/{{ careCircle.id }}/overview" class="list-group-item">
 						<app-circleimage [imagefilename]="careCircle.imagefilename"></app-circleimage>
 
 					</a>
@@ -28,11 +28,11 @@
 	<div class="col-md-2">
 		<button class="btn btn-peli" (click)="modalService.open('addCareCircle')">
 			<fa-icon [icon]="faPlusCircle"></fa-icon> Add new Circle
-		</button>		
+		</button>
 	</div>
 
 	<add-carecircle (onAddCircle)="getCirclesOfUser()"></add-carecircle>
-	
-	<div class="col-md-2">		
+
+	<div class="col-md-2">
 	</div>
 </div>

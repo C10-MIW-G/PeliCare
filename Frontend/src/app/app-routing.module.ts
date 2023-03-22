@@ -13,10 +13,12 @@ import { CareCircleComponent } from './components/carecircle/carecircle.componen
 import { CreateAccountComponent } from './components/create-account/create-account.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { HomeComponent } from './components/home/home.component';
+import { CarecircleOverviewComponent } from './components/carecircle-overview/carecircle-overview.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'carecircles', component: CarecirclelistComponent, canActivate: [AuthGuard] },
+  { path: 'carecircle/:id/overview', component: CarecircleOverviewComponent, canActivate: [AuthGuard] },
   { path: 'carecircle/:id', component: CareCircleComponent, canActivate: [AuthGuard] },
   { path: 'account/create', component: CreateAccountComponent },
   { path: 'account/signin', component: SignInComponent },
