@@ -2,10 +2,7 @@ package com.makeitworkch10.pacemakers.pelicare.model;
 
 import com.makeitworkch10.pacemakers.pelicare.user.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * @author Ruben de Vries
@@ -16,6 +13,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class CareCircleUser {

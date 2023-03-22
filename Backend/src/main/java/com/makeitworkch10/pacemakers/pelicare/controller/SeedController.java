@@ -1,11 +1,8 @@
 package com.makeitworkch10.pacemakers.pelicare.controller;
 
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
-import com.makeitworkch10.pacemakers.pelicare.model.CareCircleUser;
-import com.makeitworkch10.pacemakers.pelicare.model.Task;
 import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleRepository;
-import com.makeitworkch10.pacemakers.pelicare.repository.CareCircleUserRepository;
-import com.makeitworkch10.pacemakers.pelicare.repository.TaskRepository;
+import com.makeitworkch10.pacemakers.pelicare.service.SeedService;
 import com.makeitworkch10.pacemakers.pelicare.user.Role;
 import com.makeitworkch10.pacemakers.pelicare.user.User;
 import com.makeitworkch10.pacemakers.pelicare.user.UserRepository;
@@ -26,100 +23,137 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class SeedController {
 
-    private final TaskRepository taskRepository;
     private final CareCircleRepository careCircleRepository;
     private final UserRepository userRepository;
-    private final CareCircleUserRepository careCircleUserRepository;
+    private final SeedService seedService;
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/seed")
     public void seedDatabase(){
-        // first CareCircles
-        CareCircle circle1 = new CareCircle();
-        circle1.setName("Care Circle 1");
 
-        CareCircle circle2 = new CareCircle();
-        circle2.setName("Care Circle 2");
+        //Create Users
+        User userBart = User.builder()
+                .name("Bart")
+                .email("bart@pelicare.nl")
+                .phoneNumber("202-555-0176")
+                .password(passwordEncoder.encode("Bart123"))
+                .role(Role.USER)
+                .build();
+        userRepository.save(userBart);
 
-        CareCircle circle3 = new CareCircle();
-        circle3.setName("Care Circle 3");
+        User userEmily = User.builder()
+                .name("Emily")
+                .email("emily@pelicare.nl")
+                .phoneNumber("510-555-0113")
+                .password(passwordEncoder.encode("Emily123"))
+                .role(Role.USER)
+                .build();
+        userRepository.save(userEmily);
 
-        // first tasks
-        Task task1 = new Task();
-        task1.setTitle("Walk the dog");
-        task1.setDescription("Wodan...");
-        task1.setCareCircle(circle1);
-        task1.setCompletedTask(false);
+        User userHannah = User.builder()
+                .name("Hannah")
+                .email("hannah@pelicare.nl")
+                .phoneNumber("864-555-0188")
+                .password(passwordEncoder.encode("Hannah123"))
+                .role(Role.USER)
+                .build();
+        userRepository.save(userHannah);
 
-        Task task2 = new Task();
-        task2.setTitle("Feed the cat");
-        task2.setDescription("Poekie...");
-        task2.setCareCircle(circle2);
-        task2.setCompletedTask(false);
+        User userJohn = User.builder()
+                .name("John")
+                .email("john@pelicare.nl")
+                .phoneNumber("714-555-0152")
+                .password(passwordEncoder.encode("John123"))
+                .role(Role.USER)
+                .build();
+        userRepository.save(userJohn);
 
-        Task task3 = new Task();
-        task3.setTitle("Grocery shopping");
-        task3.setDescription("Milk, eggs, cheese and bread");
-        task3.setCareCircle(circle2);
-        task3.setCompletedTask(false);
+        User userMarc = User.builder()
+                .name("Marc")
+                .email("marc@pelicare.nl")
+                .phoneNumber("562-555-0116")
+                .password(passwordEncoder.encode("Marc123"))
+                .role(Role.USER)
+                .build();
+        userRepository.save(userMarc);
 
-        careCircleRepository.save(circle1);
-        careCircleRepository.save(circle2);
-        careCircleRepository.save(circle3);
-        taskRepository.save(task1);
-        taskRepository.save(task2);
-        taskRepository.save(task3);
+        User userMartha = User.builder()
+                .name("Martha")
+                .email("martha@pelicare.nl")
+                .phoneNumber("909-555-0166")
+                .password(passwordEncoder.encode("Martha123"))
+                .role(Role.USER)
+                .build();
+        userRepository.save(userMartha);
 
-        // Users with different privileges
-        // Circle admin is not site admin but site user.
-        // role of Circle admin is stored in CareCircleUser objects and table
-        User circle1Admin = new User();
-        circle1Admin.setEmail("admin1");
-        circle1Admin.setPassword(passwordEncoder.encode("admin1"));
+        /////////////////////////////////////////////////////////////////////////////////////
 
-        circle1Admin.setRole(Role.USER);
-        userRepository.save(circle1Admin);
-        CareCircleUser adminCircle1 = new CareCircleUser(circle1Admin, circle1, true);
-        careCircleUserRepository.save(adminCircle1);
+        //Care Circle Bart
+        CareCircle circleBart = CareCircle.builder()
+                .name("Bart")
+                .imagefilename("bart.jpg")
+                .build();
+        careCircleRepository.save(circleBart);
 
-        User circle1User = new User();
-        circle1User.setEmail("user1");
-        circle1User.setPassword(passwordEncoder.encode("user1"));
-        circle1User.setRole(Role.USER);
-        userRepository.save(circle1User);
-        CareCircleUser userCircle1 = new CareCircleUser(circle1User, circle1, false);
-        careCircleUserRepository.save(userCircle1);
+        //Tasks Bart
+        seedService.addTasksToCircle("src/main/resources/seed-data/tasks-bart.csv",
+                circleBart);
 
-        // people in Circle 2
+        //Members Bart
+        seedService.addUserToCircle(userBart, circleBart, true);
+        seedService.addUserToCircle(userEmily, circleBart, true);
+        seedService.addUserToCircle(userMarc, circleBart, false);
 
-        User circle2Admin = new User();
-        circle2Admin.setEmail("admin2");
-        circle2Admin.setPassword(passwordEncoder.encode("admin2"));
+        /////////////////////////////////////////////////////////////////////////////////////
 
-        circle2Admin.setRole(Role.USER);
-        userRepository.save(circle2Admin);
-        CareCircleUser adminCircle2 = new CareCircleUser(circle2Admin, circle2, true);
-        careCircleUserRepository.save(adminCircle2);
+        //Care Circle Eugene
+        CareCircle circleEugene = CareCircle.builder()
+                .name("Eugene")
+                .imagefilename("eugene.jpg")
+                .build();
+        careCircleRepository.save(circleEugene);
 
-        User circle2User = new User();
-        circle2User.setEmail("user2");
-        circle2User.setPassword(passwordEncoder.encode("user2"));
-        circle2User.setRole(Role.USER);
-        userRepository.save(circle2User);
-        CareCircleUser userCircle2 = new CareCircleUser(circle2User, circle2, false);
-        careCircleUserRepository.save(userCircle2);
+        //Tasks Eugene
+        seedService.addTasksToCircle("src/main/resources/seed-data/tasks-eugene.csv",
+                circleEugene);
 
-        // Admin for Care Circle 3
-        User circle3Admin = new User();
-        circle3Admin.setEmail("admin3");
-        circle3Admin.setPassword(passwordEncoder.encode("admin3"));
+        //Members Eugene
+        seedService.addUserToCircle(userHannah, circleEugene, true);
+        seedService.addUserToCircle(userEmily, circleEugene, false);
 
-        circle3Admin.setRole(Role.USER);
-        userRepository.save(circle3Admin);
-        CareCircleUser adminCircle3 = new CareCircleUser(circle3Admin, circle3, true);
-        careCircleUserRepository.save(adminCircle3);
+        /////////////////////////////////////////////////////////////////////////////////////
 
+        //Care Circle Ellis
+        CareCircle circleEllis = CareCircle.builder()
+                .name("Ellis")
+                .imagefilename("ellis.jpg")
+                .build();
+        careCircleRepository.save(circleEllis);
+
+        //Tasks Ellis
+        seedService.addTasksToCircle("src/main/resources/seed-data/tasks-ellis.csv",
+                circleEllis);
+
+        //Members Ellis
+        seedService.addUserToCircle(userMartha, circleEllis, true);
+
+        /////////////////////////////////////////////////////////////////////////////////////
+
+        //Care Circle Mom and Dad
+        CareCircle circleMomDad = CareCircle.builder()
+                .name("Mom and Dad")
+                .imagefilename("mom-dad.jpg")
+                .build();
+        careCircleRepository.save(circleMomDad);
+
+        //Tasks Mom and Dad
+        seedService.addTasksToCircle("src/main/resources/seed-data/tasks-mom-dad.csv",
+                circleMomDad);
+
+        //Members Mom and Dad
+        seedService.addUserToCircle(userJohn, circleMomDad, true);
+        seedService.addUserToCircle(userMartha, circleMomDad, false);
+        seedService.addUserToCircle(userHannah, circleMomDad, false);
     }
-
 }
 
