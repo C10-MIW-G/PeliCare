@@ -56,6 +56,20 @@ public class CareCircleController {
                 .body(resource);
     }
 
+    @PatchMapping(value = "/update")
+    public ResponseEntity<String> updateCareCircle(@RequestPart("files") List<MultipartFile> multipartFiles,
+                                                   @RequestPart("careCircleName")String newCarecircleName,
+                                                   @RequestPart("careCircleId") String carecircleId,
+                                                   @RequestPart("oldImageFilename") String oldImageFilename,
+                                                   @RequestPart("noImage") String noImage,
+                                                   @RequestHeader (name="Authorization") String jwt) {
+
+        Long circleId = Long.parseLong(carecircleId); // the JSON request body does not support a number
+        careCircleService.editCircle(multipartFiles, newCarecircleName, circleId, jwt, oldImageFilename, noImage);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<CareCircleDTO>> getAllCircles(@RequestHeader (name="Authorization") String jwt){
         List<CareCircleDTO> responseList = careCircleService.findAllCareCirclesOfUser(jwt);

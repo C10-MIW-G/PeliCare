@@ -21,8 +21,8 @@ export class CareCircleComponent implements OnInit {
 	public isAdmin: Boolean;
 	public isUser: Boolean;
 	public careCircle: CareCircle;
-	public imageBlobUrl: string | ArrayBuffer | null;
-
+	public imageBlobUrl: string | ArrayBuffer | null;	
+	
 	constructor(
 		private route: ActivatedRoute,
 		private careCircleService: CareCircleService,
@@ -71,5 +71,5 @@ export class CareCircleComponent implements OnInit {
 					this.errorHandlingService.redirectUnexpectedErrors(error);
 				}
 			})
-	}
+	}		
 }

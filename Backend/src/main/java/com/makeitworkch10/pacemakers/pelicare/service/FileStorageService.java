@@ -25,7 +25,6 @@ import java.util.List;
  * p.c.c.moonen@gmail.com
  * <p>
  * saving and retrieving files from disk
- * code found on: https://spring.io/guides/gs/uploading-files/
  */
 @Service
 public class FileStorageService {
@@ -124,5 +123,23 @@ public class FileStorageService {
 
     public Path load(String filename) {
         return Paths.get(PHOTO_STORAGE_LOCATION).resolve(filename);
+    }
+
+    public String updateImage(Long carecircleId,
+                              String oldImageFilename,
+                              String noImage,
+                              List<MultipartFile> multipartFiles) {
+        if (noImage.compareTo("true") == 0) { // no more user provided image for this Care Circle
+            deleteImage(oldImageFilename);
+            return "no file selected";
+        } else if (multipartFiles.get(0).isEmpty() ) {
+                // no file selected
+                return oldImageFilename;
+
+        } else {
+                // delete old file, save new file
+                deleteImage(oldImageFilename);
+                return saveImage(multipartFiles, carecircleId);
+        }
     }
 }

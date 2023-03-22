@@ -31,9 +31,12 @@ export class CareCircleService {
 	}
 
 	public uploadFile(formdata: FormData) {
-
 		return this.http.post(`${this.apiBackendUrl}/carecircle/upload`, formdata);
 	}
+
+	public updateCareCircle(formdata: FormData) {
+		return this.http.patch(`${this.apiBackendUrl}/carecircle/update`, formdata)
+	} 
 
 	public isUser(circleId: Number): Observable<boolean> {
 		return this.http.get<boolean>(`${this.apiBackendUrl}/carecircle/isuser/${circleId}`);

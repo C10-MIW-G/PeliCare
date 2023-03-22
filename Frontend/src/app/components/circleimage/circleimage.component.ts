@@ -44,9 +44,7 @@ export class CircleimageComponent implements OnInit, OnChanges{
 					}
 				});
 		} else {
-			this.imageBlobUrl = "../../../assets/images/avatar.png"
+			this.imageBlobUrl = "../../../assets/images/PeliCare-zwart.png"
 		}
   } 
-   
-
 }

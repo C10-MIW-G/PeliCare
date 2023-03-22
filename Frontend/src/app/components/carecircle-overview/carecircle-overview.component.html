@@ -51,7 +51,13 @@
     </div>
   </div>
 
-  <div class="col-md-2 text-center">
+  <div class="col-md-2 text-center">   
+
+		<button *ngIf="isAdmin" type="button" class="btn btn-peli mt-1" data-bs-toggle="modal"
+			data-bs-target="#editCircle">
+			Edit this Circle
+		</button>
+
     <button *ngIf="isAdmin" type="button" class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#deleteCircle">
       Delete this Circle
     </button>
@@ -82,4 +88,57 @@
       </div>
     </div>
   </div>
+
+  <!-- edit care circle modal -->
+	<div class="modal fade" id="editCircle" tabindex="-1" aria-labelledby="editCircleLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="editCircleLabel">
+						Edit Care Circle {{careCircle.name}}
+					</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body row gap-2">
+					<div class="col-3">
+						<app-circleimage [imagefilename]="careCircle.imagefilename" id="currentImage"></app-circleimage>
+					</div>
+					<div class="col">
+						<label for="newName">Edit Care Circle name</label>
+						<input type="text" id="newName" name="newName" value="{{careCircle.name}}"
+							[(ngModel)]="newName">
+						<label for="imageSelect" class="form-label">
+							Optional: a new image for your Care Circle.
+							<br>
+							Leave empty if you don't want to change the image. 
+						</label>
+						<input #myFileSelect class="form-control" accept="image/png, image/gif, image/jpeg" type="file"
+							(change)="newFileSelected($event)">
+						<input type="checkbox" id="deleteImage" [(ngModel)]="deleteImage">
+						<label for="deletImage">CareCircle should not have an image</label>
+					</div>
+				</div>
+				
+				<div class="modal-footer">
+					<button
+					  type="button"
+					  class="btn btn-secondary"
+					  data-bs-dismiss="modal"					
+				    >
+					  Close
+				  </button>
+
+				  <button
+					  type="button"
+					  class="btn btn-peli"
+					  (click)="updateCareCircle()"
+					  data-bs-dismiss="modal"					
+				  >
+					Save changes
+				  </button>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+

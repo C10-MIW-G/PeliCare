@@ -1,30 +1,18 @@
 <div class="row container-fluid component-body">
-  <div *ngIf="careCircle" class="col-md-2 text-center">
-    <app-circleimage
-      [imagefilename]="careCircle.imagefilename"
-    ></app-circleimage>
-    <br />
-    <button
-      class="btn btn-peli m-1"
-      routerLink="/carecircle/{{careCircle.id}}/overview"
-    >Overview
-    </button>
-    <br />
-    <button
-    class="btn btn-peli m-1"
-    aria-disabled="true"
-    routerLink="/carecircle/{{careCircle.id}}"
-    disabled
-    >Task List<span class="ps-2"></span>
-    </button>
-    <br />
-    <button
-      class="btn btn-peli m-1"
-      routerLink="/carecircle/{{ careCircle.id }}/members"
-    >
-      Members
-    </button>
-  </div>
+	<div *ngIf="careCircle" class="col-md-2 text-center">
+		<app-circleimage [imagefilename]="careCircle.imagefilename"></app-circleimage>
+		<br />
+		<button class="btn btn-peli m-1" routerLink="/carecircle/{{careCircle.id}}/overview">Overview
+		</button>
+		<br />
+		<button class="btn btn-peli m-1" aria-disabled="true" routerLink="/carecircle/{{careCircle.id}}" disabled>Task
+			List<span class="ps-2"></span>
+		</button>
+		<br />
+		<button class="btn btn-peli m-1" routerLink="/carecircle/{{ careCircle.id }}/members">
+			Members
+		</button>
+	</div>
 
 	<div class="col-md-8">
 		<div *ngIf="careCircle">
@@ -37,14 +25,35 @@
 		</div>
 	</div>
 
-  <div class="col-md-2 text-center">
-    <button
-      type="button"
-      class="btn btn-peli"
-      (click)="modalService.open('addTask')"
-    >
-      <fa-icon [icon]="faPlusCircle"></fa-icon> Add new Task
-    </button>
+	<div class="col-md-2 text-center">
+		<button type="button" class="btn btn-peli" (click)="modalService.open('addTask')">
+			<fa-icon [icon]="faPlusCircle"></fa-icon> Add new Task
+		</button>
+	</div>
+
+	<!-- delete care circle modal-->
+	<div class="modal fade" id="deleteCircle" tabindex="-1" aria-labelledby="deleteCircleLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="deleteCircleLabel">
+						Are you sure you want to delete this care circle?
+					</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body row gap-2">
+					<button class="btn btn-outline-dark btn-danger col" (click)="deleteCareCircle()"
+						data-bs-dismiss="modal">
+						Yes, delete Care Circle
+					</button>
+					<button type="button" class="btn btn-outline-dark btn-warning col" data-bs-dismiss="modal">
+						No, go back
+					</button>
+				</div>
+				<div class="modal-footer">
+					<p>Deleting a Care Circle can not be undone.</p>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
-
