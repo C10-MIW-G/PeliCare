@@ -40,7 +40,7 @@
       </div>
       <div class="card" style="width: 20rem">
         <a routerLink="/carecircle/{{ careCircle.id }}" class="list-group-item">
-          <h4 class="card-title">To-do list</h4></a>
+          <h4 class="card-title">Task List</h4></a>
           <hr>
           <ul>
           <li *ngFor="let task of careCircle.taskList">
@@ -51,17 +51,17 @@
     </div>
   </div>
 
-  <div class="col-md-2 text-center">   
-
+  <div class="col-md-2 text-center">
 		<button *ngIf="isAdmin" type="button" class="btn btn-peli mt-1" data-bs-toggle="modal"
-			data-bs-target="#editCircle">			
+			data-bs-target="#editCircle">
         <fa-icon class="pe-1" [icon]="faPenToSquare"></fa-icon> Edit this Circle
         <span class="ps-3"></span>
 		</button>
 
     <button *ngIf="isAdmin" type="button" class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#deleteCircle">
-        <fa-icon class="pe-1" [icon]="faTrash"></fa-icon> Delete this Circle      
+        <fa-icon class="pe-1" [icon]="faTrash"></fa-icon> Delete this Circle
     </button>
+  </div>
   </div>
 
   <!-- delete care circle modal-->
@@ -82,17 +82,15 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Go back
           </button>
-          <button type="button" class="btn btn-danger col" (click)="deleteCareCircle()" data-bs-dismiss="modal">
-            Yes, delete this Care Circle
-            <fa-icon class="pe-1" [icon]="faTrash"></fa-icon> Delete account
-      <span class="ps-4"></span>
+          <button type="button" class="btn btn-danger" (click)="deleteCareCircle()" data-bs-dismiss="modal">
+            Yes
           </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- edit care circle modal -->
+   <!-- edit care circle modal -->
 	<div class="modal fade" id="editCircle" tabindex="-1" aria-labelledby="editCircleLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -113,7 +111,7 @@
 						<label for="imageSelect" class="form-label">
 							Choose a new image for your Care Circle.
 							<br>
-							Leave empty if you don't want to change the image. 
+							Leave empty if you don't want to change the image.
 						</label>
 						<input #myFileSelect class="form-control" accept="image/png, image/gif, image/jpeg" type="file"
 							(change)="newFileSelected($event)">
@@ -121,12 +119,12 @@
 						<label for="deletImage">CareCircle should not have an image</label>
 					</div>
 				</div>
-				
+
 				<div class="modal-footer">
 					<button
 					  type="button"
 					  class="btn btn-secondary"
-					  data-bs-dismiss="modal"					
+					  data-bs-dismiss="modal"
 				    >
 					  Close
 				  </button>
@@ -135,7 +133,7 @@
 					  type="button"
 					  class="btn btn-peli"
 					  (click)="updateCareCircle()"
-					  data-bs-dismiss="modal"					
+					  data-bs-dismiss="modal"
 				  >
 					Save changes
 				  </button>
@@ -143,5 +141,4 @@
 			</div>
 		</div>
 	</div>
-</div>
 
