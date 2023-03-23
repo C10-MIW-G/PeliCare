@@ -11,10 +11,10 @@ target/
 /src/main/resources/images/*
 
 ## pictures from seed data should not be ignored
-!bart.jpg
-!ellis.jpg
-!eugene.jpg
-!mom-dad.jpg
+!1.jpg
+!2.jpg
+!3.jpg
+!4.jpg
 
 ### STS ###
 .apt_generated

@@ -91,7 +91,7 @@ export class CarecircleOverviewComponent implements OnInit {
 						// therefore an event is needed to reload the circleimage component,
 						// which reads the (unchanged) image filename 
 						// from its parent component.
-						this.imageService.Stream.next(this.careCircle.imagefilename);
+						this.imageService.Stream.next("test");
 					}
 					this.modalCleanup();					
 				},

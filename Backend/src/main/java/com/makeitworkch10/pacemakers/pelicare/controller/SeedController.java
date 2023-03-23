@@ -91,7 +91,7 @@ public class SeedController {
         //Care Circle Bart
         CareCircle circleBart = CareCircle.builder()
                 .name("Bart")
-                .imagefilename("bart.jpg")
+                .imagefilename("1.jpg")
                 .build();
         careCircleRepository.save(circleBart);
 
@@ -109,7 +109,7 @@ public class SeedController {
         //Care Circle Eugene
         CareCircle circleEugene = CareCircle.builder()
                 .name("Eugene")
-                .imagefilename("eugene.jpg")
+                .imagefilename("2.jpg")
                 .build();
         careCircleRepository.save(circleEugene);
 
@@ -126,7 +126,7 @@ public class SeedController {
         //Care Circle Ellis
         CareCircle circleEllis = CareCircle.builder()
                 .name("Ellis")
-                .imagefilename("ellis.jpg")
+                .imagefilename("3.jpg")
                 .build();
         careCircleRepository.save(circleEllis);
 
@@ -142,7 +142,7 @@ public class SeedController {
         //Care Circle Mom and Dad
         CareCircle circleMomDad = CareCircle.builder()
                 .name("Mom and Dad")
-                .imagefilename("mom-dad.jpg")
+                .imagefilename("4.jpg")
                 .build();
         careCircleRepository.save(circleMomDad);
 
