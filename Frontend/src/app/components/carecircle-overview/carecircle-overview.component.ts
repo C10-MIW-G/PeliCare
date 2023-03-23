@@ -1,12 +1,14 @@
 import { Task } from './../../interfaces/task';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CareCircle } from 'src/app/interfaces/carecircle';
 import { CareCircleUserStatus } from 'src/app/interfaces/carecircle-user-status';
 import { CareCircleService } from 'src/app/services/care-circle.service';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { ImageService } from 'src/app/services/image.service';
+import { ViewChild } from '@angular/core';
 
 @Component({
 	selector: 'app-carecircle-overview',
@@ -31,16 +33,20 @@ export class CarecircleOverviewComponent implements OnInit {
 	public newName: string;
 	public deleteImage: boolean = false;
 
+	@ViewChild('myFileSelect')
+	templateInputFileName: ElementRef;
+
 	constructor(
 		private route: ActivatedRoute,
 		private careCircleService: CareCircleService,
 		private router: Router,
-		private errorHandlingService: ErrorHandlingService
+		private errorHandlingService: ErrorHandlingService,
+		private imageService: ImageService
 	) { }
 
 	ngOnInit(): void {
 		this.route.params.subscribe(routeParams => { this.getCareCircle(routeParams['id']) });
-    this.route.params.subscribe(routeParams => { this.getAllMembersOfCareCircle(routeParams['id']) });
+		this.route.params.subscribe(routeParams => { this.getAllMembersOfCareCircle(routeParams['id']) });
 	}
 
 	getCareCircle(id: Number): void {
@@ -77,13 +83,27 @@ export class CarecircleOverviewComponent implements OnInit {
 		this.careCircleService.updateCareCircle(this.prepareFormData())
 			.subscribe({
 				complete: () => {
-					//this.router.navigateByUrl(`/carecircle/${this.circleId}`)
 					this.ngOnInit();
+					if (!this.deleteImage) {
+						// Event for child component circleimage
+						// but only called if there is an actual new image to look up.
+						// Any existing image file is always named after the care circle id,
+						// therefore an event is needed to reload the circleimage component,
+						// which reads the (unchanged) image filename 
+						// from its parent component.
+						this.imageService.Stream.next(this.careCircle.imagefilename);
+					}
+					this.modalCleanup();					
 				},
 				error: (error: HttpErrorResponse) => {
 					this.errorHandlingService.redirectUnexpectedErrors(error);
 				}
 			});
+	}
+
+	private modalCleanup() {
+		this.deleteImage = false;
+		this.templateInputFileName.nativeElement.value="";
 	}
 
 	private prepareFormData(): FormData {
@@ -98,10 +118,9 @@ export class CarecircleOverviewComponent implements OnInit {
 		editFormData.append('careCircleId', this.careCircle.id.toString());
 		editFormData.append('oldImageFilename', this.careCircle.imagefilename);
 		editFormData.append('noImage', this.deleteImage ? 'true' : 'false');
-		// eindig met het opschonen van de nieuw ingevoerde data
-		this.newSelectedImage = undefined;
-		return editFormData;
 
+		this.newSelectedImage = undefined;		
+		return editFormData;
 	}
 
 	deleteCareCircle() {
@@ -128,11 +147,11 @@ export class CarecircleOverviewComponent implements OnInit {
 		}
 	}
 
-  get tasksToBeDone(): Task[] {
-    let tasksToBeDone: Task[];
-    tasksToBeDone = this.careCircle.taskList = this.careCircle.taskList.filter(x => x.completedTask !== true);
-    return tasksToBeDone;
-  }
+	get tasksToBeDone(): Task[] {
+		let tasksToBeDone: Task[];
+		tasksToBeDone = this.careCircle.taskList = this.careCircle.taskList.filter(x => x.completedTask !== true);
+		return tasksToBeDone;
+	}
 
 	getAllMembersOfCareCircle(id: Number): void {
 		this.circleId = Number(this.route.snapshot.paramMap.get('id'));

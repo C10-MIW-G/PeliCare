@@ -9,26 +9,34 @@ bij aanmaken regelt deze component zelf de juiste inhoud, met backend-api calls
 één plek om deze logica op te slaan
 */
 @Component({
-  selector: 'app-circleimage',
-  templateUrl: './circleimage.component.html',
-  styleUrls: ['./circleimage.component.css']
+	selector: 'app-circleimage',
+	templateUrl: './circleimage.component.html',
+	styleUrls: ['./circleimage.component.css']
 })
-export class CircleimageComponent implements OnInit, OnChanges{
+export class CircleimageComponent implements OnInit, OnChanges {
 
-  constructor( private imageService: ImageService,
-                private errorHandlingService: ErrorHandlingService) {} 
+	constructor(private imageService: ImageService,
+		private errorHandlingService: ErrorHandlingService) { }
 	ngOnChanges(changes: SimpleChanges): void {
 		// refresh the data		
 		this.ngOnInit();
+
 	}
 
-  @Input() imagefilename: string;
+	@Input() imagefilename: string;
 
-  public imageBlobUrl: string | ArrayBuffer | null;
+	public imageBlobUrl: string | ArrayBuffer | null;
 
-  ngOnInit(): void {
-    if (this.imagefilename 
-			&& 
+	ngOnInit(): void {
+		this.imageService.Stream.subscribe((event: string) => {
+			this.getImageData();
+		})
+		this.getImageData();
+	}
+
+	private getImageData() {
+		if (this.imagefilename
+			&&
 			this.imagefilename != 'no file selected') {
 			this.imageService.download(this.imagefilename)
 				.subscribe({
@@ -44,7 +52,7 @@ export class CircleimageComponent implements OnInit, OnChanges{
 					}
 				});
 		} else {
-			this.imageBlobUrl = "../../../assets/images/PeliCare-zwart.png"
+			this.imageBlobUrl = "../../../assets/images/PeliCare-zwart.png";
 		}
-  } 
+	}
 }
