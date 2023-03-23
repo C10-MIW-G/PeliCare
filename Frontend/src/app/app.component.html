@@ -17,7 +17,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" routerLink="/carecircles">Overview</a>
-              <a class="dropdown-item" *ngFor="let careCircle of careCircles" routerLink="/carecircle/{{careCircle.id}}">{{careCircle.name}}</a>
+              <a class="dropdown-item" *ngFor="let careCircle of careCircles" routerLink="/carecircle/{{careCircle.id}}/overview">{{careCircle.name}}</a>
             </div>
           </li>
           </ul>

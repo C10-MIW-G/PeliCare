@@ -35,7 +35,7 @@
                 {{ userstatus.email }}
               </li>
               <li
-                *ngIf="userstatus.phoneNumber != null"
+                *ngIf="userstatus.phoneNumber.length > 2"
                 class="list-group-item"
               >
                 <span><fa-icon [icon]="faPhone"></fa-icon></span> :
