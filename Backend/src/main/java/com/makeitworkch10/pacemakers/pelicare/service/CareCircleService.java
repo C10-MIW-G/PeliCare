@@ -139,7 +139,5 @@ public class CareCircleService {
             careCircle.setImagefilename(newImageFileName);
             careCircleRepository.save(careCircle);
         }
-
-
     }
 }

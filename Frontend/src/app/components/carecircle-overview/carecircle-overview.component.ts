@@ -5,6 +5,7 @@ import { CareCircle } from 'src/app/interfaces/carecircle';
 import { CareCircleUserStatus } from 'src/app/interfaces/carecircle-user-status';
 import { CareCircleService } from 'src/app/services/care-circle.service';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
+import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
 	selector: 'app-carecircle-overview',
@@ -21,6 +22,8 @@ export class CarecircleOverviewComponent implements OnInit {
 	public userCircles: CareCircle[];
 	public careCircle: CareCircle;
 	public circleId: number;
+	faTrash = faTrash;
+	faPenToSquare = faPenToSquare;
 
 	// data from edit modal
 	newSelectedImage: any = null;
