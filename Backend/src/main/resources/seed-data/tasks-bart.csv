@@ -1,2 +1,5 @@
-Grocery Shopping;I'm running low on eggs, cheese, milk, bread, carrots and beer.;;false
+Grocery shopping;I'm running low on eggs, cheese, milk, bread, carrots and beer.;;false
 Hospital appointment;I need a ride to the hospital. It's a 60 minute drive from my house.;2023-04-18 10:00;false
+Pick up my parcel;There is a parcel waiting for me at the gas station nearby.;;false
+Get my car from the garage;The car is ready to be picked up from the garage. The payment has already been done.;;false
+Bring my car to the garage;My car needs to be brought in to the garage for the yearly inspection.;2023-03-15 09:00;true
