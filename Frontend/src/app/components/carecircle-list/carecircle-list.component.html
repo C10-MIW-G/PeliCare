@@ -4,9 +4,9 @@
 	<div class="col-md-8">
 		<h4 class="text-dark mb-4 text-center">My Care Circles</h4>
 		<div *ngIf="userCircles && userCircles.length !== null"
-			class="row row-cols-1 row-cols-md-4 g-4 d-flex justify-content-center">
+			class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center">
 			<div *ngFor="let careCircle of userCircles" class="col">
-				<div class="card" style="width: 14rem">
+				<div class="card" style="width: 15rem">
 					<h4 class="card-title">{{ careCircle.name }}</h4>
 					<a routerLink="/carecircle/{{ careCircle.id }}/overview" class="list-group-item mt-2">
 						<app-circleimage [imagefilename]="careCircle.imagefilename"></app-circleimage>
