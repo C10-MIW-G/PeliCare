@@ -1,3 +1,4 @@
+import { Task } from './../../interfaces/task';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -126,6 +127,12 @@ export class CarecircleOverviewComponent implements OnInit {
 			return this.userCircles;
 		}
 	}
+
+  get tasksToBeDone(): Task[] {
+    let tasksToBeDone: Task[];
+    tasksToBeDone = this.careCircle.taskList = this.careCircle.taskList.filter(x => x.completedTask !== true);
+    return tasksToBeDone;
+  }
 
 	getAllMembersOfCareCircle(id: Number): void {
 		this.circleId = Number(this.route.snapshot.paramMap.get('id'));

@@ -36,17 +36,15 @@
           </div>
         </div>
 
-        <label for="imageSelect" class="form-label">
+        <label for="imageSelect" class="form-label mt-3">
           Select an image for your Care Circle
         </label>
-        <input #myFileSelect 
-                class="form-control" 
-                accept="image/png, image/gif, image/jpeg"                           
-                type="file" (change)="fileSelected($event)">       
-
+        <input #myFileSelect
+                class="form-control"
+                accept="image/png, image/gif, image/jpeg"
+                type="file" (change)="fileSelected($event)">
       </div>
     </form>
-    
   </div>
   <div class="modal-footer">
     <button

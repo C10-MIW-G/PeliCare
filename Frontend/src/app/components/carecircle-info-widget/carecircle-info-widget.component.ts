@@ -1,3 +1,4 @@
+import { Task } from './../../interfaces/task';
 import { ErrorHandlingService } from './../../services/error-handling.service';
 import { CareCircleService } from './../../services/care-circle.service';
 import { CareCircle } from './../../interfaces/carecircle';
@@ -61,13 +62,19 @@ export class CarecircleInfoWidgetComponent implements OnInit {
       });
   }
 
+  get countTasksToBeDone(): number {
+      let tasksToBeDone: Task[];
+      tasksToBeDone = this.careCircle.taskList = this.careCircle.taskList.filter(x => x.completedTask !== true);
+      return tasksToBeDone.length;
+  }
+
   get taskCountMessage(): string {
-    if (this.careCircle.taskList.length == 0) {
-      return 'This circle has no tasks';
-    } else if (this.careCircle.taskList.length == 1) {
-      return 'This circle has 1 task';
+    if (this.countTasksToBeDone == 0) {
+      return 'This circle has no unfinished tasks';
+    } else if (this.countTasksToBeDone == 1) {
+      return 'This circle has 1 unfinished task';
     } else {
-      return 'This circle has ' + this.careCircle.taskList.length + ' tasks';
+      return 'This circle has ' + this.countTasksToBeDone + ' unfinished tasks';
     }
   }
 
