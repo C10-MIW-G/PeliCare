@@ -54,12 +54,13 @@
   <div class="col-md-2 text-center">   
 
 		<button *ngIf="isAdmin" type="button" class="btn btn-peli mt-1" data-bs-toggle="modal"
-			data-bs-target="#editCircle">
-			Edit this Circle
+			data-bs-target="#editCircle">			
+        <fa-icon class="pe-1" [icon]="faPenToSquare"></fa-icon> Edit this Circle
+        <span class="ps-3"></span>
 		</button>
 
     <button *ngIf="isAdmin" type="button" class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#deleteCircle">
-      Delete this Circle
+        <fa-icon class="pe-1" [icon]="faTrash"></fa-icon> Delete this Circle      
     </button>
   </div>
 
@@ -83,6 +84,8 @@
           </button>
           <button type="button" class="btn btn-danger col" (click)="deleteCareCircle()" data-bs-dismiss="modal">
             Yes, delete this Care Circle
+            <fa-icon class="pe-1" [icon]="faTrash"></fa-icon> Delete account
+      <span class="ps-4"></span>
           </button>
         </div>
       </div>
