@@ -35,8 +35,8 @@ export class CarecircleOverviewComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-		this.route.params.subscribe(routeParams => { this.getCareCircle(routeParams['id']) })
-		this.getAllMembersOfCareCircle();
+		this.route.params.subscribe(routeParams => { this.getCareCircle(routeParams['id']) });
+    this.route.params.subscribe(routeParams => { this.getAllMembersOfCareCircle(routeParams['id']) });
 	}
 
 	getCareCircle(id: Number): void {
@@ -95,7 +95,7 @@ export class CarecircleOverviewComponent implements OnInit {
 		editFormData.append('oldImageFilename', this.careCircle.imagefilename);
 		editFormData.append('noImage', this.deleteImage ? 'true' : 'false');
 		// eindig met het opschonen van de nieuw ingevoerde data
-		this.newSelectedImage = undefined;		
+		this.newSelectedImage = undefined;
 		return editFormData;
 
 	}
@@ -124,7 +124,7 @@ export class CarecircleOverviewComponent implements OnInit {
 		}
 	}
 
-	getAllMembersOfCareCircle(): void {
+	getAllMembersOfCareCircle(id: Number): void {
 		this.circleId = Number(this.route.snapshot.paramMap.get('id'));
 		this.careCircleService.getMembersOfCareCircle(this.circleId).subscribe({
 			next: (response: CareCircleUserStatus[]) => {
