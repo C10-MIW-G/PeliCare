@@ -1,5 +1,7 @@
 package com.makeitworkch10.pacemakers.pelicare;
 
+import com.makeitworkch10.pacemakers.pelicare.dto.NewTaskDTO;
+import com.makeitworkch10.pacemakers.pelicare.dto.TaskCompleteDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.TaskDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;
 import com.makeitworkch10.pacemakers.pelicare.model.CareCircle;
@@ -21,8 +23,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 @RequiredArgsConstructor
 /**
@@ -101,6 +104,31 @@ public class TaskServiceTest {
         assertThatExceptionOfType(ResourceNotFoundException.class)
                 .isThrownBy(()-> taskService.getTask(25L))
                 .withMessage( "Task with id 25 not found");
+    }
+
+    @Test
+    void saveTaskCompleteTest() {
+        TaskCompleteDTO taskCompleteDTO = new TaskCompleteDTO(true, 3L);
+        TaskDTO taskDTO = new TaskDTO(3L,LocalDateTime.of(2023,4,15,11,50),
+                "trim the hedge", "garden", false);
+
+        when(taskRepository.findById(taskCompleteDTO.getId()))
+                .thenReturn(Optional.ofNullable(task3));
+        when(taskRepository.save(task3)).thenReturn(task3);
+        when(taskRepository.findById(3L)).thenReturn(Optional.ofNullable(task3));
+        TaskDTO testTaskDTO = new TaskDTO();
+        testTaskDTO.setId(3L);
+        when(taskDTOMapper.apply(task3)).thenReturn(testTaskDTO);
+        taskService.saveTaskComplete(taskCompleteDTO);
+        assertThat(task3.isCompletedTask()).isTrue();
+    }
+
+    @Test
+    void saveTaskThrowExceptionTest()throws ResourceNotFoundException {
+        TaskCompleteDTO taskCompleteDTO = new TaskCompleteDTO(true, 4L);
+
+        assertThrows(ResourceNotFoundException.class,
+                ()->taskService.getTask(taskCompleteDTO.getId()));
     }
 }
 
