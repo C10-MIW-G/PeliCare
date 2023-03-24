@@ -129,7 +129,7 @@ public class FileStorageService {
                               String oldImageFilename,
                               String noImage,
                               List<MultipartFile> multipartFiles) {
-        if (noImage.compareTo("true") == 0) { // no more user provided image for this Care Circle
+        if (Boolean.parseBoolean(noImage)) { // no more user provided image for this Care Circle
             deleteImage(oldImageFilename);
             return "no file selected";
         } else if (multipartFiles.get(0).isEmpty() ) {

@@ -97,19 +97,18 @@
       <div class="modal-body row gap-2">
         <div class="col">
           <label for="newName">Edit Care Circle name</label>
-          <input type="text" id="newName" class="form-control mb-3" name="newName" value="{{careCircle.name}}"
+          <input class="form-control mb-3" type="text" id="newName" name="newName" value="{{careCircle.name}}"
             [(ngModel)]="newName">
           <label for="imageSelect" class="form-label">
-            Choose a new image for your Care Circle.
+            Optional: a new image for your Care Circle.
             <br>
             Leave empty if you don't want to change the image.
           </label>
           <input #myFileSelect class="form-control mb-3" accept="image/png, image/gif, image/jpeg" type="file"
             (change)="newFileSelected($event)">
-
           <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="deleteImage" [(ngModel)]="deleteImage">
-            <label class="form-check-label mb-3" for="deletImage">CareCircle should not have an image</label>
+            <input type="checkbox" class="form-check-input mb-3" id="deleteImage" [(ngModel)]="deleteImage">
+            <label class="form-check-label" for="deletImage">CareCircle should not have an image</label>
           </div>
         </div>
       </div>

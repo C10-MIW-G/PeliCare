@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ImageService } from 'src/app/services/image.service';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
+import { Subject } from 'rxjs';
 
 /*
 plaats in template van oudercomponent CareCircle,

@@ -64,8 +64,7 @@ public class CareCircleController {
                                                    @RequestPart("noImage") String noImage,
                                                    @RequestHeader (name="Authorization") String jwt) {
 
-        Long circleId = Long.parseLong(carecircleId); // the JSON request body does not support a number
-        careCircleService.editCircle(multipartFiles, newCarecircleName, circleId, jwt, oldImageFilename, noImage);
+        careCircleService.editCircle(multipartFiles, newCarecircleName, carecircleId, jwt, oldImageFilename, noImage);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

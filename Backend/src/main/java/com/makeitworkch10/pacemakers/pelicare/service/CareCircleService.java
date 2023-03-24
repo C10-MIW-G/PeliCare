@@ -121,17 +121,18 @@ public class CareCircleService {
 
     public void editCircle(List<MultipartFile> multipartFiles,
                            String newCarecircleName,
-                           Long carecircleId,
+                           String carecircleId,
                            String jwt,
                            String oldImageFilename,
                            String noImage) {
-        if(careCircleUserService.isUserAdminOfCircle(carecircleId,jwt)){
+        Long circleId = Long.parseLong(carecircleId);
+        if(careCircleUserService.isUserAdminOfCircle(circleId,jwt)){
 
-            CareCircle careCircle = careCircleRepository.findById(carecircleId)
+            CareCircle careCircle = careCircleRepository.findById(circleId)
                     .orElseThrow(()-> new ResourceNotFoundException("Care Circle could not be found"));
             careCircle.setName(newCarecircleName);
 
-            String newImageFileName = fileStorageService.updateImage(   carecircleId,
+            String newImageFileName = fileStorageService.updateImage(   circleId,
                                                                         oldImageFilename,
                                                                         noImage,
                                                                         multipartFiles);
