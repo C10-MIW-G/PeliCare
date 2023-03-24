@@ -1,6 +1,5 @@
 package com.makeitworkch10.pacemakers.pelicare;
 
-import com.makeitworkch10.pacemakers.pelicare.dto.NewTaskDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.TaskCompleteDTO;
 import com.makeitworkch10.pacemakers.pelicare.dto.TaskDTO;
 import com.makeitworkch10.pacemakers.pelicare.exception.ResourceNotFoundException;
@@ -109,8 +108,6 @@ public class TaskServiceTest {
     @Test
     void saveTaskCompleteTest() {
         TaskCompleteDTO taskCompleteDTO = new TaskCompleteDTO(true, 3L);
-        TaskDTO taskDTO = new TaskDTO(3L,LocalDateTime.of(2023,4,15,11,50),
-                "trim the hedge", "garden", false);
 
         when(taskRepository.findById(taskCompleteDTO.getId()))
                 .thenReturn(Optional.ofNullable(task3));
