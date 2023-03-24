@@ -11,7 +11,7 @@
           <li class="list-group-item">
             <span><fa-icon [icon]="faAt"></fa-icon></span> : {{ user.email }}
           </li>
-          <li class="list-group-item">
+          <li *ngIf="user.phoneNumber.length > 2" class="list-group-item">
             <span><fa-icon [icon]="faPhone"></fa-icon></span> :
             {{ user.phoneNumber }}
           </li>
