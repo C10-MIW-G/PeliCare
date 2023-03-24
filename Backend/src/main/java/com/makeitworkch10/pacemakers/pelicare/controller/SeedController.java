@@ -41,6 +41,15 @@ public class SeedController {
                 .build();
         userRepository.save(userBart);
 
+        User userEugene = User.builder()
+                .name("Eugene")
+                .email("eugene@pelicare.nl")
+                .phoneNumber("202-555-0245")
+                .password(passwordEncoder.encode("Eugene123"))
+                .role(Role.USER)
+                .build();
+        userRepository.save(userEugene);
+
         User userEmily = User.builder()
                 .name("Emily")
                 .email("emily@pelicare.nl")
@@ -90,7 +99,7 @@ public class SeedController {
 
         //Care Circle Bart
         CareCircle circleBart = CareCircle.builder()
-                .name("Bart")
+                .name("Bart's Circle")
                 .imagefilename("no file selected")
                 .build();
         careCircleRepository.save(circleBart);
@@ -120,6 +129,7 @@ public class SeedController {
         //Members Eugene
         seedService.addUserToCircle(userHannah, circleEugene, true);
         seedService.addUserToCircle(userEmily, circleEugene, false);
+        seedService.addUserToCircle(userEugene, circleEugene, false);
 
         /////////////////////////////////////////////////////////////////////////////////////
 

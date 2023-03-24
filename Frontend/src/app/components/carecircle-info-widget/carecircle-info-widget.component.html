@@ -6,39 +6,25 @@
       ><fa-icon [icon]="isAdmin ? faUserShield : faUser"></fa-icon
     ></a>
   </li>
-  <li class="list-inline-item">
-    <a
-      role="button"
-      style="background-color: var(--peli-main-color)"
-      [tooltip]="'View circle members'"
-      routerLink="/carecircle/{{ careCircle.id }}/members"
-      ><fa-icon [icon]="faUsers"></fa-icon
-    ></a>
-  </li>
-  <li class="list-inline-item">
-    <a
-      [tooltip]="memberCountMessage"
-      style="background-color: var(--peli-main-color)"
-      >{{ memberCount }}</a
-    >
-  </li>
 </ul>
 
 <ul class="info-widget list-inline mb-2">
   <li class="list-inline-item">
-    <a
-      role="button"
-      [tooltip]="'View tasklist'"
-      style="background-color: var(--peli-secondary-color)"
-      routerLink="/carecircle/{{ careCircle.id }}"
-      ><fa-icon [icon]="faTasks"></fa-icon
-    ></a>
+    <button
+      class="btn btn-peli"
+      routerLink="/carecircle/{{ careCircle.id }}/members"
+      [tooltip]="memberCountMessage"
+      ><fa-icon class="pe-1" [icon]="faUsers"></fa-icon
+    >
+    {{ memberCount }}</button>
   </li>
   <li class="list-inline-item">
-    <a
+    <button
+      class="btn btn-peli"
+      routerLink="/carecircle/{{ careCircle.id }}"
       [tooltip]="taskCountMessage"
-      style="background-color: var(--peli-secondary-color)"
-      >{{ careCircle.taskList.length }}</a
+      ><fa-icon class="pe-1" [icon]=faTasks></fa-icon
     >
+    {{ careCircle.taskList.length }}</button>
   </li>
 </ul>
