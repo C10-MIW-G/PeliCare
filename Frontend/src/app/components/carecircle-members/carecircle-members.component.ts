@@ -2,7 +2,7 @@ import { CareCircle } from './../../interfaces/carecircle';
 import { UserService } from './../../services/user.service';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CareCircleService } from '../../services/care-circle.service';
@@ -18,6 +18,7 @@ import {
   faToggleOn,
   faUserPlus
 } from '@fortawesome/free-solid-svg-icons';
+import { ViewChild } from '@angular/core';
 
 @Component({
 	selector: 'app-carecircle-members',
@@ -44,6 +45,9 @@ export class CarecircleMembersComponent implements OnInit {
   faToggleOff = faToggleOff;
   faToggleOn = faToggleOn;
   faUserPlus = faUserPlus;
+
+  @ViewChild('newMemberField')
+	newMemberField: ElementRef;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -103,6 +107,7 @@ export class CarecircleMembersComponent implements OnInit {
 				complete: () => {
 					console.log('User is added');
 					this.reload();
+					this.newMemberField.nativeElement.value="";
 				},
 				error: (error: HttpErrorResponse) => {
 					if (error.status === 409) {
